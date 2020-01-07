@@ -1,0 +1,20 @@
+{
+    "test": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-rnnplayground-test-143353-authRole",
+            "UnauthRoleArn": "arn:aws:iam::218461526891:role/amplify-rnnplayground-test-143353-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::218461526891:role/amplify-rnnplayground-test-143353-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-rnnplayground-test-143353-deployment",
+            "UnauthRoleName": "amplify-rnnplayground-test-143353-unauthRole",
+            "StackName": "amplify-rnnplayground-test-143353",
+            "StackId": "arn:aws:cloudformation:eu-central-1:218461526891:stack/amplify-rnnplayground-test-143353/4678d970-218a-11ea-9e7f-062f915451fc",
+            "AmplifyAppId": "d2cyly3y7661tg"
+        },
+        "categories": {
+            "auth": {
+                "rnnplayground8aad0c65": {}
+            }
+        }
+    }
+}

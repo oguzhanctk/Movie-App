@@ -1,0 +1,9 @@
+{
+	"auth": {
+		"rnnplayground8aad0c65": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
+}
