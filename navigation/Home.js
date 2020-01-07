@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Button, SafeAreaView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import LottieView from "lottie-react-native";
@@ -43,23 +43,31 @@ export default class Home extends Component {
 
     render() {
         return(
-            <View style = {{flex : 1,
-                flexDirection : "row",
-                justifyContent : "center", 
-                alignItems : "center",
-                backgroundColor : "white",}}>
-                
-                <TouchableOpacity style = {styles.fab} onPress = {() => this.props.incrementCounter()}>
-                    <Icon name = "plus" size = {23}/>
-                </TouchableOpacity>
-                <Text style = {{marginHorizontal : 5}}>{this.props.counter}</Text>
-                <TouchableOpacity style = {styles.fab} onPress = {() => this.props.decrementCounter()}>
-                    <Icon name = "minus" size = {23}/>
-                </TouchableOpacity>
-
+            <SafeAreaView style = {{flex : 1, 
+                flexDirection : "column",
+                justifyContent : "center",
+                alignItems : "center" }}>
+                <Button title = "go to Screen2" 
+                    onPress = {() => Navigation.push(this.props.componentId, {
+                        component : {
+                            name : "Screen2"
+                        }
+                    })}/>
+                <View style = {{flexDirection : "row",
+                    justifyContent : "center", 
+                    alignItems : "center",
+                    marginVertical : 15}}>
+                    <TouchableOpacity style = {styles.fab} onPress = {() => this.props.incrementCounter()}>
+                        <Icon name = "plus" size = {23}/>
+                    </TouchableOpacity>
+                    <Text style = {{marginHorizontal : 5}}>{this.props.counter}</Text>
+                    <TouchableOpacity style = {styles.fab} onPress = {() => this.props.decrementCounter()}>
+                        <Icon name = "minus" size = {23}/>
+                    </TouchableOpacity>
+                </View>
                 <LottieView source = {require("./assets/animation/3532-car.json")}
-                    style = {{width :170, height : 170}}/> 
-            </View>
+                        style = {{width :170, height : 170, backgroundColor : "orange"}}/> 
+            </SafeAreaView>
         )
     }
 }
