@@ -41,8 +41,6 @@ export default class Home extends Component {
         }
     }
 
-    //comment line
-
     render() {
         return(
             <View style = {{flex : 1,
