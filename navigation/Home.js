@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, Button, SafeAreaView }
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import LottieView from "lottie-react-native";
+import { MovieApi } from "../api/fetch_movies";
+import Loader from "./Loader";
 
 export default class Home extends Component {
     
@@ -20,10 +22,6 @@ export default class Home extends Component {
                 }
             }
         };
-    }
-
-    componentDidAppear = () => {
-        console.log("appear");
     }
 
     navigationButtonPressed = ({buttonId}) => {
@@ -53,6 +51,11 @@ export default class Home extends Component {
                             name : "Screen2"
                         }
                     })}/>
+                <Loader/>
+                <Button title = "fetch" 
+                    onPress = {() => {
+                        MovieApi.fetchMovies(); 
+                    }}/>
                 <View style = {{flexDirection : "row",
                     justifyContent : "center", 
                     alignItems : "center",
