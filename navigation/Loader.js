@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import { usePromiseTracker } from "react-promise-tracker";
 import { View, Text, ActivityIndicator } from "react-native";
 
-//test comment
-//comment1
-//comment from test_branch
-
 const Loader = () => {
     const { promiseInProgress } = usePromiseTracker(); 
 
