@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, Button, TextInput, StyleSheet, Platform } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
-import { USER_KEY } from "./config";
-import { goHome } from "./navigation";
+import { USER_KEY } from "../config";
+import { goHome } from "../navigation";
 import { Navigation } from "react-native-navigation";
 
 export default class SignUp extends Component {

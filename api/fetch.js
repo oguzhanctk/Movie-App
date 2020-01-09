@@ -8,7 +8,3 @@ export const fetchWithDelay = url => {
             .catch(err => console.log(err))
             )
 }
-
-export const testFunction = () => {
-    console.log("testing");
-}

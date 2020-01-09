@@ -2,10 +2,11 @@ import { Navigation } from "react-native-navigation";
 
 Navigation.setDefaultOptions({
     navigationBar : {
-        backgroundColor : "#8fd681"
+        backgroundColor : "gray"
     },
     bottomTabs : {
-        titleDisplayMode : "alwaysShow"
+        titleDisplayMode : "showWhenActive",
+        backgroundColor : "white"
     },
     
         
@@ -85,7 +86,7 @@ export const test = () => {
               stack: {
                 children: [{
                   component: {
-                    name: 'Test',
+                    name: 'Discover',
                     passProps: {
                       text: 'This is tab 1'
                     }
@@ -102,7 +103,7 @@ export const test = () => {
             },
             {
               component: {
-                name: 'Test',
+                name: 'Discover',
                 passProps: {
                   text: 'This is tab 2'
                 },
@@ -171,7 +172,7 @@ export const goTosideMenuLayout = () => {
 export const overlayTest = () => {
     Navigation.showOverlay({
         component : {
-            name : "Test",
+            name : "Discover",
             options : {
                 overlay : {
                     interceptTouchOutside : true
@@ -180,3 +181,76 @@ export const overlayTest = () => {
         }
     });
 }
+
+export const goToMainLayout = () => {
+    Navigation.setRoot({
+        root : {
+            bottomTabs : {
+                id : "main_bottom_tabs",
+                children : [
+                    {
+                        stack : {
+                            children : [
+                                {
+                                    component : {
+                                        name : "Home",
+                                        options : {
+                                            topBar : {
+                                                visible : false
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            options : {
+                                bottomTab : {
+                                    selectedIconColor : "orange",
+                                    selectedTextColor : "orange",
+                                    text : "Anasayfa",
+                                    icon : require("./assets/home.png"),
+                                }
+                            }
+                        }
+                    },
+                    {
+                        stack : {
+                            children : [
+                                {
+                                    component : {
+                                        name : "Discover",
+                                        options : {
+                                            topBar : {
+                                                title : {
+                                                    text : "Keşfet",
+                                                    color : "red",
+                                                    alignment : "center"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            options : {
+                                bottomTab : {
+                                    text : "Keşfet",
+                                    icon : require("./assets/search.png")
+                                }
+                            }
+                        }
+                    },
+                    {
+                        component : {
+                            name : "Discover",
+                            options : {
+                                bottomTab : {
+                                    text : "Kitaplık",
+                                    icon : require("./assets/library.png")
+                                },
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    });
+} 

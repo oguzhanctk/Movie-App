@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Animated, Text, Easing } from "react-native";
+import { View, Animated, Text } from "react-native";
 
 export default class CustomAnimation extends Component {
     state = {

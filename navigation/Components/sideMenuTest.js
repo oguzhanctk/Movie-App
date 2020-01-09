@@ -18,7 +18,7 @@ class SideMenuTest extends React.Component {
             <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
                 <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
                     <Image style = {{width : 100, height : 100, borderRadius : 7, margin : 7}}
-                        source = {require("./assets/pika.png")}/>
+                        source = {require("../assets/pika.png")}/>
                     <Button title = "Go back" onPress = {() => {
                         Navigation.pop(this.props.componentId)
                     }}/>

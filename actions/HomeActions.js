@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import Home from "../navigation/Home";
+import Home from "../navigation/Components/Home";
 
 export const incCount = {
     type : "INCREMENT_COUNTER",
