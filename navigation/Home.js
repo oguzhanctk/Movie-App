@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, SafeAreaView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
-import LottieView from "lottie-react-native";
+import CustomAnimation from "../animation_Components/animations";
 import { MovieApi } from "../api/fetch_movies";
 import Loader from "./Loader";
 
@@ -39,23 +39,27 @@ export default class Home extends Component {
         }
     }
 
+    
     render() {
         return(
             <SafeAreaView style = {{flex : 1, 
                 flexDirection : "column",
                 justifyContent : "center",
                 alignItems : "center" }}>
-                <Button title = "go to Screen2" 
-                    onPress = {() => Navigation.push(this.props.componentId, {
-                        component : {
-                            name : "Screen2"
-                        }
-                    })}/>
-                <Loader/>
-                <Button title = "fetch" 
-                    onPress = {() => {
-                        MovieApi.fetchMovies(); 
-                    }}/>
+                <CustomAnimation style = {{width : 300, height : 50}}>
+                    <Button title = "go to Screen2" 
+                        onPress = {() => Navigation.push(this.props.componentId, {
+                            component : {
+                                name : "Screen2"
+                            }
+                        })}/>
+                    <Loader/>
+                    <Button title = "fetch" 
+                        onPress = {() => {
+                            MovieApi.fetchMovies(); 
+                        }}/>
+                </CustomAnimation>
+                
                 <View style = {{flexDirection : "row",
                     justifyContent : "center", 
                     alignItems : "center",
@@ -68,8 +72,7 @@ export default class Home extends Component {
                         <Icon name = "minus" size = {23}/>
                     </TouchableOpacity>
                 </View>
-                <LottieView source = {require("./assets/animation/3532-car.json")}
-                        style = {{width :170, height : 170, backgroundColor : "orange"}}/> 
+                 
             </SafeAreaView>
         )
     }
