@@ -72,3 +72,6 @@ awsconfiguration.json
 amplifyconfiguration.json
 amplify-gradle-config.json
 amplifyxc.config
+
+#TMDB Api key
+api/config.js

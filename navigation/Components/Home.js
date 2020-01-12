@@ -6,6 +6,7 @@ import CustomAnimation from "../../animation_Components/animations";
 import { MovieApi } from "../../api/fetch_movies";
 import { MovieCard } from "./microComponents/MovieCard";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
+import { key } from "../../api/config";
 
 export default class Home extends Component {
     
@@ -32,7 +33,7 @@ export default class Home extends Component {
     // }
 
     componentDidMount = () => {
-        fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e02b145f1588ea6f178b8e24b19a93f8&language=en-US")
+        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key.api_key}&language=en-US`)
         .then(response => response.json())
         .then(data => console.log(data.genres))
         .catch(err => console.log(err));
