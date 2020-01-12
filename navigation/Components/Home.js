@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensions, FlatList, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import CustomAnimation from "../../animation_Components/animations";
 import { MovieApi } from "../../api/fetch_movies";
 import { MovieCard } from "./microComponents/MovieCard";
+import { MoviesSlider } from "./microComponents/MoviesSlider";
 
 export default class Home extends Component {
     
@@ -12,6 +13,8 @@ export default class Home extends Component {
         super(props);
         Navigation.events().bindComponent(this);
     }
+
+
 
     // navigationButtonPressed = ({buttonId}) => {
     //     const { componentId } = this.props;
@@ -28,21 +31,31 @@ export default class Home extends Component {
     //     }
     // }
 
-    
+    componentDidMount = () => {
+        fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=e02b145f1588ea6f178b8e24b19a93f8&language=en-US")
+        .then(response => response.json())
+        .then(data => console.log(data.genres))
+        .catch(err => console.log(err));
+    }
+
+
+
     render() {
         return(
-            <SafeAreaView style = {{backgroundColor : "#ccc", flex : 1}}>     
-                <View style = {{
-                        width : Dimensions.get("window").width, 
-                        flexDirection : "row"}}>
-                </View>
+            <SafeAreaView style = {{backgroundColor : "#e6ffec", flex : 1}}>
+                <ScrollView showsVerticalScrollIndicator = {true}>     
+                    <MoviesSlider headerText = "Popüler"/>
+                    <MoviesSlider headerText = "Yakın zamanda"/>
+                    <MoviesSlider headerText = "Tüm zamanlar"/>
+                    <View style = {{height : 20}}/>
+                </ScrollView>
             </SafeAreaView>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    fab : {
+    fab : { 
         borderWidth:1,
         borderColor:'rgba(0,0,0,0.2)',
         alignItems:'center',

@@ -2,12 +2,17 @@ import { Navigation } from "react-native-navigation";
 
 Navigation.setDefaultOptions({
     navigationBar : {
-        backgroundColor : "gray"
+        backgroundColor : "orange",
+        
     },
     bottomTabs : {
         titleDisplayMode : "showWhenActive",
         backgroundColor : "white"
     },
+    statusBar : {
+        style : "light",
+        backgroundColor : "orange"
+    }
     
         
 })
@@ -26,7 +31,7 @@ export const goToAuth = () => {
                                 bottomTab : {
                                     fontSize : 12,
                                     text : "Sign in",
-                                    icon : require("./assets/signin.png"),
+                                    icon : require("./assets/signin.png")
                                 }
                             }
                         },
@@ -197,7 +202,7 @@ export const goToMainLayout = () => {
                                         options : {
                                             topBar : {
                                                 visible : false
-                                            }
+                                            },
                                         }
                                     }
                                 }
@@ -233,7 +238,9 @@ export const goToMainLayout = () => {
                             options : {
                                 bottomTab : {
                                     text : "Keşfet",
-                                    icon : require("./assets/search.png")
+                                    icon : require("./assets/search.png"),
+                                    selectedIconColor : "orange",
+                                    selectedTextColor : "orange"
                                 }
                             }
                         }
@@ -244,7 +251,9 @@ export const goToMainLayout = () => {
                             options : {
                                 bottomTab : {
                                     text : "Kitaplık",
-                                    icon : require("./assets/library.png")
+                                    icon : require("./assets/library.png"),
+                                    selectedIconColor : "orange",
+                                    selectedTextColor : "orange"
                                 },
                             }
                         }
