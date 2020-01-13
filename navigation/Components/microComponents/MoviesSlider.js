@@ -23,8 +23,8 @@ export const MoviesSlider = (props) => {
     return (
         <View style = {{paddingVertical : 1, 
                         paddingLeft : 7}}>
-            <View style = {{justifyContent : "center", paddingVertical : 3 }}>
-                <Text style = {{fontWeight : "bold", fontSize : 18, color : "#f78e05"}}>{props.headerText}</Text>
+            <View style = {{justifyContent : "center", paddingVertical : 3}}>
+                <Text style = {{fontWeight : "bold", fontSize : 18, color : "white"}}>{props.headerText}</Text>
             </View>
             <FlatList
                     data = {data}

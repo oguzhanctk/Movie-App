@@ -1,20 +1,23 @@
-const HomeReducer = (state = {
-    counter : 0,
+const HomePageReducer = (state = {
+    isFetching : false,
+    popularMovies : [] 
 }, action) => {
     switch (action.type) {
-        case "INCREMENT_COUNTER":
+        case "DATA_REQUESTED":
             return {
                 ...state,
-                counter : state.counter + 1
-            }; break;
-        case "DECREMENT_COUNTER":
+                isFetching : true
+            };
+
+        case "DATA_RECEIVED":
             return {
                 ...state,
-                counter : state.counter - 1,
-            }; break;
+                // popularMovies : [...action.payload.results]
+            }; 
+
         default:
-            return state; break;
+            return state;
     }
 }
 
-export default HomeReducer;
+export default HomePageReducer;

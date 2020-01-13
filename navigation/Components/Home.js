@@ -6,7 +6,7 @@ import CustomAnimation from "../../animation_Components/animations";
 import { MovieApi } from "../../api/fetch_movies";
 import { MovieCard } from "./microComponents/MovieCard";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
-import { key } from "../../api/config";
+import { constants } from "../../api/config";
 
 export default class Home extends Component {
     
@@ -33,17 +33,15 @@ export default class Home extends Component {
     // }
 
     componentDidMount = () => {
-        fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${key.api_key}&language=en-US`)
-        .then(response => response.json())
-        .then(data => console.log(data.genres))
-        .catch(err => console.log(err));
+        this.props.fetchDataFromApi(`https://api.themoviedb.org/3/movie/popular?api_key=${constants.api_key}&language=en-US&page=1`)
     }
 
 
 
     render() {
         return(
-            <SafeAreaView style = {{backgroundColor : "#e6ffec", flex : 1}}>
+            <SafeAreaView style = {{backgroundColor : "black", flex : 1}}>
+                <Text style = {{color : "white"}}>{this.props.isLoading.toString()}</Text>
                 <ScrollView showsVerticalScrollIndicator = {true}>     
                     <MoviesSlider headerText = "Popüler"/>
                     <MoviesSlider headerText = "Yakın zamanda"/>

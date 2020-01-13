@@ -2,7 +2,7 @@ import { Navigation } from "react-native-navigation";
 
 Navigation.setDefaultOptions({
     navigationBar : {
-        backgroundColor : "orange",
+        backgroundColor : "gray",
         
     },
     bottomTabs : {
@@ -11,7 +11,7 @@ Navigation.setDefaultOptions({
     },
     statusBar : {
         style : "light",
-        backgroundColor : "orange"
+        backgroundColor : "gray"
     }
     
         

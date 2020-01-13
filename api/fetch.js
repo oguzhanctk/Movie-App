@@ -1,10 +1,8 @@
-import { trackPromise } from "react-promise-tracker";
+import axios from "axios";
 
-export const fetchWithDelay = url => {
-        trackPromise(
-            fetch(url)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
-            )
+export const createGetRequest = url => {
+    axios.get(url)
+    .then(response => console.log(response))
+    .catch(err => console.log(err))
 }
+

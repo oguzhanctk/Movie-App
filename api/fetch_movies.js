@@ -1,8 +1,12 @@
-import { fetchWithDelay } from "./fetch";
+import { createGetRequest } from "./fetch";
+import { key } from "./config";
 
-const url = "https://jsonplaceholder.typicode.com/todos/1";
-const fetchMovies = () => fetchWithDelay(url);
+const url = "https://api.themoviedb.org/3/";
+
+const fetchPopularMovies = () => {
+    createGetRequest(`${url}movies/popular/?api_key=${key.api_key}&language=en-US&page=1`);
+}
 
 export const MovieApi = {
-    fetchMovies,
+    fetchPopularMovies,
 }
