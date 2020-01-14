@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensi
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import CustomAnimation from "../../animation_Components/animations";
-import { MovieApi } from "../../api/fetch_movies";
-import { MovieCard } from "./microComponents/MovieCard";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 
@@ -33,7 +31,8 @@ export default class Home extends Component {
     // }
 
     componentDidMount = () => {
-        this.props.fetchDataFromApi(`https://api.themoviedb.org/3/movie/popular?api_key=${constants.api_key}&language=en-US&page=1`)
+        this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
+        console.log(this.props.latestMovies);
     }
 
 
@@ -41,11 +40,10 @@ export default class Home extends Component {
     render() {
         return(
             <SafeAreaView style = {{backgroundColor : "black", flex : 1}}>
-                <Text style = {{color : "white"}}>{this.props.isLoading.toString()}</Text>
                 <ScrollView showsVerticalScrollIndicator = {true}>     
-                    <MoviesSlider headerText = "Popüler"/>
-                    <MoviesSlider headerText = "Yakın zamanda"/>
-                    <MoviesSlider headerText = "Tüm zamanlar"/>
+                    <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
+                    <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>
+                    <MoviesSlider headerText = "Yakında" movieData = {this.props.latestMovies}/>
                     <View style = {{height : 20}}/>
                 </ScrollView>
             </SafeAreaView>
