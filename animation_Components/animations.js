@@ -11,7 +11,7 @@ export default class CustomAnimation extends Component {
             this.state.slideDown,
             {
                 toValue : 1,
-                duration : 1500,
+                duration : 1800,
                 useNativeDriver : true
             }
         ).start();
@@ -23,17 +23,9 @@ export default class CustomAnimation extends Component {
         return(
             <Animated.View
                 style = {{...this.props.style,
-                    transform: [
-                        {
-                          translateY: slideDown.interpolate({
-                            inputRange: [0, 1],
-                            outputRange: [-600, 0]
-                          })
-                        }
-                      ],
+                    opacity : slideDown,
                     justifyContent : "center",
-                    alignItems : "center",
-                    marginVertical : 5}}>
+                    alignItems : "center"}}>
                 {this.props.children}
             </Animated.View>
         )

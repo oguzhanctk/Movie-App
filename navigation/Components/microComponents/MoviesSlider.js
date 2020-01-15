@@ -16,7 +16,7 @@ export const MoviesSlider = (props) => {
                     data = {data}
                     horizontal
                     renderItem = {({item}) => (
-                        <MovieCard imagePath = {item.poster_path}/>
+                        <MovieCard imagePath = {item.poster_path} movieId = {item.id}/>
                         )}
                     keyExtractor = {item => item.id.toString()}
                     ItemSeparatorComponent = {() => (

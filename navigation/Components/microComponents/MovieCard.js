@@ -5,10 +5,14 @@ import { Navigation } from "react-native-navigation";
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w185";
-    const onMoviePress = () => {
+    
+    const onMoviePress = (id) => {
         Navigation.showModal({
             component : {
-                name : "Discover",
+                name : "MovieDetail",
+                passProps : {
+                    movieId : id
+                }
             }
         });
     } 
@@ -19,7 +23,7 @@ export const MovieCard = (props) => {
                     backgroundColor : "black",
                     padding : 3, 
                     flex : 1}}>
-                <TouchableHighlight style = {{flex : 1}} onPress = {() => onMoviePress()}>
+                <TouchableHighlight style = {{flex : 1}} onPress = {() => onMoviePress(props.movieId)}>
                     <Image source = {{uri : `${baseImageUrl}${props.imagePath}`}}
                         style = {{flex : 1, 
                                 width : null, 

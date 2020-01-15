@@ -8,6 +8,7 @@ import SideMenuTest from "./Components/sideMenuTest";
 import { Provider } from "react-redux";
 import store from "../reducers/index";
 import Discover from "./Components/Discover";
+import MovieDetailActions from "../actions/MovieDetailActions";
 
 export const registerScreens = () => {
     Navigation.registerComponentWithRedux("Home", () => HomeActions, Provider, store);
@@ -17,5 +18,6 @@ export const registerScreens = () => {
     Navigation.registerComponent("Initializing", () => Initializing);
     Navigation.registerComponent("Discover", () => Discover);
     Navigation.registerComponent("SideMenuTest", () => SideMenuTest);
+    Navigation.registerComponentWithRedux("MovieDetail", () => MovieDetailActions, Provider, store);
 
 }

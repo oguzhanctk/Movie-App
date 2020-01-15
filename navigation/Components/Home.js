@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensions, FlatList, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
-import CustomAnimation from "../../animation_Components/animations";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 
@@ -32,7 +31,6 @@ export default class Home extends Component {
 
     componentDidMount = () => {
         this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
-        console.log(this.props.latestMovies);
     }
 
 

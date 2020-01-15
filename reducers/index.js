@@ -1,7 +1,13 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import HomeReducer from "./HomeReducer";
+import MovieDetailReducer from "./MovieDetailReducer";
 import thunk from "redux-thunk";
 
-const store = createStore(HomeReducer, applyMiddleware(thunk));
+const Rootreducers = combineReducers({
+    HomeReducer,
+    MovieDetailReducer
+});
+
+const store = createStore(Rootreducers, applyMiddleware(thunk));
 
 export default store;
