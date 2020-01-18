@@ -15,10 +15,15 @@ const MovieDetail = (props) => {
     useEffect(() => {
         const fetchMovie = async () => {
             await props.fetchMovieDetails(url);
-        }
+            }
         fetchMovie();
+        return () => {
+            props.clearMovieDetails();
+        };
     }, []);
 
+
+    
     return (
         <SafeAreaView>
             <CustomAnimation>
@@ -33,7 +38,8 @@ const MovieDetail = (props) => {
                                     fontWeight : "bold", 
                                     letterSpacing : 1,
                                     alignSelf : "center",
-                                    marginBottom : 5}}>
+                                    marginBottom : 5,
+                                    paddingHorizontal : 3}}>
                                 {props.movieDetail.original_title}
                             </Text>
                             <View style = {{flexDirection : "row", 
@@ -43,7 +49,7 @@ const MovieDetail = (props) => {
                                 backgroundColor : "#ccc", 
                                 marginVertical : 5}}>
                                 <View>
-                                    <Text style = {{fontWeight : "bold"}}>{props.movieDetail.release_date.split("-")[0]}</Text>
+                                    <Text style = {{fontWeight : "bold"}}>{props.movieDetail.release_date}</Text>
                                 </View>
                                 <View>
                                     <Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}m</Text>

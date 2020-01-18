@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensions, FlatList, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
-import Icon from "react-native-vector-icons/Feather";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 

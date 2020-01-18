@@ -23,13 +23,18 @@ export const fetch_Movie_Details = (url) => {
     }
 }
 
+export const clearMovieDetails = {
+    type : "CLEAR_DATA"
+};
+
 const mapStateToProps = (state) => ({
     isLoading : state.MovieDetailReducer.isLoading,
-    movieDetail : state.MovieDetailReducer.movieDetail
+    movieDetail : state.MovieDetailReducer.movieDetail,
 })
 
 const mapDispatchToProps = (dispatch) => ({
     fetchMovieDetails : (url) => dispatch(fetch_Movie_Details(url)),
+    clearMovieDetails : () => dispatch(clearMovieDetails)
 })
 
 

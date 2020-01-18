@@ -5,6 +5,8 @@ import { Navigation } from "react-native-navigation";
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w185";
+
+    
     
     const onMoviePress = (id) => {
         Navigation.showModal({

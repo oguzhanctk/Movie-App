@@ -34,7 +34,3 @@ export const MoviesSlider = (props) => {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-
-})

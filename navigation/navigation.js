@@ -7,7 +7,7 @@ Navigation.setDefaultOptions({
     },
     bottomTabs : {
         titleDisplayMode : "showWhenActive",
-        backgroundColor : "white"
+        backgroundColor : "white",
     },
     statusBar : {
         style : "light",
@@ -227,11 +227,7 @@ export const goToMainLayout = () => {
                                         name : "Discover",
                                         options : {
                                             topBar : {
-                                                title : {
-                                                    text : "Keşfet",
-                                                    color : "red",
-                                                    alignment : "center"
-                                                }
+                                                visible : false
                                             }
                                         }
                                     }
@@ -264,7 +260,7 @@ export const goToMainLayout = () => {
                             }
                         }
                     }
-                ]
+                ],
             }
         }
     });

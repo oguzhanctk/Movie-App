@@ -1,6 +1,6 @@
-const MovieDetailReducer = (state = {
-    movieDetail : {},
-    isLoading : false,
+const DiscoverReducer = (state = {
+    results : [],
+    isLoading : false
 }, action) => {
     switch (action.type) {
         case "MOVIE_REQUESTED":
@@ -11,14 +11,9 @@ const MovieDetailReducer = (state = {
         case "MOVIE_RECEIVED":
             return {
                 ...state,
-                isLoading : false,
-                movieDetail : Object.assign({}, action.payload)
-            };
-        case "CLEAR_DATA":
-            return {
-                ...state,
-                movieDetail : Object.assign({}, {})
-            };
+                results : Object.assign({}, action.payload),
+                isLoading : false
+            }
         case "FAIL":
             return {
                 ...state,
@@ -29,4 +24,4 @@ const MovieDetailReducer = (state = {
     }
 }
 
-export default MovieDetailReducer;
+export default DiscoverReducer;
