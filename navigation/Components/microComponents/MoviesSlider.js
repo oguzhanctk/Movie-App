@@ -4,7 +4,6 @@ import { MovieCard } from "./MovieCard";
 import { DimensionDeclaration } from "./dimensions_declaration";
 
 export const MoviesSlider = (props) => {
-    const data = props.movieData;
 
     return (
         <View style = {{paddingVertical : 1, 
@@ -13,7 +12,7 @@ export const MoviesSlider = (props) => {
                 <Text style = {{fontWeight : "bold", fontSize : 14, color : "white"}}>{props.headerText}</Text>
             </View>
             <FlatList
-                    data = {data}
+                    data = {props.movieData}
                     horizontal
                     renderItem = {({item}) => (
                         <MovieCard imagePath = {item.poster_path} movieId = {item.id}/>

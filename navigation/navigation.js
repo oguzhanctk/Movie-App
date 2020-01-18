@@ -209,8 +209,10 @@ export const goToMainLayout = () => {
                             ],
                             options : {
                                 bottomTab : {
-                                    selectedIconColor : "orange",
-                                    selectedTextColor : "orange",
+                                    iconColor : "gray",
+                                    textColor : "gray",
+                                    selectedIconColor : "black",
+                                    selectedTextColor : "black",
                                     text : "Anasayfa",
                                     icon : require("./assets/home.png"),
                                 }
@@ -237,10 +239,12 @@ export const goToMainLayout = () => {
                             ],
                             options : {
                                 bottomTab : {
+                                    iconColor : "gray",
+                                    textColor : "gray",
                                     text : "Keşfet",
                                     icon : require("./assets/search.png"),
-                                    selectedIconColor : "orange",
-                                    selectedTextColor : "orange"
+                                    selectedIconColor : "black",
+                                    selectedTextColor : "black"
                                 }
                             }
                         }
@@ -250,10 +254,12 @@ export const goToMainLayout = () => {
                             name : "Discover",
                             options : {
                                 bottomTab : {
+                                    iconColor : "gray",
+                                    textColor : "gray",
                                     text : "Kitaplık",
                                     icon : require("./assets/library.png"),
-                                    selectedIconColor : "orange",
-                                    selectedTextColor : "orange"
+                                    selectedIconColor : "black",
+                                    selectedTextColor : "black"
                                 },
                             }
                         }

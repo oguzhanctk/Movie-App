@@ -24,7 +24,7 @@ const App = () => {
   
   return (
 
-    <View style = {{flex : 1, justifyContent : "center", alignItems : "center", backgroundColor : "orange"}}>
+    <View style = {{flex : 1, justifyContent : "center", alignItems : "center", backgroundColor : "black"}}>
       <Text>oguzhan</Text>
     </View>
   )
