@@ -3,32 +3,32 @@ export const genres = [
     {
       "id": 28,
       "name": "Action",
-      "color": "#e35656"
+      "color": "#63876f"
     },
     {
       "id": 12,
       "name": "Adventure",
-      "color": "#e3a456"
+      "color": "#6e8a65"
     },
     {
       "id": 16,
       "name": "Animation",
-      "color": "#c9e356"
+      "color": "#70805b"
     },
     {
       "id": 35,
       "name": "Comedy",
-      "color": "#8ce356"
+      "color": "#8a8f5e"
     },
     {
       "id": 80,
       "name": "Crime",
-      "color": "#56e393"
+      "color": "#a1976d"
     },
     {
       "id": 99,
       "name": "Documentary",
-      "color": "#56c4e3"
+      "color": "#ad8379"
     },
     {
       "id": 18,

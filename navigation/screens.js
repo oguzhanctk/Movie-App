@@ -9,9 +9,11 @@ import { Provider } from "react-redux";
 import store from "../reducers/index";
 import DiscoverActions from "../actions/DiscoverActions";
 import MovieDetailActions from "../actions/MovieDetailActions";
+import SearchActions from "../actions/SearchActions";
 
 export const registerScreens = () => {
     Navigation.registerComponentWithRedux("Home", () => HomeActions, Provider, store);
+    Navigation.registerComponentWithRedux("Search", () => SearchActions, Provider, store);
     Navigation.registerComponent("SignIn", () => SignIn);
     Navigation.registerComponent("SignUp", () => SignUp);
     Navigation.registerComponent("Library", () => Library);

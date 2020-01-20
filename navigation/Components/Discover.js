@@ -16,12 +16,14 @@ export default class Discover extends Component {
 
     renderItem = ({item}) => {
         return(
-            <TouchableHighlight style = {{marginHorizontal : 7, marginVertical : 3}} onPress = {() => console.log("genre pressed")}>
+            <TouchableHighlight style = {{marginHorizontal : 7, marginVertical : 3}} 
+                onPress = {() => console.log("genre pressed")}>
                 <View style = {{backgroundColor : item.color, 
                     height : Dimensions.get("window").height/10,
                     width : "100%",
                     justifyContent : "center",
-                    alignItems : "center"}}>
+                    alignItems : "center",
+                    borderRadius : 3}}>
                     <Text style = {{color : "white", 
                         fontSize : 16, 
                         fontWeight : "bold", 
@@ -29,43 +31,36 @@ export default class Discover extends Component {
                 </View>
             </TouchableHighlight>
     )}
+
+    onSearchPress = () => {
+        Navigation.showModal({
+            component : {
+                name : "Search"
+            }
+        })
+    }
  
 
     render() {
         return(
             <SafeAreaView style = {{flex : 1, backgroundColor : "black"}}>
-                <View style = {{padding : 3, 
-                        height : 50, 
+                <TouchableOpacity style = {{flex : 1, 
                         flexDirection : "row",
                         alignItems : "center",
-                        marginVertical : 7,
-                        marginHorizontal : 3}}>
-                    <TextInput placeholder = "enter name to search"
-                        style = {{paddingHorizontal : 7,
-                            fontSize : 17,
-                            flex : 1,
-                            borderWidth : 0.25,
-                            borderRadius : 7,
-                            backgroundColor : "#ccc",
-                            marginRight : 7}}/>
-                    <TouchableOpacity onPress = {() => this.props.fetchSearchResults(`${constants.searchBaseUrl}inception&page=1`)} style = {{width : 50, 
-                            alignItems : "center",
-                            justifyContent : "center",
-                            borderRadius : 7,
-                            backgroundColor : "#e65a37",
-                            height : "100%",
-                            }}
-                            activeOpacity = {0.7}>
-                        <Icon name = "search" size = {30} color = "black"/>
-                    </TouchableOpacity>
-                </View>
-                
-                <View style = {{width : "100%", padding : 7, marginBottom : 75}}>
+                        backgroundColor : "#3c423e",
+                        paddingHorizontal : 3,
+                        margin : 5,
+                        borderRadius : 3}}
+                        onPress = {() => this.onSearchPress()}
+                        activeOpacity = {0.75}>
+                    <Icon name = "search" size = {30} color = "gray"/>
+                    <Text style = {{fontSize : 21, color : "gray", marginLeft : 13}}>click to search</Text>
+                </TouchableOpacity>
+                <View style = {{flex : 9, width : "100%", padding : 7}}>
                     <FlatList data = {this.state.data}
                         renderItem = {this.renderItem}
                         keyExtractor = {(item) => item.id.toString()}
                         showsVerticalScrollIndicator = {false}/>
-                        
                 </View>
             </SafeAreaView>
         )
