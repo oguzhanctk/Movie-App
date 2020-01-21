@@ -17,18 +17,17 @@ const MovieDetail = (props) => {
             await props.fetchMovieDetails(url);
             }
         fetchMovie();
+        console.log(props.movieDetail);
         return () => {
             props.clearMovieDetails();
         };
     }, []);
 
-
-    
     return (
         <SafeAreaView>
             <CustomAnimation>
                 <ScrollView showsVerticalScrollIndicator = {false}>
-                    <Image source = {{ uri : `${baseImageUrl}${imagePath}`}}
+                    <Image source = {{ uri : `${baseImageUrl + imagePath}`}}
                         style = {{width : width, height : height}}
                         resizeMode = "cover">
                     </Image>
@@ -40,7 +39,7 @@ const MovieDetail = (props) => {
                                     alignSelf : "center",
                                     marginBottom : 5,
                                     paddingHorizontal : 3}}>
-                                {props.movieDetail.original_title}
+                                {props.movieDetail.title}
                             </Text>
                             <View style = {{flexDirection : "row", 
                                 alignItems : "center", 

@@ -10,10 +10,10 @@ export const fetch_Search_Results = (url) => {
         });
         await axios.get(url)
         .then(response => {
-            console.log(response.data, "DiscoverActions -> 12");
+            // console.log(response.data, "DiscoverActions -> 12");
             dispatch({
                 type : "RESULTS_RECEIVED",
-                payload : response.data
+                payload : response.data.results
             });
         })
         .catch(err => {

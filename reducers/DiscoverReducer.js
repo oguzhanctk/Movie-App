@@ -1,23 +1,23 @@
 const DiscoverReducer = (state = {
     results : [],
-    isLoading : false
+    isLoading : false,
 }, action) => {
     switch (action.type) {
-        case "MOVIE_REQUESTED":
+        case "RESULTS_REQUESTED":
             return {
                 ...state,
                 isLoading : true
             };
-        case "MOVIE_RECEIVED":
+        case "RESULTS_RECEIVED":
             return {
                 ...state,
-                results : Object.assign({}, action.payload),
-                isLoading : false
+                results : [...action.payload],
+                isLoading : false,
             }
-        case "FAIL":
+        case "SEARCH_FAILED":
             return {
                 ...state,
-                isLoading : false
+                isLoading : false,
             }
         default:
             return state;
