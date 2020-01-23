@@ -17,7 +17,6 @@ const MovieDetail = (props) => {
             await props.fetchMovieDetails(url);
             }
         fetchMovie();
-        console.log(props.movieDetail);
         return () => {
             props.clearMovieDetails();
         };

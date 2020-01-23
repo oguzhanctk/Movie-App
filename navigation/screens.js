@@ -10,9 +10,11 @@ import store from "../reducers/index";
 import DiscoverActions from "../actions/DiscoverActions";
 import MovieDetailActions from "../actions/MovieDetailActions";
 import SearchActions from "../actions/SearchActions";
+import GenreActions from "../actions/GenreActions";
 
 export const registerScreens = () => {
     Navigation.registerComponentWithRedux("Home", () => HomeActions, Provider, store);
+    Navigation.registerComponentWithRedux("Genre", () => GenreActions, Provider, store);
     Navigation.registerComponentWithRedux("Search", () => SearchActions, Provider, store);
     Navigation.registerComponent("SignIn", () => SignIn);
     Navigation.registerComponent("SignUp", () => SignUp);

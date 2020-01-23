@@ -12,7 +12,7 @@ export const MoviesSlider = (props) => {
                 <Text style = {{fontWeight : "bold", fontSize : 14, color : "white"}}>{props.headerText}</Text>
             </View>
             <FlatList
-                    data = {props.movieData}
+                    data = {props.movieData.filter(item => item.poster_path !== null)}
                     horizontal
                     renderItem = {({item}) => (
                         <MovieCard imagePath = {item.poster_path} movieId = {item.id}/>

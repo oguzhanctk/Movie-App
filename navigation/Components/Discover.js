@@ -17,13 +17,17 @@ export default class Discover extends Component {
     renderItem = ({item}) => {
         return(
             <TouchableHighlight style = {{marginHorizontal : 7, marginVertical : 3}} 
-                onPress = {() => console.log("genre pressed")}>
+                onPress = {() => {
+                    this.onGenrePress(item.id);
+                }}>
                 <View style = {{backgroundColor : item.color, 
                     height : Dimensions.get("window").height/10,
                     width : "100%",
                     justifyContent : "center",
                     alignItems : "center",
-                    borderRadius : 3}}>
+                    borderRadius : 3,
+                    borderWidth : 0.55,
+                    borderColor : "white"}}>
                     <Text style = {{color : "white", 
                         fontSize : 16, 
                         fontWeight : "bold", 
@@ -35,7 +39,18 @@ export default class Discover extends Component {
     onSearchPress = () => {
         Navigation.showModal({
             component : {
-                name : "Search"
+                name : "Search",
+            }
+        })
+    }
+    
+    onGenrePress = (id) => {
+        Navigation.showModal({
+            component : {
+                name : "Genre",
+                passProps : {
+                    genreId : id
+                }
             }
         })
     }

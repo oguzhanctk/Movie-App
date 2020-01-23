@@ -12,7 +12,7 @@ const MovieDetailReducer = (state = {
             return {
                 ...state,
                 isLoading : false,
-                movieDetail : Object.assign({}, action.payload)
+                movieDetail : Object.assign({}, action.payload, {release_date : action.payload.release_date.split("-")[0]})
             };
         case "CLEAR_DATA":
             return {

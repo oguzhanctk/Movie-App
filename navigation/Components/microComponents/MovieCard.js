@@ -32,7 +32,8 @@ export const MovieCard = (props) => {
                                 height : null, 
                                 borderRadius : 7, 
                                 borderWidth : 0.3, 
-                                borderColor : "white"
+                                borderColor : "white",
+                                backgroundColor : "gray"
                                 }}
                         resizeMode = "cover"/>
                 </TouchableHighlight>

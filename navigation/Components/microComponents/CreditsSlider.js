@@ -6,7 +6,13 @@ const CreditsSlider = (props) => {
     const renderItem = ({item}) => (
         <View style = {{width : 110, alignItems : "center"}}>
             <Image source = {{uri : `https://image.tmdb.org/t/p/w500${item.profile_path}`}}
-                style = {{width : 70, height : 70, borderRadius : 35, marginRight : 7, borderWidth : 0.3, borderColor : "black"}}/>
+                style = {{width : 70, 
+                    height : 70, 
+                    borderRadius : 35, 
+                    marginRight : 7, 
+                    borderWidth : 0.3, 
+                    borderColor : "black",
+                    backgroundColor : "gray"}}/>
             <Text style = {{padding : 5}}>{item.name}</Text>
         </View>
     );
