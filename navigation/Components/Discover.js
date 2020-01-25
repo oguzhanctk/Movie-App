@@ -21,7 +21,7 @@ export default class Discover extends Component {
                     this.onGenrePress(item.id);
                 }}>
                 <View style = {{backgroundColor : item.color, 
-                    height : Dimensions.get("window").height/10,
+                    height : Dimensions.get("window").height/11,
                     width : "100%",
                     justifyContent : "center",
                     alignItems : "center",
@@ -29,9 +29,9 @@ export default class Discover extends Component {
                     borderWidth : 0.55,
                     borderColor : "white"}}>
                     <Text style = {{color : "white", 
-                        fontSize : 16, 
+                        fontSize : 23, 
                         fontWeight : "bold", 
-                        letterSpacing : 1}}>{item.name}</Text>
+                        letterSpacing : 1}}>#{item.name}</Text>
                 </View>
             </TouchableHighlight>
     )}
@@ -58,14 +58,16 @@ export default class Discover extends Component {
 
     render() {
         return(
-            <SafeAreaView style = {{flex : 1, backgroundColor : "black"}}>
+            <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
                 <TouchableOpacity style = {{flex : 1, 
                         flexDirection : "row",
                         alignItems : "center",
                         backgroundColor : "#3c423e",
                         paddingHorizontal : 3,
                         margin : 5,
-                        borderRadius : 3}}
+                        borderRadius : 3,
+                        borderWidth : 1,
+                        borderColor : "#595959"}} 
                         onPress = {() => this.onSearchPress()}
                         activeOpacity = {0.75}>
                     <Icon name = "search" size = {30} color = "gray"/>

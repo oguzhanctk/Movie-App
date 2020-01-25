@@ -36,7 +36,7 @@ export default class Home extends Component {
 
     render() {
         return(
-            <SafeAreaView style = {{backgroundColor : "black", flex : 1}}>
+            <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
                 <ScrollView showsVerticalScrollIndicator = {true}>     
                     <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
                     <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>

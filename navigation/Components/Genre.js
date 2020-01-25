@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, FlatList, Dimensions, TouchableOpacity, Image } from 'react-native'
+import { Text, View, SafeAreaView, FlatList, Dimensions, TouchableOpacity, Image, RefreshControl } from 'react-native'
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 export default class Genre extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            page : 1
+            page : 1,
+            refreshing : false
         }
     }
     
@@ -26,6 +28,21 @@ export default class Genre extends Component {
                     movieId : id
                 }
             }
+        });
+    }
+
+    wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout)
+        });
+    }
+
+    onRefresh = () => {
+        this.setState({refreshing : true}, async () => {
+            await this.props.fetchMoviesWithGenre(`${constants.searchByGenreUrl + this.props.genreId}&page=${this.state.page + 1}`);
+            this.wait(500).then(() => { 
+                this.setState({refreshing : false, page : this.state.page + 1});
+            });
         });
     }
 
@@ -50,12 +67,33 @@ export default class Genre extends Component {
     render() {
         return (
             <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
-                <View style = {{flex : 1, marginTop : 13, alignItems : "center", backgroundColor : "gray"}}>
+                <View style = {{height : Dimensions.get("window").height / 8,
+                width : Dimensions.get("window").width,
+                justifyContent : "space-between",
+                alignItems : "center"}}>
+                    <Text style = {{fontWeight : "bold",
+                        color : "white",
+                        marginVertical : 3,
+                        fontSize : 19}}>{this.state.page}</Text>
+                    <View style = {{flexDirection : "row"}}>
+                        <Icon name = "refresh" size = {19} color = "white"/>
+                        <Text style = {{fontWeight : "bold",
+                            color : "white",
+                            marginVertical : 3,
+                            fontSize : 11,
+                            marginLeft : 3}}>yenilemek için aşağı çekin</Text>
+                    </View>
+                </View>
+                <View style = {{flex : 1, marginTop : 7, alignItems : "center", backgroundColor : "gray"}}>
                     <FlatList data = {this.props.genreResults.filter(item => item.poster_path !== null)}
                         renderItem = {this.renderItem}
                         keyExtractor = {(item) => item.id.toString()}
                         numColumns = {3}
-                        showsVerticalScrollIndicator = {false}/> 
+                        showsVerticalScrollIndicator = {false}
+                        refreshControl = {
+                            <RefreshControl refreshing = {this.state.refreshing}
+                                onRefresh = {() => this.onRefresh()}/>}
+                        /> 
                 </View>
             </SafeAreaView>
         )

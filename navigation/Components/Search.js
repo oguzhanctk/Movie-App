@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
@@ -33,15 +33,6 @@ class Search extends Component {
         return(
             <View style = {{padding : 3, margin : 2}}>
                 <TouchableOpacity onPress = {() => this.onMoviePress(item.id)}>
-                    {
-                        (item.poster_path === null) ?
-                            <Image source = {require("../assets/pika.png")}
-                            style = {{width : ViewWidth, 
-                                height : ViewHeight, 
-                                borderRadius : 3, 
-                                backgroundColor : "orange",
-                                borderWidth : 0.35,
-                                borderColor : "black"}}/> :
                             <Image source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
                                 style = {{width : ViewWidth, 
                                     height : ViewHeight, 
@@ -49,11 +40,14 @@ class Search extends Component {
                                     backgroundColor : "orange",
                                     borderWidth : 0.35,
                                     borderColor : "black"}}/>
-                    }
                 </TouchableOpacity>
                 
             </View>
         )
+    }
+
+    check = (arr) => {
+        
     }
 
     shouldComponentUpdate = (nextProps) => {
@@ -80,11 +74,15 @@ class Search extends Component {
                 </TouchableOpacity>
             </View>
             <View style = {{flex : 1, marginTop : 13, alignItems : "center"}}>
-                <FlatList data = {this.props.searchResults.filter(item => item.poster_path !== null)}
-                    renderItem = {this.renderItem}
-                    keyExtractor = {(item) => item.id.toString()}
-                    numColumns = {3}
-                    showsVerticalScrollIndicator = {false}/> 
+                {
+                    (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ?
+                        (<Text style = {{color : "black", fontSize : 18}}>herhangi bir sonuç bulamadık :/</Text>) :
+                        (<FlatList data = {this.props.searchResults.filter(item => item.poster_path !== null)}
+                            renderItem = {this.renderItem}
+                            keyExtractor = {(item) => item.id.toString()}
+                            numColumns = {3}
+                            showsVerticalScrollIndicator = {false}/>)
+                }
             </View>
         </SafeAreaView>
         )

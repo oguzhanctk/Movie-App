@@ -14,7 +14,6 @@ Navigation.setDefaultOptions({
         backgroundColor : "gray"
     }
     
-        
 })
 
 export const goToAuth = () => {

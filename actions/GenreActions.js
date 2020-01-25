@@ -9,7 +9,6 @@ export const fetch_Movies_With_Genre = (url) => {
         });
         await axios.get(url)
         .then(response => {
-            console.log(response.data.results);
             dispatch({
                 type : "GENRE_RECEIVED",
                 payload : response.data.results

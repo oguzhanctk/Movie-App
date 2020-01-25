@@ -20,23 +20,16 @@ export const MovieCard = (props) => {
     } 
 
     return (
-        <View style = {{width : DimensionDeclaration.movieCardWidth, 
-                    height : DimensionDeclaration.movieCardHeight, 
-                    backgroundColor : "black",
-                    padding : 3, 
-                    flex : 1}}>
                 <TouchableHighlight style = {{flex : 1}} onPress = {() => onMoviePress(props.movieId)}>
                     <Image source = {{uri : `${baseImageUrl}${props.imagePath}`}}
-                        style = {{flex : 1, 
-                                width : null, 
-                                height : null, 
-                                borderRadius : 7, 
-                                borderWidth : 0.3, 
-                                borderColor : "white",
+                        style = {{width : DimensionDeclaration.movieCardWidth - 11, 
+                                height : DimensionDeclaration.movieCardHeight - 11, 
+                                borderRadius : 3, 
+                                borderWidth : 0.85,
+                                borderColor : "black",
                                 backgroundColor : "gray"
                                 }}
                         resizeMode = "cover"/>
                 </TouchableHighlight>
-        </View>
     )
 }
