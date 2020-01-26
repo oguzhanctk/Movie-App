@@ -1,7 +1,12 @@
 import { connect } from "react-redux";
 import Home from "../navigation/Components/Home";
 import axios from "axios";
-import { constants } from "../api/config";
+
+const addIsSavedObject = (arr) => {
+    for(let i of arr) {
+        i = Object.assign(i, {isSaved : false});
+    }
+}
 
 export const fetch_Data_From_Api = (popular, latest, topRated) => {
     return async dispatch => {
@@ -14,7 +19,10 @@ export const fetch_Data_From_Api = (popular, latest, topRated) => {
             await axios.get(topRated)
         ])
         .then(axios.spread((p, l, t) => {
-            // console.log(p.data + "HomeActions -> 17")
+            addIsSavedObject(p.data.results);
+            addIsSavedObject(l.data.results);
+            addIsSavedObject(t.data.results);
+            // console.log(p.data, "HomeActions -> 17");
             dispatch({
                 type : "DATA_RECEIVED",
                 payload : {
@@ -32,7 +40,7 @@ export const fetch_Data_From_Api = (popular, latest, topRated) => {
             })
         })
     }
-} 
+}
 
 const mapStateToProps = (state) => ({
     popularMovies : state.HomeReducer.popularMovies,

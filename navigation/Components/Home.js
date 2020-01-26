@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensi
 import { Navigation } from "react-native-navigation";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
+import AsyncStorage from "@react-native-community/async-storage";
+
 
 export default class Home extends Component {
     
@@ -10,8 +12,6 @@ export default class Home extends Component {
         super(props);
         Navigation.events().bindComponent(this);
     }
-
-
 
     // navigationButtonPressed = ({buttonId}) => {
     //     const { componentId } = this.props;
@@ -28,16 +28,15 @@ export default class Home extends Component {
     //     }
     // }
 
-    componentDidMount = () => {
-        this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
+    componentDidMount = async () => {
+        await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
+        console.log(this.props.popularMovies, "Home -> 33");
     }
-
-
 
     render() {
         return(
             <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
-                <ScrollView showsVerticalScrollIndicator = {true}>     
+                <ScrollView showsVerticalScrollIndicator = {true}>
                     <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
                     <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>
                     <MoviesSlider headerText = "Yakında" movieData = {this.props.latestMovies}/>

@@ -246,7 +246,7 @@ export const goToMainLayout = () => {
                     },
                     {
                         component : {
-                            name : "Discover",
+                            name : "Library",
                             options : {
                                 bottomTab : {
                                     iconColor : "gray",

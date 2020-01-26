@@ -17,7 +17,7 @@ export const MoviesSlider = (props) => {
                     data = {props.movieData.filter(item => item.poster_path !== null)}
                     horizontal
                     renderItem = {({item}) => (
-                        <MovieCard imagePath = {item.poster_path} movieId = {item.id}/>
+                        <MovieCard imagePath = {item.poster_path} movieId = {item.id} isSaved = {item.isSaved}/>
                         )}
                     keyExtractor = {item => item.id.toString()}
                     ItemSeparatorComponent = {() => (
@@ -26,13 +26,16 @@ export const MoviesSlider = (props) => {
                     showsHorizontalScrollIndicator = {false}
                     ListEmptyComponent = {() => (
                         <View style = {{flex : 1, 
-                                        backgroundColor : "#6bc230", 
-                                        height : DimensionDeclaration.movieCardWidth + 30,
+                                        backgroundColor : "#5e6e62", 
+                                        height : DimensionDeclaration.movieCardWidth + 42,
                                         width : Dimensions.get("window").width}}>
                         </View>
                     )}
                     initialNumToRender = {5}
-                     />
+                    ListFooterComponent = {() => (
+                        <View style = {{width : 7}}/>
+                    )}
+                    />
         </View>
     )
 }
