@@ -43,10 +43,10 @@ export const fetch_Data_From_Api = (popular, latest, topRated) => {
 }
 
 const mapStateToProps = (state) => ({
-    popularMovies : state.HomeReducer.popularMovies,
-    latestMovies : state.HomeReducer.latestMovies,
-    topRatedMovies : state.HomeReducer.topRatedMovies,
-    isLoading : state.HomeReducer.isFetching,
+    popularMovies : state.HomePageReducer.popularMovies,
+    latestMovies : state.HomePageReducer.latestMovies,
+    topRatedMovies : state.HomePageReducer.topRatedMovies,
+    isLoading : state.HomePageReducer.isFetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,7 +1,8 @@
 import React from 'react'
 import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
-import { MovieCard } from "./MovieCard";
+import MovieCardActions from "../../../actions/MovieCardActions";
 import { DimensionDeclaration } from "./dimensions_declaration";
+import store from "../../../reducers/index";
 
 export const MoviesSlider = (props) => {
 
@@ -17,7 +18,10 @@ export const MoviesSlider = (props) => {
                     data = {props.movieData.filter(item => item.poster_path !== null)}
                     horizontal
                     renderItem = {({item}) => (
-                        <MovieCard imagePath = {item.poster_path} movieId = {item.id} isSaved = {item.isSaved}/>
+                        <MovieCardActions store = {store} 
+                            imagePath = {item.poster_path} 
+                            movieId = {item.id} 
+                            isSaved = {item.isSaved}/>
                         )}
                     keyExtractor = {item => item.id.toString()}
                     ItemSeparatorComponent = {() => (

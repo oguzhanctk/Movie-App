@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Button, SafeAreaView, Dimensions, FlatList, ScrollView } from "react-native";
+import { View, StyleSheet, Button, SafeAreaView, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
-import AsyncStorage from "@react-native-community/async-storage";
-
 
 export default class Home extends Component {
     
@@ -30,7 +28,7 @@ export default class Home extends Component {
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
-        console.log(this.props.popularMovies, "Home -> 33");
+        console.log(this.props.popularMovies[0], "Home -> 33");
     }
 
     render() {

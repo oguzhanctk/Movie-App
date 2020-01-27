@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import HomeReducer from "./HomeReducer";
+import HomePageReducer from "./HomeReducer";
 import MovieDetailReducer from "./MovieDetailReducer";
 import DiscoverReducer from "./DiscoverReducer";
 import GenreReducer from "./GenreReducer";
 import thunk from "redux-thunk";
 
 const Rootreducers = combineReducers({
-    HomeReducer,
+    HomePageReducer,
     MovieDetailReducer,
     DiscoverReducer,
     GenreReducer

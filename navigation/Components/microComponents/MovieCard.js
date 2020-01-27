@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid } from 'react-native'
+import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid, Button } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
@@ -71,19 +71,12 @@ export const MovieCard = (props) => {
                 resizeMode = "cover">
                     {
                         (props.isSaved) ? 
+                            null : 
                             (
                                 <TouchableHighlight style = {styles.fab} 
                                     onPress = {() => {
                                         storeData({id : props.movieId, poster_path : props.imagePath});
-                                        }}
-                                    underlayColor = "lightgreen">
-                                    <Icon name = "star" size = {15}/>
-                                </TouchableHighlight>
-                            ) : 
-                            (
-                                <TouchableHighlight style = {styles.fab} 
-                                    onPress = {() => {
-                                        storeData({id : props.movieId, poster_path : props.imagePath});
+                                        props.updateMovieCard(props.movieId);
                                     }}
                                     underlayColor = "lightgreen">
                                     <Icon name = "plus" size = {15}/>
