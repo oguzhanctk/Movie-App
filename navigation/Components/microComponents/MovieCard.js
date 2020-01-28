@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid, Button } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
@@ -7,7 +7,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w185";
-    
+    const [isAdded, setisAdded] = useState(false);
+
     const onMoviePress = (id) => {
         Navigation.showModal({
             component : {
@@ -33,6 +34,7 @@ export const MovieCard = (props) => {
             if(existingData === null) {
                 try {
                     await AsyncStorage.setItem("@library_item", JSON.stringify([value]));
+                    setisAdded(true);
                     ToastAndroid.show("Kütüphaneye eklendi", ToastAndroid.SHORT);
                 } catch (error) {
                     console.log(error, "MovieCard -> 30");                    
@@ -43,6 +45,7 @@ export const MovieCard = (props) => {
                     if(checkDataExistence(toArray, value) === false) {
                         toArray.push(value);
                         await AsyncStorage.setItem("@library_item", JSON.stringify(toArray));
+                        setisAdded(true);
                         ToastAndroid.show("Kütüphaneye eklendi", ToastAndroid.SHORT);
                     } else {
                         ToastAndroid.show("Bu film zaten kütüphanede", ToastAndroid.SHORT);
@@ -53,6 +56,23 @@ export const MovieCard = (props) => {
             }
         } catch (error) {
             console.log(error, "MovieCard -> 41");
+        }
+    }
+
+    const removeData = async (id) => {
+        try {
+            let data = await AsyncStorage.getItem("@library_item");
+            let res = JSON.parse(data);
+            console.log(res);
+            res.filter(item => item.id =! id);
+            try {
+                await AsyncStorage.setItem("@library_item", JSON.stringify(res));
+                ToastAndroid.show("Kütüphaneden başarıyla kaldırıldı", ToastAndroid.SHORT);
+            } catch (error) {
+                console.log(error);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -70,19 +90,16 @@ export const MovieCard = (props) => {
                         }}
                 resizeMode = "cover">
                     {
-                        (props.isSaved) ? 
+                        (isAdded === true) ?
                             null : 
-                            (
-                                <TouchableHighlight style = {styles.fab} 
-                                    onPress = {() => {
-                                        storeData({id : props.movieId, poster_path : props.imagePath});
-                                        props.updateMovieCard(props.movieId);
-                                    }}
-                                    underlayColor = "lightgreen">
-                                    <Icon name = "plus" size = {15}/>
-                                </TouchableHighlight>
-                            )
-                    }
+                        (<TouchableHighlight style = {styles.fab} 
+                            onPress = {() => {
+                                storeData({id : props.movieId, poster_path : props.imagePath});
+                            }}
+                            underlayColor = "lightgreen">
+                            <Icon name = "plus" size = {15}/>
+                        </TouchableHighlight>)
+                    }         
             </ImageBackground>
         </TouchableHighlight>
     )

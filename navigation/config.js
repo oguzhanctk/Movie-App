@@ -1,4 +1,10 @@
-export const USER_KEY = "@item"
+import { Dimensions } from "react-native";
+
+export const USER_KEY = "@item";
+export const libraryConstants = {
+  libraryWidth : Dimensions.get("window").width / 4,
+  libraryHeight : Dimensions.get("window").height / 5,
+};
 export const genres = [
     {
       "id": 28,

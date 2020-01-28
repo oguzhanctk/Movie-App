@@ -28,7 +28,6 @@ export default class Home extends Component {
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
-        console.log(this.props.popularMovies[0], "Home -> 33");
     }
 
     render() {

@@ -19,18 +19,6 @@ const HomePageReducer = (state = {
                 topRatedMovies : [...action.payload.topRated.results],
                 isFetching : false
             };
-        case "UPDATE_MOVIE_CARD":
-            const temp = state.popularMovies.map(item => {
-                if(item.id === action.payload) {  
-                    return Object.assign(item, {isSaved : !item.isSaved});
-                } else {
-                    return {...item};
-                }
-            });
-            return {
-                ...state,
-                popularMovies : [...temp]
-            };
         default:
             return state;
     }
