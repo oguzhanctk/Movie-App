@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Button, SafeAreaView, ScrollView } from "react-native";
+import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
 import { Navigation } from "react-native-navigation";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
+import { Loader } from "./microComponents/Loader";
 
 export default class Home extends Component {
     
@@ -33,12 +34,16 @@ export default class Home extends Component {
     render() {
         return(
             <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
-                <ScrollView showsVerticalScrollIndicator = {true}>
-                    <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
-                    <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>
-                    <MoviesSlider headerText = "Yakında" movieData = {this.props.latestMovies}/>
-                    <View style = {{height : 20}}/>
-                </ScrollView>
+                {
+                    (this.props.isLoading) ?
+                        (<Loader/>) : 
+                        (<ScrollView showsVerticalScrollIndicator = {true}>
+                            <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
+                            <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>
+                            <MoviesSlider headerText = "Yakında" movieData = {this.props.latestMovies}/>
+                            <View style = {{height : 20}}/>
+                        </ScrollView>)
+                }
             </SafeAreaView>
         )
     }

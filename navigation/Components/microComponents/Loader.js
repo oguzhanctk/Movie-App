@@ -2,18 +2,11 @@ import React, { Component } from "react";
 import { usePromiseTracker } from "react-promise-tracker";
 import { View, Text, ActivityIndicator } from "react-native";
 
-const Loader = () => {
-    const { promiseInProgress } = usePromiseTracker(); 
+export const Loader = () => {
 
     return(
-        <View>
-        {
-            (promiseInProgress === true) 
-            ? <ActivityIndicator size = "large" color = "blue"/>
-            : null 
-        }
+        <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
+            <ActivityIndicator size = "large" color = "blue"/>
         </View>
     )
 }
-
-export default Loader;
