@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid, Button } from 'react-native'
+import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid, Button, Text } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { storeMethod } from "../storage/index";
 
 export const MovieCard = (props) => {
-    const baseImageUrl = "https://image.tmdb.org/t/p/w185";
+    const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const [isAdded, setisAdded] = useState(false);
 
     const onMoviePress = (id) => {
@@ -42,7 +42,7 @@ export const MovieCard = (props) => {
                                 storeMethod.storeData({id : props.movieId, poster_path : props.imagePath}, setisAdded);
                             }}
                             underlayColor = "lightgreen">
-                            <Icon name = "plus" size = {15}/>
+                            <Icon name = "plus" size = {17}/>
                         </TouchableHighlight>)
                     }         
             </ImageBackground>

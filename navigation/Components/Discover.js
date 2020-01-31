@@ -3,7 +3,6 @@ import { View, Button, Text, SafeAreaView, TextInput, Dimensions, FlatList, Touc
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { genres } from "../config";
-import { constants } from "../../api/config";
 
 export default class Discover extends Component {
     

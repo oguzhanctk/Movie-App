@@ -5,6 +5,7 @@ import { Badge } from "../Components/microComponents/Badge";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import CreditsSlider from "../Components/microComponents/CreditsSlider";
 import { storeMethod } from "./storage/index";
+import { Loader } from './microComponents/Loader';
 
 const MovieDetail = (props) => {
     const url = `https://api.themoviedb.org/3/movie/${props.movieId}?api_key=e02b145f1588ea6f178b8e24b19a93f8&language=tr&append_to_response=credits`
@@ -26,8 +27,8 @@ const MovieDetail = (props) => {
     }, []);
 
     return (
-        (props.isLoading === false) ?
-            
+        (props.isLoading) ?
+            (<Loader indicatorColor = "gray"/>) :
             (<SafeAreaView>
                 <CustomAnimation>
                     <ScrollView showsVerticalScrollIndicator = {false}>
@@ -101,7 +102,7 @@ const MovieDetail = (props) => {
                         </View>
                     </ScrollView>
                 </CustomAnimation>    
-            </SafeAreaView>) : null
+            </SafeAreaView>)
 
     )
 }

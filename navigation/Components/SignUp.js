@@ -38,24 +38,24 @@ export default class SignIn extends Component {
                 <Text>{JSON.stringify(this.state.user)}</Text>
                 <Text>username : </Text>
                 <TextInput placeholder = "enter something" 
-                onChangeText = {val => this.handleText("username", val)}
-                style = {styles.textInput}
-                placeholderTextColor = "white"/>
+                    onChangeText = {val => this.handleText("username", val)}
+                    style = {styles.textInput}
+                    placeholderTextColor = "white"/>
                 <Text>email : </Text>
                 <TextInput placeholder = "enter something" 
-                onChangeText = {val => this.handleText("email", val)}
-                style = {styles.textInput}
-                placeholderTextColor = "white"/>
+                    onChangeText = {val => this.handleText("email", val)}
+                    style = {styles.textInput}
+                    placeholderTextColor = "white"/>
                 <Text>password : </Text>
                 <TextInput placeholder = "enter something" 
-                onChangeText = {val => this.handleText("password", val)}
-                style = {styles.textInput}
-                placeholderTextColor = "white"/>
+                    onChangeText = {val => this.handleText("password", val)}
+                    style = {styles.textInput}
+                    placeholderTextColor = "white"/>
                 <Text>phone_number : </Text>
                 <TextInput placeholder = "enter something" 
-                onChangeText = {val => this.handleText("phone_number", val)}
-                style = {styles.textInput}
-                placeholderTextColor = "white"/>
+                    onChangeText = {val => this.handleText("phone_number", val)}
+                    style = {styles.textInput}
+                    placeholderTextColor = "white"/>
                 <Button title = "Sign up" onPress = {() => {
                     this.signIn()
                     }

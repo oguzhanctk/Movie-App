@@ -9,7 +9,6 @@ const MovieDetailReducer = (state = {
                 isLoading : true
             };
         case "MOVIE_RECEIVED":
-            console.log(action.payload)
             return {
                 ...state,
                 isLoading : false,

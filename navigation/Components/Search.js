@@ -3,7 +3,7 @@ import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, 
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
-import CustomAnimation from "../../animation_Components/animations";
+import { Loader } from "./microComponents/Loader";
 
 class Search extends Component {
     constructor(props) {
@@ -47,10 +47,6 @@ class Search extends Component {
         )
     }
 
-    check = (arr) => {
-        
-    }
-
     shouldComponentUpdate = (nextProps) => {
         return this.props.searchResults !== nextProps.searchResults;
     }
@@ -75,17 +71,21 @@ class Search extends Component {
                     <Icon name = "search" size = {33} color = "gray"/>
                 </TouchableOpacity>
             </View>
-            <View style = {{flex : 1, marginTop : 13, alignItems : "center"}}>
-                {
-                    (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ?
-                        (<Text style = {{color : "black", fontSize : 18}}>{this.state.nullArrayText}</Text>) :
-                        (<FlatList data = {this.props.searchResults.filter(item => item.poster_path !== null)}
-                            renderItem = {this.renderItem}
-                            keyExtractor = {(item) => item.id.toString()}
-                            numColumns = {3}
-                            showsVerticalScrollIndicator = {false}/>)
-                }
-            </View>
+            {
+                (this.props.isLoading) ? 
+                    (<Loader/>) :
+                    (<View style = {{flex : 1, marginTop : 13, alignItems : "center"}}>
+                        {
+                            (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ?
+                                (<Text style = {{color : "black", fontSize : 18}}>{this.state.nullArrayText}</Text>) :
+                                (<FlatList data = {this.props.searchResults.filter(item => item.poster_path !== null)}
+                                    renderItem = {this.renderItem}
+                                    keyExtractor = {(item) => item.id.toString()}
+                                    numColumns = {3}
+                                    showsVerticalScrollIndicator = {false}/>)
+                        }
+                    </View>)
+            }
         </SafeAreaView>
         )
     }

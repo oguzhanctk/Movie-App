@@ -4,6 +4,7 @@ import { Navigation } from "react-native-navigation";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 import { Loader } from "./microComponents/Loader";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Home extends Component {
     
@@ -29,6 +30,7 @@ export default class Home extends Component {
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
+        // await AsyncStorage.removeItem("@item");
     }
 
     render() {
@@ -36,7 +38,7 @@ export default class Home extends Component {
             <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
                 {
                     (this.props.isLoading) ?
-                        (<Loader/>) : 
+                        (<Loader indicatorColor = "white"/>) : 
                         (<ScrollView showsVerticalScrollIndicator = {true}>
                             <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
                             <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { usePromiseTracker } from "react-promise-tracker";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
-export const Loader = () => {
+export const Loader = (props) => {
 
     return(
         <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-            <ActivityIndicator size = "large" color = "blue"/>
+            <ActivityIndicator size = "large" color = {props.indicatorColor}/>
         </View>
     )
 }

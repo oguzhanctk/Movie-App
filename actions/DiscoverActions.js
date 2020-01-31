@@ -1,7 +1,6 @@
 import Discover from "../navigation/Components/Discover";
 import { connect } from "react-redux";
 import axios from "axios";
-import { fetch_Movie_Details } from "./MovieDetailActions";
 
 export const fetch_Search_Results = (url) => {
     return async dispatch => {

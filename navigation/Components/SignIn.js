@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, Text, Button, TextInput, StyleSheet, Platform } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { USER_KEY } from "../config";
-import { goHome } from "../navigation";
+import { goToMainLayout } from "../navigation";
 import { Navigation } from "react-native-navigation";
 
 export default class SignUp extends Component {
@@ -27,7 +27,7 @@ export default class SignUp extends Component {
             const validate = await AsyncStorage.getItem(USER_KEY)
             .then(res => JSON.parse(res));
             if(validate.username == this.state.username && validate.password == this.state.password) {
-                goHome();
+                goToMainLayout();
             }
         } catch (error) {
             console.log(error);
