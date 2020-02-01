@@ -8,6 +8,8 @@ import { DimensionDeclaration } from "./microComponents/dimensions_declaration";
 import { storeMethod } from "./storage/index";
 import Icon from "react-native-vector-icons/Feather";
 
+//comment inside stash->0
+
 export default class Library extends Component {
     constructor(props) {
         super(props);
