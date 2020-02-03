@@ -6,7 +6,7 @@ Navigation.setDefaultOptions({
         
     },
     bottomTabs : {
-        titleDisplayMode : "showWhenActive",
+        titleDisplayMode : "alwaysShow",
         backgroundColor : "white",
     },
     statusBar : {
@@ -30,7 +30,12 @@ export const goToAuth = () => {
                                 bottomTab : {
                                     fontSize : 12,
                                     text : "Sign in",
-                                    icon : require("./assets/signin.png")
+                                    icon : require("./assets/signin.png"),
+                                    selectedTextColor : "black",
+                                    selectedIconColor : "black",
+                                    iconColor : "gray",
+                                    textColor : "gray"
+                                    
                                 }
                             }
                         },
@@ -43,11 +48,22 @@ export const goToAuth = () => {
                                     fontSize : 12,
                                     text : "Sign up",
                                     icon : require("./assets/signup.png"),
+                                    selectedTextColor : "black",
+                                    selectedIconColor : "black",
+                                    iconColor : "gray",
+                                    textColor : "gray",
+                                    
                                 }
                             }
                         }
                     }
                 ],
+                options : {
+                    bottomTabs : {
+                        backgroundColor : "white",
+                        
+                    }
+                }
             }
         }
     });   

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import { View, Text, Button, TextInput, StyleSheet, Platform } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
-import { USER_KEY } from "../config";
+import { View, Text, Button, TextInput, StyleSheet, Platform, Dimensions, ToastAndroid} from "react-native";
 import { goToMainLayout } from "../navigation";
 import { Navigation } from "react-native-navigation";
+import { Auth } from "aws-amplify";
 
-export default class SignUp extends Component {
+export default class SignIn extends Component {
 
     static get options() {
         return {
@@ -18,51 +17,57 @@ export default class SignUp extends Component {
     state = {
         username : "",
         password : "",
+        isSubmit : false,
     }
 
+    getInput = (key, value) => {
+        this.setState({[key] : value});
+    }
 
- 
     signIn = async () => {
-        try {
-            const validate = await AsyncStorage.getItem(USER_KEY)
-            .then(res => JSON.parse(res));
-            if(validate.username == this.state.username && validate.password == this.state.password) {
-                goToMainLayout();
+        const {username, password} = this.state;
+        if(username === "" || password === "") {
+            this.setState({isSubmit : false}, () => {
+                ToastAndroid.show("Lütfen tüm alanları doldurun", ToastAndroid.SHORT)
+            });
+        } else {
+            try {
+                await Auth.signIn(username, password)
+                .then(() => {
+                    this.setState({isSubmit : false}, () => goToMainLayout());
+                    console.log("succesful sign in");
+                }) 
+                .catch(err => {
+                    this.setState({isSubmit : false}, () => {
+                        ToastAndroid.show("Kullanıcı adı ya da parola yanlış", ToastAndroid.SHORT)
+                    });
+                    console.log(err);
+                });
+            } catch (err) {
+                console.log("error while signing up...", err);
             }
-        } catch (error) {
-            console.log(error);
-            
-        }   
+        }
+    }
+
+    componentWillUnmount = () => {
+        this.setState({isSubmit : false});
     }
 
     render() {
         return (
             <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-                <Text>Username</Text>
-                <TextInput style = {styles.textInput} onChangeText = {(val) => {
-                    this.setState({username : val });
-                }}/>
-                <Text>Password</Text>
-                <TextInput style = {styles.textInput} secureTextEntry = {true} onChangeText = {(val) => {
-                    this.setState({password : val });
-                }}/>  
-                <Button title = "Sign in" onPress = {() => this.signIn()}/>
-                <Button title = "hide bottom tabs" onPress = {() => {
-                    Navigation.mergeOptions(this.props.componentId, {
-                        bottomTabs : {
-                            visible : false,
-                            
-                        }
-                    })
-                }}/>
-                <Button title = "badge" onPress = {() => {
-                    Navigation.mergeOptions(this.props.componentId, {
-                        bottomTab : {
-                            badge : "New",
-                            badgeColor : "red"
-                        }
-                    })
-                }}/>
+                <View style = {{flex : 1, justifyContent : "center"}}>
+                    <Text style = {{fontSize : 37, color : "orange", fontWeight : "bold"}}>Sign In</Text>
+                </View>
+                <View style = {{flex : 3, justifyContent : "flex-start", padding : 7}}>
+                    <TextInput maxLength = {30} placeholder = "kullanıcı adı" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
+                    <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
+                    <Button title = "Sign in" disabled = {this.state.isSubmit} onPress = {() => {
+                        this.setState({isSubmit : true}, () => {
+                            this.signIn()
+                        });
+                    }}/>
+                </View>
             </View>
         )
     }
@@ -70,11 +75,13 @@ export default class SignUp extends Component {
 
 const styles = StyleSheet.create({
     textInput : {
-        backgroundColor : "gray",
-        borderRadius : 7,
+        backgroundColor : "#e1f0e8",
+        borderRadius : 3,
+        borderWidth : 0.25,
+        borderColor : "gray",
         padding : 7,
-        width : 300,
+        width : (Dimensions.get("window").width * 4) / 5,
         margin : 7,
-        color : "white"
+        color : "black",        
     }
 })

@@ -1,0 +1,22 @@
+{
+    "local": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-rnnplayground-local-32024-authRole",
+            "UnauthRoleArn": "arn:aws:iam::218461526891:role/amplify-rnnplayground-local-32024-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::218461526891:role/amplify-rnnplayground-local-32024-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "amplify-rnnplayground-local-32024-deployment",
+            "UnauthRoleName": "amplify-rnnplayground-local-32024-unauthRole",
+            "StackName": "amplify-rnnplayground-local-32024",
+            "StackId": "arn:aws:cloudformation:eu-central-1:218461526891:stack/amplify-rnnplayground-local-32024/d0242a40-4551-11ea-88dd-064768627800",
+            "AmplifyAppId": "d1t8bps7p9jjvd"
+        },
+        "categories": {
+            "auth": {
+                "rnnplayground3ffbaffc": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"734011071682-ng69tv01k8g8urcsh987sbukdc9cphlm.apps.googleusercontent.com\",\"client_secret\":\"dYrLNfa0xPzZYVsnMfc3BWxW\"}]"
+                }
+            }
+        }
+    }
+}

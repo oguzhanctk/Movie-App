@@ -6,35 +6,26 @@ import { goHome, goToAuth, goTosideMenuLayout, goToMainLayout } from "../navigat
 import { USER_KEY } from "../config";
 import { Navigation } from "react-native-navigation";
 import SplashScreen from "react-native-splash-screen";
+import { Auth } from "aws-amplify";
 
-export default class Initializing extends Component {
+class Initializing extends Component {
   
-    componentDidMount = async () => {
-        
-        try {
-            const user = await AsyncStorage.getItem(USER_KEY)
-            .then(res => JSON.parse(res));
-            console.log("user : ", user.username);
-            if(user) {
-                goToMainLayout();  
-            } else {
-                goToAuth();    
-                
-            }
-        } catch (error) {
-            console.log(error);
+    componentDidMount = () => {
+        if(Auth.currentAuthenticatedUser) {
+            SplashScreen.hide();
+            goToMainLayout();
+        } else {
             goToAuth();
         }
-        SplashScreen.hide();
     }
-
-    
 
     render() {
         return(
-            <View style = {{flex : 1}}>
-                
+            <View style = {{flex : 1, backgroundColor : "red", justifyContent : "center", alignItems : "center"}}>
+                 <Text>this is Initializing screen</Text>
             </View>
         )
     }
 }
+
+export default Initializing
