@@ -43,6 +43,7 @@ export const goToAuth = () => {
                     {
                         component : {
                             name : "SignUp",
+                            id : "signUpId",
                             options : {
                                 bottomTab : {
                                     fontSize : 12,

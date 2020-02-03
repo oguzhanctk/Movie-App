@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, Button, TextInput, StyleSheet, Platform, Dimensions, ToastAndroid} from "react-native";
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity, Platform, Dimensions, ToastAndroid} from "react-native";
 import { goToMainLayout } from "../navigation";
 import { Navigation } from "react-native-navigation";
 import { Auth } from "aws-amplify";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class SignIn extends Component {
 
     static get options() {
         return {
             bottomTabs : {
-                ...Platform.select({android : {drawBehind : true}}),
+                ...Platform.select({android : {drawBehind : false}}),
             }
         }
     }
@@ -33,8 +34,9 @@ export default class SignIn extends Component {
         } else {
             try {
                 await Auth.signIn(username, password)
-                .then(() => {
+                .then(async () => {
                     this.setState({isSubmit : false}, () => goToMainLayout());
+                    await AsyncStorage.setItem("@auth_status", "true")
                     console.log("succesful sign in");
                 }) 
                 .catch(err => {
@@ -59,7 +61,7 @@ export default class SignIn extends Component {
                 <View style = {{flex : 1, justifyContent : "center"}}>
                     <Text style = {{fontSize : 37, color : "orange", fontWeight : "bold"}}>Sign In</Text>
                 </View>
-                <View style = {{flex : 3, justifyContent : "flex-start", padding : 7}}>
+                <View style = {{flex : 2.5, justifyContent : "flex-start", padding : 7}}>
                     <TextInput maxLength = {30} placeholder = "kullanıcı adı" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                     <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
                     <Button title = "Sign in" disabled = {this.state.isSubmit} onPress = {() => {
@@ -67,6 +69,17 @@ export default class SignIn extends Component {
                             this.signIn()
                         });
                     }}/>
+                </View>
+                <View style = {{flex : 0.5, justifyContent : "center"}}>
+                    <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
+                        Navigation.mergeOptions(this.props.componentId, {
+                            bottomTabs : {
+                                currentTabId : "signUpId"
+                            }
+                        });
+                    }}>
+                            <Text style = {{color : "blue"}}>Hala kayıt olmadınız mı?</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )

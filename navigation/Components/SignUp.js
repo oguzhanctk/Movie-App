@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View, Text, Button, TextInput, StyleSheet, Dimensions, ToastAndroid } from "react-native";
-import { goToMainLayout } from "../navigation";
+import { goToMainLayout, goToAuth } from "../navigation";
 import { Auth } from "aws-amplify";
 
 export default class SignUp extends Component {
@@ -43,7 +43,8 @@ export default class SignUp extends Component {
                 await Auth.confirmSignUp(username, confCode)
                 .then(() => {
                     console.log("confirm signup succesfull");
-                    goToMainLayout();
+                    ToastAndroid.show("Kayıt başarılı...", ToastAndroid.SHORT);
+                    goToAuth();
                 });
             } catch (error) {
                 ToastAndroid.show("Doğrulama sırasında hata", ToastAndroid.SHORT);

@@ -91,7 +91,7 @@ export default class Genre extends Component {
                         numColumns = {3}
                         showsVerticalScrollIndicator = {false}
                         refreshControl = {
-                            <RefreshControl refreshing = {this.state.refreshing}
+                            <RefreshControl refreshing = {this.props.isLoading}
                                 onRefresh = {() => this.onRefresh()}/>}
                         /> 
                 </View>

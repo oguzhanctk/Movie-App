@@ -7,6 +7,8 @@ import { libraryConstants } from "../config";
 import { DimensionDeclaration } from "./microComponents/dimensions_declaration";
 import { storeMethod } from "./storage/index";
 import Icon from "react-native-vector-icons/Feather";
+import { Auth } from "aws-amplify";
+import { goToAuth } from "../navigation";
 
 export default class Library extends Component {
     constructor(props) {
@@ -32,18 +34,20 @@ export default class Library extends Component {
         this.setState({data : []});
     }
 
-    getData = () => {
-        try {
-            this.setState({isLoading : true}, async () => {
-                const data = await AsyncStorage.getItem("@library_item");
-                this.setState({isLoading : false});
-                const res = JSON.parse(data).reverse();
-                if(data !== []) {
-                    this.setState({data : [...res]});
-                }
-            });
-        } catch (error) {
-            console.log(error)
+    getData = async () => {
+        const data = await AsyncStorage.getItem("@library_item");
+        if(data) {
+            try {
+                this.setState({isLoading : true}, async () => {
+                    this.setState({isLoading : false});
+                    const res = JSON.parse(data).reverse();
+                    if(data !== []) {
+                        this.setState({data : [...res]});
+                    }
+                });
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
@@ -56,6 +60,19 @@ export default class Library extends Component {
                 }
             }
         });
+    }
+
+    signOut = async () => {
+        try {
+            await Auth.signOut()
+            .then(async () => {
+                await AsyncStorage.setItem("@auth_status", "false");
+                goToAuth()
+            });
+            console.log("signout succesfull")
+        } catch (error) {
+            console.log("error while signing out...", error)
+        }
     }
 
     renderItem = ({item}) => (
@@ -85,15 +102,22 @@ export default class Library extends Component {
 
     render() {
         return(
-            <View style = {{flex : 1, paddingTop : 35, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
-            {
-                (this.state.isLoading) ?
-                    null : 
-                (<FlatList data = {this.state.data}
-                    renderItem = {this.renderItem}
-                    keyExtractor = {(item) => item.id.toString()}
-                    numColumns = {3}/>)
-            }
+            <View style = {{flex : 1}}>
+                <View style = {{flex : 1, justifyContent : "center", alignItems : "center", backgroundColor : "gray", padding : 7}}>
+                    <TouchableOpacity onPress = {() => this.signOut()}>
+                        <Icon name = "log-out" size = {35} />
+                    </TouchableOpacity>
+                </View>
+                <View style = {{flex : 9, paddingTop : 0, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
+                {
+                    (this.state.isLoading) ?
+                        null : 
+                    (<FlatList data = {this.state.data}
+                        renderItem = {this.renderItem}
+                        keyExtractor = {(item) => item.id.toString()}
+                        numColumns = {3}/>)
+                }
+                </View>
             </View>
         )
     }

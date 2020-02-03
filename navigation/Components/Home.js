@@ -30,10 +30,10 @@ export default class Home extends Component {
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
-        // await AsyncStorage.removeItem("@item");
-        await Auth.currentAuthenticatedUser({bypassCache : true})
+        await Auth.currentAuthenticatedUser()
         .then(user => console.log(user))
         .catch(err => console.log(err));
+        // await AsyncStorage.removeItem("@item");
     }
 
     render() {
