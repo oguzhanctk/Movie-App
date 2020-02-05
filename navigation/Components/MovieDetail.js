@@ -14,7 +14,6 @@ const MovieDetail = (props) => {
     const height = Dimensions.get("window").height/2;
     const imagePath = (props.movieDetail.backdrop_path) || (props.movieDetail.poster_path); 
     const [isAdded, setisAdded] = useState(false);
-    const isLoading = 
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -66,7 +65,7 @@ const MovieDetail = (props) => {
                                         <Text style = {{fontWeight : "bold"}}>{props.movieDetail.release_date}</Text>
                                     </View>
                                     <View>
-                                        <Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}m</Text>
+                                        <Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}d</Text>
                                     </View>
                                     <View style = {{flexDirection : "row", marginRight : 5}}>
                                         <Text style = {{fontSize : 18, fontWeight : "bold"}}>{props.movieDetail.vote_average}</Text>

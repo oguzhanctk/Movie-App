@@ -28,10 +28,9 @@ export const goToAuth = () => {
                             name : "SignIn",
                             options : {
                                 bottomTab : {
-                                    fontSize : 12,
                                     text : "Sign in",
                                     icon : {
-                                      uri :  "ic_ac_unit"  
+                                      uri :  "ic_account_circle"
                                     },
                                     selectedTextColor : "black",
                                     selectedIconColor : "black",
@@ -48,9 +47,10 @@ export const goToAuth = () => {
                             id : "signUpId",
                             options : {
                                 bottomTab : {
-                                    fontSize : 12,
                                     text : "Sign up",
-                                    icon : require("./assets/signup.png"),
+                                    icon : {
+                                        uri : "ic_group_add"
+                                    },
                                     selectedTextColor : "black",
                                     selectedIconColor : "black",
                                     iconColor : "gray",
@@ -233,7 +233,7 @@ export const goToMainLayout = () => {
                                     selectedTextColor : "black",
                                     text : "Anasayfa",
                                     icon : {
-                                        uri : "ic_ac_unit"
+                                        uri : "ic_local_movies"
                                     },
                                 }
                             }
@@ -258,7 +258,9 @@ export const goToMainLayout = () => {
                                     iconColor : "gray",
                                     textColor : "gray",
                                     text : "Keşfet",
-                                    icon : require("./assets/search.png"),
+                                    icon : {
+                                        uri : "ic_search"
+                                    },
                                     selectedIconColor : "black",
                                     selectedTextColor : "black"
                                 }
@@ -273,7 +275,9 @@ export const goToMainLayout = () => {
                                     iconColor : "gray",
                                     textColor : "gray",
                                     text : "Kitaplık",
-                                    icon : require("./assets/library.png"),
+                                    icon : {
+                                        uri : "ic_library_books"
+                                    },
                                     selectedIconColor : "black",
                                     selectedTextColor : "black"
                                 },

@@ -61,18 +61,19 @@ export default class Discover extends Component {
                 <TouchableOpacity style = {{flex : 1, 
                         flexDirection : "row",
                         alignItems : "center",
-                        backgroundColor : "#3c423e",
-                        paddingHorizontal : 3,
-                        margin : 5,
+                        backgroundColor : "#4a4a4a",
+                        paddingHorizontal : 7,
+                        margin : 3,
                         borderRadius : 3,
-                        borderWidth : 1,
+                        borderWidth : 0.65,
+                        borderColor : "black",
                         borderColor : "#595959"}} 
                         onPress = {() => this.onSearchPress()}
                         activeOpacity = {0.75}>
                     <Icon name = "search" size = {30} color = "gray"/>
-                    <Text style = {{fontSize : 21, color : "gray", marginLeft : 13}}>click to search</Text>
+                    <Text style = {{fontSize : 21, color : "gray", marginLeft : 13}}>aramak için dokun</Text>
                 </TouchableOpacity>
-                <View style = {{flex : 9, width : "100%", padding : 7}}>
+                <View style = {{flex : 14, width : "100%", padding : 7}}>
                     <FlatList data = {this.state.data}
                         renderItem = {this.renderItem}
                         keyExtractor = {(item) => item.id.toString()}
