@@ -70,7 +70,10 @@ export default class SignIn extends Component {
                         });
                     }}/>
                 </View>
-                <View style = {{flex : 0.5, justifyContent : "center"}}>
+                <View style = {{flex : 0.5, 
+                        flexDirection : "column", 
+                        justifyContent : "space-evenly",
+                        alignItems : "center"}}>
                     <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
                         Navigation.mergeOptions(this.props.componentId, {
                             bottomTabs : {
@@ -78,7 +81,16 @@ export default class SignIn extends Component {
                             }
                         });
                     }}>
-                            <Text style = {{color : "blue"}}>Hala kayıt olmadınız mı?</Text>
+                        <Text style = {{color : "blue"}}>Hala kayıt olmadınız mı?</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
+                        Navigation.showModal({
+                            component : {
+                                name : "ForgotPassword"
+                            }
+                        });
+                    }}>
+                        <Text style = {{color : "blue"}}>Şifremi unuttum</Text>
                     </TouchableOpacity>
                 </View>
             </View>

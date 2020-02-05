@@ -4,10 +4,8 @@ import { Navigation } from "react-native-navigation";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 import { Loader } from "./microComponents/Loader";
-import { Auth } from "aws-amplify";
 
 export default class Home extends Component {
-    
     constructor(props) {
         super(props);
         Navigation.events().bindComponent(this);
@@ -30,10 +28,6 @@ export default class Home extends Component {
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
-        await Auth.currentAuthenticatedUser()
-        .then(user => console.log(user))
-        .catch(err => console.log(err));
-        // await AsyncStorage.removeItem("@item");
     }
 
     render() {

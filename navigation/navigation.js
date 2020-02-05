@@ -30,7 +30,9 @@ export const goToAuth = () => {
                                 bottomTab : {
                                     fontSize : 12,
                                     text : "Sign in",
-                                    icon : require("./assets/signin.png"),
+                                    icon : {
+                                      uri :  "ic_ac_unit"  
+                                    },
                                     selectedTextColor : "black",
                                     selectedIconColor : "black",
                                     iconColor : "gray",
@@ -38,7 +40,7 @@ export const goToAuth = () => {
                                     
                                 }
                             }
-                        },
+                        }
                     },
                     {
                         component : {
@@ -230,7 +232,9 @@ export const goToMainLayout = () => {
                                     selectedIconColor : "black",
                                     selectedTextColor : "black",
                                     text : "Anasayfa",
-                                    icon : require("./assets/home.png"),
+                                    icon : {
+                                        uri : "ic_ac_unit"
+                                    },
                                 }
                             }
                         }

@@ -11,6 +11,7 @@ import DiscoverActions from "../actions/DiscoverActions";
 import MovieDetailActions from "../actions/MovieDetailActions";
 import SearchActions from "../actions/SearchActions";
 import GenreActions from "../actions/GenreActions";
+import ForgotPassword from "./Components/ForgotPassword";
 
 export const registerScreens = () => {
     Navigation.registerComponentWithRedux("Home", () => HomeActions, Provider, store);
@@ -22,6 +23,7 @@ export const registerScreens = () => {
     Navigation.registerComponent("Initializing", () => Initializing);
     Navigation.registerComponentWithRedux("Discover", () => DiscoverActions, Provider, store);
     Navigation.registerComponent("SideMenuTest", () => SideMenuTest);
+    Navigation.registerComponent("ForgotPassword", () => ForgotPassword);
     Navigation.registerComponentWithRedux("MovieDetail", () => MovieDetailActions, Provider, store);
 
 }
