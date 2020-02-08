@@ -6,14 +6,19 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import CreditsSlider from "../Components/microComponents/CreditsSlider";
 import { storeMethod } from "./storage/index";
 import { Loader } from './microComponents/Loader';
+import { constants } from "../../api/config";
 
 const MovieDetail = (props) => {
-    const url = `https://api.themoviedb.org/3/movie/${props.movieId}?api_key=e02b145f1588ea6f178b8e24b19a93f8&language=tr&append_to_response=credits`
+    const url = (props.mediaType === "tv") ?
+        `https://api.themoviedb.org/3/tv/${props.id}?api_key=${constants.api_key}&language=tr&append_to_response=credits` : 
+        `https://api.themoviedb.org/3/movie/${props.id}?api_key=${constants.api_key}&language=tr&append_to_response=credits`;
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const width = Dimensions.get("window").width;
     const height = Dimensions.get("window").height/2;
     const imagePath = (props.movieDetail.backdrop_path) || (props.movieDetail.poster_path); 
     const [isAdded, setisAdded] = useState(false);
+
+    const name = props.movieDetail.original_name || props.movieDetail.original_title;    
 
     useEffect(() => {
         const fetchMovie = async () => {
@@ -53,7 +58,7 @@ const MovieDetail = (props) => {
                                         alignSelf : "center",
                                         marginBottom : 5,
                                         paddingHorizontal : 3}}>
-                                    {props.movieDetail.title}
+                                    {name}
                                 </Text>
                                 <View style = {{flexDirection : "row", 
                                     alignItems : "center", 
@@ -65,7 +70,11 @@ const MovieDetail = (props) => {
                                         <Text style = {{fontWeight : "bold"}}>{props.movieDetail.release_date}</Text>
                                     </View>
                                     <View>
-                                        <Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}d</Text>
+                                        {
+                                            (props.mediaType === "movie") ? 
+                                                (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}d</Text>) :
+                                                (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.number_of_seasons} sezon</Text>) 
+                                        }
                                     </View>
                                     <View style = {{flexDirection : "row", marginRight : 5}}>
                                         <Text style = {{fontSize : 18, fontWeight : "bold"}}>{props.movieDetail.vote_average}</Text>

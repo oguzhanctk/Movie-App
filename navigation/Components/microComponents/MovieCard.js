@@ -10,19 +10,20 @@ export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const [isAdded, setisAdded] = useState(false);
 
-    const onMoviePress = (id) => {
+    const onMoviePress = (id, type) => {
         Navigation.showModal({
             component : {
                 name : "MovieDetail",
                 passProps : {
-                    movieId : id
+                    id : id,
+                    mediaType : type
                 }
             }
         });
     }
     
     return (
-        <TouchableHighlight style = {{flex : 1}} onPress = {() => onMoviePress(props.movieId)}>
+        <TouchableHighlight style = {{flex : 1}} onPress = {() => onMoviePress(props.id, props.mediaType)}>
             <ImageBackground source = {{uri : `${baseImageUrl}${props.imagePath}`}}
                 style = {{width : DimensionDeclaration.movieCardWidth - 11, 
                         height : DimensionDeclaration.movieCardHeight - 11, 
@@ -39,7 +40,7 @@ export const MovieCard = (props) => {
                             null : 
                         (<TouchableHighlight style = {styles.fab} 
                             onPress = {() => {
-                                storeMethod.storeData({id : props.movieId, poster_path : props.imagePath}, setisAdded);
+                                storeMethod.storeData({id : props.id, poster_path : props.imagePath, media_type : props.mediaType}, setisAdded);
                             }}
                             underlayColor = "lightgreen">
                             <Icon name = "plus" size = {17}/>

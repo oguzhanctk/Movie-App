@@ -8,7 +8,6 @@ import { Loader } from "./microComponents/Loader";
 export default class Home extends Component {
     constructor(props) {
         super(props);
-        Navigation.events().bindComponent(this);
     }
 
     // navigationButtonPressed = ({buttonId}) => {
@@ -27,7 +26,12 @@ export default class Home extends Component {
     // }
 
     componentDidMount = async () => {
-        await this.props.fetchDataFromApi(constants.popularMoviesUrl, constants.latestMoviesUrl, constants.topRatedMoviesUrl);
+        await this.props.fetchDataFromApi(
+            constants.popularMoviesUrl, 
+            constants.popularTVShowsUrl, 
+            constants.topRatedMoviesUrl
+            );
+            console.log(this.props.popularMovies)
     }
 
     render() {
@@ -37,9 +41,9 @@ export default class Home extends Component {
                     (this.props.isLoading) ?
                         (<Loader indicatorColor = "white"/>) : 
                         (<ScrollView showsVerticalScrollIndicator = {true}>
-                            <MoviesSlider headerText = "Popüler" movieData = {this.props.popularMovies}/>
-                            <MoviesSlider headerText = "Tüm zamanlar" movieData = {this.props.topRatedMovies}/>
-                            <MoviesSlider headerText = "Yakında" movieData = {this.props.latestMovies}/>
+                            <MoviesSlider headerText = "Popüler Filmler" movieData = {this.props.popularMovies}/>
+                            <MoviesSlider headerText = "Popüler Diziler" movieData = {this.props.popularTv}/>
+                            <MoviesSlider headerText = "Best of Bests" movieData = {this.props.topRatedMovies}/>
                             <View style = {{height : 20}}/>
                         </ScrollView>)
                 }

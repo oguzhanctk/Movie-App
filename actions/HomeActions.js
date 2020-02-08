@@ -2,14 +2,14 @@ import { connect } from "react-redux";
 import Home from "../navigation/Components/Home";
 import axios from "axios";
 
-export const fetch_Data_From_Api = (popular, latest, topRated) => {
+export const fetch_Data_From_Api = (movie, tv, topRated) => {
     return async dispatch => {
         dispatch({
             type : "DATA_REQUESTED" 
         });
         axios.all([
-            await axios.get(popular),
-            await axios.get(latest),
+            await axios.get(movie),
+            await axios.get(tv),
             await axios.get(topRated)
         ])
         .then(axios.spread((p, l, t) => {
@@ -17,8 +17,8 @@ export const fetch_Data_From_Api = (popular, latest, topRated) => {
             dispatch({
                 type : "DATA_RECEIVED",
                 payload : {
-                    popular : p.data,
-                    latest : l.data,
+                    popularMovie : p.data,
+                    popularTv : l.data,
                     topRated : t.data
                 }
             });
@@ -35,7 +35,7 @@ export const fetch_Data_From_Api = (popular, latest, topRated) => {
 
 const mapStateToProps = (state) => ({
     popularMovies : state.HomePageReducer.popularMovies,
-    latestMovies : state.HomePageReducer.latestMovies,
+    popularTv : state.HomePageReducer.popularTv,
     topRatedMovies : state.HomePageReducer.topRatedMovies,
     isLoading : state.HomePageReducer.isFetching,
 });
