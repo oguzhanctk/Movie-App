@@ -43,7 +43,7 @@ const MovieDetail = (props) => {
                                     (isAdded === true) ?
                                         null :
                                     (<TouchableHighlight style = {styles.fab} onPress = {() => {
-                                        storeMethod.storeData({id : props.movieDetail.id, poster_path : props.movieDetail.poster_path}, setisAdded);
+                                        storeMethod.storeData({id : props.movieDetail.id, poster_path : props.movieDetail.poster_path, media_type : props.mediaType}, setisAdded);
                                     }}
                                     underlayColor = "lightgreen">
                                         <Icon name = "add" size = {35} color = "black"/>
@@ -57,7 +57,7 @@ const MovieDetail = (props) => {
                                         letterSpacing : 1,
                                         alignSelf : "center",
                                         marginBottom : 5,
-                                        paddingHorizontal : 3}}>
+                                        paddingHorizontal : 13}}>
                                     {name}
                                 </Text>
                                 <View style = {{flexDirection : "row", 
@@ -81,7 +81,6 @@ const MovieDetail = (props) => {
                                         <Icon name = "star" size = {23} color = "orange"/>
                                     </View>
                                 </View>
-                                
                             </View>
                             <View style = {{flex : 1, 
                                 flexDirection : "column",

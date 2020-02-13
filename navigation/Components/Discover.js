@@ -9,54 +9,59 @@ import {View,
         StyleSheet} from "react-native";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { genres } from "../config";
+import { movieGenres, tvGenres } from "../config";
 
 export default class Discover extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            data : genres,
-            isSelectedTypeMovie : true
+            isSelectedTypeMovie : true,
         }
     }
 
     renderItem = ({item}) => {
         return(
-            <TouchableHighlight style = {{marginHorizontal : 7, marginVertical : 3}} 
+            <TouchableHighlight style = {{marginHorizontal : 3, marginVertical : 3}} 
                 onPress = {() => {
-                    this.onGenrePress(item.id);
+                    const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
+                    this.onGenrePress(item.id, type);
                 }}>
                 <View style = {{backgroundColor : item.color, 
-                    height : Dimensions.get("window").height/11,
-                    width : "100%",
+                    height : Dimensions.get("window").height / 7,
+                    width : Dimensions.get("window").width / 2.2,
                     justifyContent : "center",
-                    alignItems : "center",
+                    alignItems : "flex-start",
                     borderRadius : 3,
-                    borderWidth : 0.55,
-                    borderColor : "white"}}>
+                    borderWidth : 0.25,
+                    borderColor : "black",
+                    padding : 7}}>
                     <Text style = {{color : "white", 
-                        fontSize : 23, 
+                        fontSize : 17, 
                         fontWeight : "bold", 
-                        letterSpacing : 1}}>#{item.name}</Text>
+                        letterSpacing : 1.3}}>#{item.name}</Text>
                 </View>
             </TouchableHighlight>
     )}
 
-    onSearchPress = () => {
+    onSearchPress = (type) => {
         Navigation.showModal({
             component : {
                 name : "Search",
+                passProps : {
+                    mediaType : type 
+                }
             }
         })
     }
     
-    onGenrePress = (id) => {
+    onGenrePress = (id, type) => {
         Navigation.showModal({
             component : {
                 name : "Genre",
                 passProps : {
-                    genreId : id
+                    genreId : id,
+                    media_type : type
                 }
             }
         })
@@ -91,16 +96,20 @@ export default class Discover extends Component {
                             borderWidth : 0.65,
                             borderColor : "black",
                             borderColor : "#595959"}} 
-                            onPress = {() => this.onSearchPress()}
+                            onPress = {() => {
+                                const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
+                                this.onSearchPress(type);
+                            }}
                             activeOpacity = {0.75}>
                         <Icon name = "search" size = {30} color = "gray"/>
                         <Text style = {{fontSize : 21, color : "gray", marginLeft : 13}}>aramak için dokun</Text>
                     </TouchableOpacity>
-                    <View style = {{flex : 9, width : "100%", padding : 7}}>
-                        <FlatList data = {this.state.data}
+                    <View style = {{flex : 9, width : "100%", padding : 5, alignItems : "center"}}>
+                        <FlatList data = {(this.state.isSelectedTypeMovie) ? movieGenres : tvGenres}
                             renderItem = {this.renderItem}
                             keyExtractor = {(item) => item.id.toString()}
-                            showsVerticalScrollIndicator = {false}/>
+                            showsVerticalScrollIndicator = {false}
+                            numColumns = {2}/>
                     </View>
                 </View>
             </SafeAreaView>

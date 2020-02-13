@@ -1,39 +1,26 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, SafeAreaView, ScrollView } from "react-native";
-import { Navigation } from "react-native-navigation";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 import { Loader } from "./microComponents/Loader";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            page : 1
+        }
     }
-
-    // navigationButtonPressed = ({buttonId}) => {
-    //     const { componentId } = this.props;
-
-    //     if(buttonId == "leftSide") {
-    //         console.log("sideMenu button pressed");
-    //         Navigation.mergeOptions(componentId, {
-    //             sideMenu : {
-    //                 left : {
-    //                     visible : true
-    //                 }
-    //             }
-    //         })
-    //     }
-    // }
 
     componentDidMount = async () => {
         await this.props.fetchDataFromApi(
-            constants.popularMoviesUrl, 
-            constants.popularTVShowsUrl, 
-            constants.topRatedMoviesUrl
-            );
-            console.log(this.props.popularMovies)
+            `${constants.popularMoviesUrl + this.state.page}`, 
+            `${constants.popularTVShowsUrl + this.state.page}`, 
+            `${constants.topRatedMoviesUrl + this.state.page}`
+        );
     }
-
+    
     render() {
         return(
             <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
@@ -51,16 +38,3 @@ export default class Home extends Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-    fab : { 
-        borderWidth:1,
-        borderColor:'rgba(0,0,0,0.2)',
-        alignItems:'center',
-        justifyContent:'center',
-        width:55,
-        height:55,  
-        borderRadius:100,
-        backgroundColor : "lightblue"
-    }
-})

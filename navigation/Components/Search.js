@@ -23,7 +23,8 @@ class Search extends Component {
             component : {
                 name : "MovieDetail",
                 passProps : {
-                    movieId : id
+                    id : id,
+                    mediaType : this.props.mediaType
                 }
             }
         });
@@ -47,11 +48,12 @@ class Search extends Component {
         )
     }
 
-    shouldComponentUpdate = (nextProps) => {
+    shouldComponentUpdate = (nextState, nextProps) => {
         return this.props.searchResults !== nextProps.searchResults;
     }
 
     render() {
+        const searchUrl = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=true`;
         return (
         <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
             <View style = {styles.container}>
@@ -64,8 +66,9 @@ class Search extends Component {
                     ref={(input) => { this.textInput = input }}
                     onFocus = {() => this.textInput.clear()}/>
                 <TouchableOpacity style = {{padding : 3}}
-                    onPress = {() => {
-                        this.props.fetchSearchResults(`${constants.searchUrl}&query=${this.state.searchValue}`);
+                    onPress = {async () => {
+                        const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=true`;
+                        await this.props.fetchSearchResults(url);
                         (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null; 
                     }}>
                     <Icon name = "search" size = {33} color = "gray"/>

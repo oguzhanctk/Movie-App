@@ -1,7 +1,16 @@
 import React, { Component } from "react";
-import { View, Text, Button, TextInput, StyleSheet, Dimensions, ToastAndroid } from "react-native";
-import { goToMainLayout, goToAuth } from "../navigation";
+import {View, 
+        Text, 
+        Button, 
+        TextInput, 
+        StyleSheet, 
+        Dimensions, 
+        ToastAndroid,
+        TouchableOpacity,
+        ImageBackground} from "react-native";
+import { goToAuth } from "../navigation";
 import { Auth } from "aws-amplify";
+import Icon from "react-native-vector-icons/Feather";
 
 export default class SignUp extends Component {
 
@@ -27,9 +36,23 @@ export default class SignUp extends Component {
                 await Auth.signUp({username, password, attributes : {email}});
                 console.log("succesfull signup");
                 this.setState({stage : 1});
-        } catch (error) {
-            ToastAndroid.show(`Kayıt sırasında hata oluştu, ${error.message}`, ToastAndroid.LONG);
-            console.log("error signing up...", error);
+            } catch (error) {
+                if(error.message === "Invalid email address format.")
+                    ToastAndroid.show("Lütfen geçerli bir e-mail adresi girin", ToastAndroid.SHORT);
+                else {
+                    switch (error.code) {
+                        case "InvalidParameterException":
+                            ToastAndroid.show("Şifre uzunluğu en az 8 karakter olmalıdır.", ToastAndroid.SHORT);
+                            break;
+                        case "UsernameExistsException":
+                            ToastAndroid.show("Bu kullanıcı adı daha önce alınmış", ToastAndroid.SHORT);
+                        case "InvalidPasswordException":
+                            ToastAndroid.show("Şifre uzunluğu en az 8 karakter olmalıdır.", ToastAndroid.SHORT);
+                        default:
+                            break;
+                    }
+                }
+                console.log(error);
             }
         }
     }
@@ -37,17 +60,26 @@ export default class SignUp extends Component {
     confirmSignUp = async () => {
         const {username, confCode} = this.state;
         if(username === "" || confCode === "") {
-            ToastAndroid.show("Lütfen tüm alanları doldurun", ToastAndroid.SHORT);
+            ToastAndroid.show("Lütfen e-mail adresinize gelen kodu girin.", ToastAndroid.SHORT);
         } else {
             try {
                 await Auth.confirmSignUp(username, confCode)
                 .then(() => {
                     console.log("confirm signup succesfull");
-                    ToastAndroid.show("Kayıt başarılı...", ToastAndroid.SHORT);
+                    ToastAndroid.show("Kayıt başarılı.", ToastAndroid.SHORT);
                     goToAuth();
                 });
             } catch (error) {
-                ToastAndroid.show("Doğrulama sırasında hata", ToastAndroid.SHORT);
+                switch (error.code) {
+                    case "CodeMismatchException":
+                        ToastAndroid.show("Doğrulama kodu yanlış", ToastAndroid.SHORT);
+                        break;
+                    case "LimitExceededException":
+                        ToastAndroid.show("Kod istek limiti aşıldı lütfen daha sonra tekrar deneyin.", ToastAndroid.SHORT);
+                        break;
+                    default:
+                        break;
+                }
                 console.log("error while confirmsignup...", error);
             }
         }
@@ -62,7 +94,7 @@ export default class SignUp extends Component {
                 ToastAndroid.show("Kod tekrar gönderildi", ToastAndroid.SHORT);
             })
         } catch (error) {
-            console.log(err);
+            console.log(error);
         }
     }
 
@@ -71,31 +103,54 @@ export default class SignUp extends Component {
             <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
                 {
                     this.state.stage === Number(0) && (
-                        <React.Fragment>
-                            <View style = {{flex : 1, justifyContent : "center"}}>
-                                <Text style = {{fontSize : 37, color : "orange", fontWeight : "bold"}}>Sign Up</Text>
+                        <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
+                            <View style = {styles.apertureContainer}>
+                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
                             </View>
-                            <View style = {{flex : 3, justifyContent : "flex-start", padding : 7}}>
+                            <View style = {{flex : 4, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
                                 <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                                 <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
                                 <TextInput maxLength = {12} placeholder = "telefon numarası" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
-                                <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
-                                <Button title = "Sign up" onPress = {() => {
-                                    this.signUp();
-                                }}/>
+                                <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("password", value)}/>
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.signUp()
+                                }}>
+                                    <Text style = {styles.buttonText}>Kaydol</Text>
+                                </TouchableOpacity>
                             </View>
-                        </React.Fragment>)
+                        </ImageBackground>)
                 }
 
                 {
                     this.state.stage === Number(1) && (
                         <View style = {{flex : 1}}>
-                            <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-                                <Text style = {{fontSize : 26}}>Devam etmek için e-mail adresinize gelen 6 haneli kodu girin.</Text>
+                            <View style = {{...styles.apertureContainer, flex : 1}}>
+                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
                             </View>
-                            <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-                                <TextInput maxLength = {30} placeholder = "doğrulama kodu" style = {styles.textInput} onChangeText = {(value) => this.getInput("confCode", value)}/>
-                                <Button title = "Doğrula" onPress = {() => {
+                            <View style = {{flex : 0.5, justifyContent : "center", alignItems : "center", padding : 13}}>
+                                <Text style = {{fontSize : 21}}>Devam etmek için e-mail adresinize gelen 6 haneli kodu girin.</Text>
+                            </View>
+                            <View style = {{flex : 1, justifyContent : "flex-start", alignItems : "center"}}>
+                                <TextInput maxLength = {30} placeholder = "doğrulama kodu" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("confCode", value)}/>
+                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.confirmSignUp();
+                                }}>
+                                    <Text style = {styles.buttonText}>Doğrula</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.resendConfCode();
+                                }}>
+                                    <Text style = {styles.buttonText}>Kodu tekrar al</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.setState({stage : 0});
+                                }}>
+                                    <Text style = {styles.buttonText}>Kayıt ekranına geri dön</Text>
+                                </TouchableOpacity>
+                                
+                                
+                                
+                                {/* <Button title = "Doğrula" onPress = {() => {
                                     this.confirmSignUp();
                                 }}/>
                                 <Button title = "Kodu tekrar gönder" onPress = {() => {
@@ -103,7 +158,7 @@ export default class SignUp extends Component {
                                 }}/>
                                 <Button title = "kayıt ekranına geri dön" onPress = {() => {
                                     this.setState({stage : 0});
-                                }}/>
+                                }}/> */}
                             </View>
                         </View>
                     )
@@ -120,8 +175,28 @@ const styles = StyleSheet.create({
         borderWidth : 0.25,
         borderColor : "gray",
         padding : 7,
-        width : (Dimensions.get("window").width * 4) / 5,
-        margin : 7,
+        width : Dimensions.get("window").width * 0.8,
+        marginVertical : 3,
         color : "black",        
+    },
+    apertureContainer : {
+        flex : 2,
+        justifyContent : "center",
+        alignItems : "center",
+    },
+    logoSize : Dimensions.get("window").height / 3.5,
+    button : {
+        backgroundColor : "orange",
+        opacity : 0.8,
+        width : Dimensions.get("window").width * 0.8,
+        justifyContent : "center",
+        alignItems : "center",
+        padding : 7,
+        borderRadius : 3
+    },
+    buttonText : {
+        fontSize : 14,
+        fontWeight : "bold",
+        letterSpacing : 1
     }
 })

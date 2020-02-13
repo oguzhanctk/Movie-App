@@ -42,6 +42,7 @@ export default class Library extends Component {
                     this.setState({isLoading : false});
                     const res = JSON.parse(data).reverse();
                     if(data !== []) {
+                        console.log(res);
                         this.setState({data : [...res]});
                     }
                 });
@@ -51,12 +52,13 @@ export default class Library extends Component {
         }
     }
 
-    onMoviePress = (id) => {
+    onMoviePress = (id, type) => {
         Navigation.showModal({
             component : {
                 name : "MovieDetail",
                 passProps : {
-                    movieId : id
+                    id : id,
+                    mediaType : type 
                 }
             }
         });
@@ -76,7 +78,7 @@ export default class Library extends Component {
     }
 
     renderItem = ({item}) => (
-            <TouchableOpacity onPress = {() => this.onMoviePress(item.id)}>
+            <TouchableOpacity onPress = {() => this.onMoviePress(item.id, item.media_type)}>
                 <ImageBackground source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
                 style = {{backgroundColor : "gray", 
                 width : libraryConstants.libraryWidth,
@@ -103,12 +105,12 @@ export default class Library extends Component {
     render() {
         return(
             <View style = {{flex : 1}}>
-                <View style = {{flex : 1, justifyContent : "center", alignItems : "center", backgroundColor : "gray", padding : 7}}>
-                    <TouchableOpacity onPress = {() => this.signOut()}>
-                        <Icon name = "log-out" size = {35} />
+                <View style = {{flex : 1, justifyContent : "center", alignItems : "flex-end", backgroundColor : "gray"}}>
+                    <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
+                        <Icon name = "x-circle" size = {20} color = "darkred"/>
                     </TouchableOpacity>
                 </View>
-                <View style = {{flex : 9, paddingTop : 0, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
+                <View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
                 {
                     (this.state.isLoading) ?
                         null : 
@@ -125,8 +127,7 @@ export default class Library extends Component {
 
 const styles = StyleSheet.create({
     fab : { 
-        borderWidth : 1,
-        borderColor : "rgba(0,0,0,0.2)",
+        borderWidth : 0.25,
         alignItems : "center",
         justifyContent : "center",
         width : DimensionDeclaration.movieCardHeight / 6,
@@ -136,5 +137,16 @@ const styles = StyleSheet.create({
         opacity : 0.75,
         bottom : 3,
         right : 3
+    },
+    logout : {
+        borderWidth : 0.25,
+        alignItems : "center",
+        justifyContent : "center",
+        width : DimensionDeclaration.movieCardHeight / 5,
+        height : DimensionDeclaration.movieCardHeight / 5,  
+        borderRadius : 100,
+        backgroundColor : "#ada1a2",
+        opacity : 0.75,
+        right : 10
     }
 });
