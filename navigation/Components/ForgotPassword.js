@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Button, ToastAndroid } from 'react-native'
+import { Text, View, TextInput, Button, ToastAndroid, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import { Auth } from "aws-amplify";
 import { Navigation } from 'react-native-navigation';
+import Icon from "react-native-vector-icons/Feather";
 
 export default class ForgotPassword extends Component {
     state = {
@@ -26,9 +27,13 @@ export default class ForgotPassword extends Component {
                     this.setState({stage : 1});
                     console.log(data);
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    if(err.code === "UserNotFoundException")
+                        ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT);
+                    console.log(err)
+                });
             } catch (error) {
-                console.log("Hata forgotPassword", err);
+                console.log("Hata forgotPassword...", error);
             }
         }
     }
@@ -46,50 +51,65 @@ export default class ForgotPassword extends Component {
                         ToastAndroid.show("Şifre başarıyla değiştirildi", ToastAndroid.SHORT);
                     }, 1000);
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    if(err.code === "CodeMismatchException")
+                        ToastAndroid.show("Doğrulama kodu yanlış", ToastAndroid.SHORT);
+                    if(err.code === "InvalidParameterException")
+                        ToastAndroid.show("Şifre uzunluğu yeterli değil", ToastAndroid.SHORT);
+                    console.log(err)
+                });
             } catch (error) {
-                console.log("Hata forgotPasswordSubmit", err)
+                console.log("Hata forgotPasswordSubmit...", error)
             }
         }
     }
 
     render() {
         return (
-            <View style = {{flex : 1, justifyContent : "center", paddingHorizontal : 7, backgroundColor : "#ddd"}}>
+            <View style = {{flex : 1, justifyContent : "center", paddingHorizontal : 7, backgroundColor : "white"}}>
                 {
                     this.state.stage === Number(0) &&
-                        (<View>
-                            <TextInput style = {{borderWidth : 0.45, 
-                                paddingHorizontal : 13, 
-                                marginBottom : 7,
-                                backgroundColor : "white" }} 
-                                placeholder = "kullanıcı adı"
-                                onChangeText = {(value) => this.getUserInput("username", value)}/>
-                            <Button title = "Şifreyi yenile" onPress = {() => {
-                                this.forgotPassword();
-                            }}/>
-                        </View>)
+                        (
+                        <React.Fragment>
+                            <View style = {styles.apertureContainer}>
+                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
+                            </View>
+                            <View style = {{alignItems : "center", flex : 1}}>
+                                <TextInput style = {styles.textInput} 
+                                    placeholder = "kullanıcı adı"
+                                    onChangeText = {(value) => this.getUserInput("username", value)}/>
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                    this.forgotPassword();
+                                }}>
+                                    <Text style = {styles.buttonText}>Devam</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </React.Fragment>)
                 }
 
                 {
                     this.state.stage === Number(1) &&
-                        (<View>
-                            <TextInput style = {{borderWidth : 0.45, 
-                                paddingHorizontal : 13, 
-                                marginBottom : 7,
-                                backgroundColor : "white" }} 
-                                placeholder = "doğrulama kodu"
-                                onChangeText = {(value) => this.getUserInput("code", value)}/>
-                            <TextInput style = {{borderWidth : 0.45, 
-                                paddingHorizontal : 13, 
-                                marginBottom : 7,
-                                backgroundColor : "white" }} 
-                                placeholder = "yeni parola"
-                                secureTextEntry
-                                onChangeText = {(value) => this.getUserInput("newPass", value)}/>
-                            <Button title = "Şifreyi yenile" onPress = {() => {
-                                this.forgotPasswordSubmit();
-                            }}/>
+                        (<View style = {{flex : 1, alignItems : "center"}}>
+                            <View style = {styles.apertureContainer}>
+                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
+                            </View>
+                            <View style = {{flex : 1, alignItems : "center", justifyContent : "flex-start"}}>
+                                <TextInput style = {styles.textInput} 
+                                    placeholder = "doğrulama kodu"
+                                    onChangeText = {(value) => this.getUserInput("code", value)}/>
+                                <TextInput style = {styles.textInput} 
+                                    placeholder = "yeni parola"
+                                    secureTextEntry
+                                    onChangeText = {(value) => this.getUserInput("newPass", value)}/>
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                    this.forgotPasswordSubmit()
+                                }}>
+                                    <Text style = {styles.buttonText}>Yenile</Text>
+                                </TouchableOpacity>
+                                {/* <Button title = "Şifreyi yenile" onPress = {() => {
+                                    this.forgotPasswordSubmit();
+                                }}/> */}
+                            </View>
                         </View>)
                 }
 
@@ -97,3 +117,36 @@ export default class ForgotPassword extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    textInput : {
+        backgroundColor : "#e1f0e8",
+        borderRadius : 3,
+        borderWidth : 0.25,
+        borderColor : "gray",
+        padding : 7,
+        width : (Dimensions.get("window").width * 4) / 5,
+        margin : 7,
+        color : "black",        
+    },
+    apertureContainer : {
+        flex : 1,
+        justifyContent : "center",
+        alignItems : "center",
+    },
+    logoSize : Dimensions.get("window").height / 3.5,
+    button : {
+        backgroundColor : "orange",
+        opacity : 0.8,
+        width : Dimensions.get("window").width / 2,
+        justifyContent : "center",
+        alignItems : "center",
+        padding : 7,
+        borderRadius : 3
+    },
+    buttonText : {
+        fontSize : 14,
+        fontWeight : "bold",
+        letterSpacing : 1
+    } 
+})

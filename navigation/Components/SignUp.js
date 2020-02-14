@@ -110,7 +110,7 @@ export default class SignUp extends Component {
                             <View style = {{flex : 4, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
                                 <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                                 <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
-                                <TextInput maxLength = {12} placeholder = "telefon numarası" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
+                                <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
                                 <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("password", value)}/>
                                 <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
                                         this.signUp()
