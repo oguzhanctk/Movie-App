@@ -3,13 +3,13 @@ import { View, SafeAreaView, ScrollView } from "react-native";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 import { Loader } from "./microComponents/Loader";
-import AsyncStorage from "@react-native-community/async-storage";
 
 export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            page : 1
+            page : 1,
+            currentUser : "",
         }
     }
 

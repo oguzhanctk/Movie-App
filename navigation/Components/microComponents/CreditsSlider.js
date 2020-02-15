@@ -5,8 +5,8 @@ const CreditsSlider = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const renderItem = ({item}) => (
         <View style = {{width : 110, alignItems : "center"}}>
-            <Image source = {{uri : `https://image.tmdb.org/t/p/w500${item.profile_path}`}}
-                style = {{width : 70, 
+            <Image source = {{uri : `${baseImageUrl + item.profile_path}`}}
+                style = {{width : 70,
                     height : 70, 
                     borderRadius : 35, 
                     marginRight : 7, 
@@ -18,7 +18,7 @@ const CreditsSlider = (props) => {
     );
 
     return (
-        <View style = {{padding : 5, marginVertical : 15}}>
+        <View style = {{padding : 5, marginVertical : 15, alignItems : "center"}}>
             <FlatList
                 data = {props.data}
                 horizontal

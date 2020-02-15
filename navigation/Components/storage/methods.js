@@ -2,12 +2,12 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { checkDataExistence } from "./helpers";
 import { ToastAndroid } from "react-native";
 
-export const storeData = async (value, f) => {
+export const storeData = async (value, f, username) => {
     try {
-        let existingData = await AsyncStorage.getItem("@library_item");
+        let existingData = await AsyncStorage.getItem(`@library_item_${username}`);
         if(existingData === null) {
             try {
-                await AsyncStorage.setItem("@library_item", JSON.stringify([value]));
+                await AsyncStorage.setItem(`@library_item_${username}`, JSON.stringify([value]));
                 f(true);
                 ToastAndroid.show("Kütüphaneye eklendi", ToastAndroid.SHORT);
             } catch (error) {
@@ -18,7 +18,7 @@ export const storeData = async (value, f) => {
                 let toArray = JSON.parse(existingData);
                 if(checkDataExistence(toArray, value) === false) {
                     toArray.push(value);
-                    await AsyncStorage.setItem("@library_item", JSON.stringify(toArray));
+                    await AsyncStorage.setItem(`@library_item_${username}`, JSON.stringify(toArray));
                     f(true);
                     ToastAndroid.show("Kütüphaneye eklendi", ToastAndroid.SHORT);
                 } else {
@@ -33,12 +33,12 @@ export const storeData = async (value, f) => {
     }
 }
 
-export const removeData = async (id) => {
+export const removeData = async (id, username) => {
         try {
-            let data = await AsyncStorage.getItem("@library_item");
+            let data = await AsyncStorage.getItem(`@library_item_${username}`);
             let res = JSON.parse(data).filter(item => item.id !== id);
             try {
-                await AsyncStorage.setItem("@library_item", JSON.stringify(res));
+                await AsyncStorage.setItem(`@library_item_${username}`, JSON.stringify(res));
                 ToastAndroid.show("Kütüphaneden başarıyla kaldırıldı", ToastAndroid.SHORT);
             } catch (error) {
                 console.log(error);

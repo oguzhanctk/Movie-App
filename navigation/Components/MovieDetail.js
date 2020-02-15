@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, SafeAreaView, Dimensions, ScrollView, ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid } from 'react-native'
+import {View,
+        Text,
+        SafeAreaView,
+        Dimensions,
+        ScrollView,
+        ImageBackground,
+        TouchableHighlight,
+        StyleSheet} from 'react-native'
 import CustomAnimation from "../../animation_Components/animations/";
 import { Badge } from "../Components/microComponents/Badge";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -7,6 +14,7 @@ import CreditsSlider from "../Components/microComponents/CreditsSlider";
 import { storeMethod } from "./storage/index";
 import { Loader } from './microComponents/Loader';
 import { constants } from "../../api/config";
+import { Auth } from "aws-amplify";
 
 const MovieDetail = (props) => {
     const url = (props.mediaType === "tv") ?
@@ -42,8 +50,14 @@ const MovieDetail = (props) => {
                                 {
                                     (isAdded === true) ?
                                         null :
-                                    (<TouchableHighlight style = {styles.fab} onPress = {() => {
-                                        storeMethod.storeData({id : props.movieDetail.id, poster_path : props.movieDetail.poster_path, media_type : props.mediaType}, setisAdded);
+                                    (<TouchableHighlight style = {styles.fab} onPress = {async () => {
+                                        const user = await Auth.currentAuthenticatedUser();
+                                        storeMethod.storeData({
+                                            id : props.movieDetail.id, 
+                                            poster_path : props.movieDetail.poster_path, 
+                                            media_type : props.mediaType},
+                                            setisAdded,
+                                            user.username);
                                     }}
                                     underlayColor = "lightgreen">
                                         <Icon name = "add" size = {35} color = "black"/>
@@ -72,7 +86,7 @@ const MovieDetail = (props) => {
                                     <View>
                                         {
                                             (props.mediaType === "movie") ? 
-                                                (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}d</Text>) :
+                                                (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}<Text style = {{fontSize : 9}}>dk</Text></Text>) :
                                                 (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.number_of_seasons} sezon</Text>) 
                                         }
                                     </View>

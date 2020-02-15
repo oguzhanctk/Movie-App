@@ -75,16 +75,28 @@ export default class SignIn extends Component {
                     <View style = {{flex : 2, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
                         <TextInput maxLength = {30} placeholder = "kullanıcı adı" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                         <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
-                        <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                            this.setState({isSubmit : true}, () => {
-                                this.signIn()
-                            });
-                        }}>
-                            <Text style = {styles.buttonText}>Giriş</Text>
-                        </TouchableOpacity>
+                        <View style = {{
+                            flexDirection : "row", 
+                            justifyContent : "space-between", 
+                            width : Dimensions.get("window").width * 0.8}}>
+                            <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                this.setState({isSubmit : true}, () => {
+                                    this.signIn()
+                                });
+                            }}>
+                                <Text style = {styles.buttonText}>Giriş</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {{...styles.button, backgroundColor : "#fac966"}} disabled = {true} onPress = {() => {
+                                this.setState({isSubmit : true}, () => {
+                                    goToMainLayout();
+                                });
+                            }}>
+                                <Text style = {styles.buttonText}>Atla</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style = {{flex : 0.5, 
-                            flexDirection : "column", 
+                            flexDirection : "column",
                             justifyContent : "space-evenly",
                             alignItems : "center"}}>
                         <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
@@ -119,7 +131,7 @@ const styles = StyleSheet.create({
         borderWidth : 0.25,
         borderColor : "gray",
         padding : 7,
-        width : (Dimensions.get("window").width * 4) / 5,
+        width : Dimensions.get("window").width * 0.8,
         margin : 7,
         color : "black",        
     },
@@ -132,7 +144,7 @@ const styles = StyleSheet.create({
     button : {
         backgroundColor : "orange",
         opacity : 0.8,
-        width : Dimensions.get("window").width / 2,
+        width : Dimensions.get("window").width / 3,
         justifyContent : "center",
         alignItems : "center",
         padding : 7,

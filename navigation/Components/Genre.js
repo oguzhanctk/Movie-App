@@ -15,10 +15,11 @@ export default class Genre extends Component {
     }
     
     componentDidMount = async () => {
-        await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page}`)
+            await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page}`)
     }
+    
     componentWillUnmount = () => {
-        this.props.clearResultArray()
+        this.props.clearResultArray();
     }
 
     onMoviePress = (id, type) => {

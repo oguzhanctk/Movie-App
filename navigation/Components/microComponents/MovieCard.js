@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid, Button, Text } from 'react-native'
+import React, { useState } from 'react'
+import { ImageBackground, TouchableHighlight, StyleSheet } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
-import AsyncStorage from "@react-native-community/async-storage";
 import { storeMethod } from "../storage/index";
+import { Auth } from "aws-amplify";
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
@@ -39,8 +39,14 @@ export const MovieCard = (props) => {
                         (isAdded === true) ?
                             null : 
                         (<TouchableHighlight style = {styles.fab} 
-                            onPress = {() => {
-                                storeMethod.storeData({id : props.id, poster_path : props.imagePath, media_type : props.mediaType}, setisAdded);
+                            onPress = {async () => {
+                                const user = await Auth.currentAuthenticatedUser();
+                                storeMethod.storeData({
+                                    id : props.id, 
+                                    poster_path : props.imagePath, 
+                                    media_type : props.mediaType},
+                                    setisAdded,
+                                    user.username);
                             }}
                             underlayColor = "lightgreen">
                             <Icon name = "plus" size = {17}/>

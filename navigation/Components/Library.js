@@ -16,7 +16,8 @@ export default class Library extends Component {
         Navigation.events().bindComponent(this);
         this.state = {
             data : [],
-            isLoading : false
+            isLoading : false,
+            currentUser : "", 
         };
     }
 
@@ -24,6 +25,11 @@ export default class Library extends Component {
 
     componentDidAppear = () => {
         this.getData();
+    }
+
+    componentDidMount = async () => {
+        const user = await Auth.currentAuthenticatedUser();
+        this.setState({currentUser : user.username});
     }
 
     // componentDidMount = () => {
@@ -35,14 +41,14 @@ export default class Library extends Component {
     }
 
     getData = async () => {
-        const data = await AsyncStorage.getItem("@library_item");
+        const user = await Auth.currentAuthenticatedUser();
+        const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
         if(data) {
             try {
                 this.setState({isLoading : true}, async () => {
                     this.setState({isLoading : false});
                     const res = JSON.parse(data).reverse();
                     if(data !== []) {
-                        console.log(res);
                         this.setState({data : [...res]});
                     }
                 });
@@ -92,7 +98,7 @@ export default class Library extends Component {
                         onPress = {() => {
                             let toArray = this.state.data.filter(member => member.id !== item.id);
                             this.setState({data : toArray});
-                            storeMethod.removeData(item.id);
+                            storeMethod.removeData(item.id, this.state.currentUser);
                         }}
                         underlayColor = "red">
                         <Icon name = "minus" size = {15} color = "black"/>

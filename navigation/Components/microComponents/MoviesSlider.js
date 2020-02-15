@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList, StyleSheet, Dimensions } from 'react-native'
+import { View, Text, FlatList, Dimensions } from 'react-native'
 import { MovieCard } from "./MovieCard";
 import { DimensionDeclaration } from "./dimensions_declaration";
 
@@ -17,7 +17,7 @@ export const MoviesSlider = (props) => {
                     data = {props.movieData.filter(item => item.poster_path !== null)}
                     horizontal
                     renderItem = {({item}) => (
-                        <MovieCard  imagePath = {item.poster_path} 
+                        <MovieCard imagePath = {item.poster_path} 
                             id = {item.id}
                             mediaType = {item.media_type}/>
                         )}
