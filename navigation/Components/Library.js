@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, ImageBackground, TouchableOpacity, TouchableHighlight, StyleSheet } from "react-native";
+import { View, Text, FlatList, ImageBackground, TouchableOpacity, TouchableHighlight, StyleSheet, Dimensions } from "react-native";
 import { Navigation } from "react-native-navigation";
 import AsyncStorage from "@react-native-community/async-storage";
 import { constants } from "../../api/config";
@@ -9,6 +9,7 @@ import { storeMethod } from "./storage/index";
 import Icon from "react-native-vector-icons/Feather";
 import { Auth } from "aws-amplify";
 import { goToAuth } from "../navigation";
+import LottieView from "lottie-react-native";
 
 export default class Library extends Component {
     constructor(props) {
@@ -17,7 +18,8 @@ export default class Library extends Component {
         this.state = {
             data : [],
             isLoading : false,
-            currentUser : "", 
+            currentUser : "",
+            isSkip : null,
         };
     }
 
@@ -28,8 +30,12 @@ export default class Library extends Component {
     }
 
     componentDidMount = async () => {
-        const user = await Auth.currentAuthenticatedUser();
-        this.setState({currentUser : user.username});
+        const isSkip = await AsyncStorage.getItem("@isSkip");
+        if(isSkip !== "true") {
+            const user = await Auth.currentAuthenticatedUser();
+            this.setState({currentUser : user.username});
+        } else 
+            this.setState({isSkip : true});
     }
 
     // componentDidMount = () => {
@@ -41,19 +47,21 @@ export default class Library extends Component {
     }
 
     getData = async () => {
-        const user = await Auth.currentAuthenticatedUser();
-        const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
-        if(data) {
-            try {
-                this.setState({isLoading : true}, async () => {
-                    this.setState({isLoading : false});
-                    const res = JSON.parse(data).reverse();
-                    if(data !== []) {
-                        this.setState({data : [...res]});
-                    }
-                });
-            } catch (error) {
-                console.log(error)
+        if(this.state.isSkip !== true) { 
+            const user = await Auth.currentAuthenticatedUser();
+            const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
+            if(data) {
+                try {
+                    this.setState({isLoading : true}, async () => {
+                        this.setState({isLoading : false});
+                        const res = JSON.parse(data).reverse();
+                        if(data !== []) {
+                            this.setState({data : [...res]});
+                        }
+                    });
+                } catch (error) {
+                    console.log(error)
+                }
             }
         }
     }
@@ -109,24 +117,48 @@ export default class Library extends Component {
     );
 
     render() {
+        const iconSizeH = Dimensions.get("window").height / 2;
+        const iconSizeW = Dimensions.get("window").width;
         return(
-            <View style = {{flex : 1}}>
-                <View style = {{flex : 1, justifyContent : "center", alignItems : "flex-end", backgroundColor : "gray"}}>
-                    <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
-                        <Icon name = "x-circle" size = {20} color = "darkred"/>
-                    </TouchableOpacity>
-                </View>
-                <View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
-                {
-                    (this.state.isLoading) ?
-                        null : 
-                    (<FlatList data = {this.state.data}
-                        renderItem = {this.renderItem}
-                        keyExtractor = {(item) => item.id.toString()}
-                        numColumns = {3}/>)
-                }
-                </View>
-            </View>
+            (this.state.isSkip === true) ? 
+                (<View style = {{
+                    flex : 1, 
+                    backgroundColor : "gray",
+                    justifyContent : "flex-start",
+                    alignItems: "center"}}>
+                    <View style = {{
+                        height : iconSizeH,
+                        width : iconSizeW,
+                        justifyContent : "center",
+                        alignItems : "center",
+                        marginBottom : 17}}>
+                        <LottieView source = {require("../assets/animation/823-crying")} autoPlay loop/>
+                    </View>
+                    <View style = {{alignItems : "center", justifyContent : "center"}}>
+                        <Text style = {{fontSize : 19, color : "white", marginBottom : 7}}>Kütüphaneyi kullanabilmek için</Text>
+                        <Text style = {{fontSize : 19, color : "white", marginBottom : 17}}>lütfen giriş yapın.</Text>
+                        <TouchableOpacity style = {{...styles.logout, right : 0}} onPress = {() => goToAuth()}>
+                            <Icon name = "x-circle" size = {20} color = "darkred"/>
+                        </TouchableOpacity>
+                    </View>
+                </View>) :
+                (<View style = {{flex : 1}}>
+                    <View style = {{flex : 1, justifyContent : "center", alignItems : "flex-end", backgroundColor : "gray"}}>
+                        <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
+                            <Icon name = "x-circle" size = {20} color = "darkred"/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
+                    {
+                        (this.state.isLoading) ?
+                            null : 
+                        (<FlatList data = {this.state.data}
+                            renderItem = {this.renderItem}
+                            keyExtractor = {(item) => item.id.toString()}
+                            numColumns = {3}/>)
+                    }
+                    </View>
+                </View>)
         )
     }
 }

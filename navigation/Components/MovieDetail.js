@@ -6,7 +6,8 @@ import {View,
         ScrollView,
         ImageBackground,
         TouchableHighlight,
-        StyleSheet} from 'react-native'
+        StyleSheet,
+        ToastAndroid} from 'react-native'
 import CustomAnimation from "../../animation_Components/animations/";
 import { Badge } from "../Components/microComponents/Badge";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -15,6 +16,7 @@ import { storeMethod } from "./storage/index";
 import { Loader } from './microComponents/Loader';
 import { constants } from "../../api/config";
 import { Auth } from "aws-amplify";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const MovieDetail = (props) => {
     const url = (props.mediaType === "tv") ?
@@ -51,13 +53,18 @@ const MovieDetail = (props) => {
                                     (isAdded === true) ?
                                         null :
                                     (<TouchableHighlight style = {styles.fab} onPress = {async () => {
-                                        const user = await Auth.currentAuthenticatedUser();
-                                        storeMethod.storeData({
-                                            id : props.movieDetail.id, 
-                                            poster_path : props.movieDetail.poster_path, 
-                                            media_type : props.mediaType},
-                                            setisAdded,
-                                            user.username);
+                                        const isSkip = await AsyncStorage.getItem("@isSkip");
+                                        if(isSkip === "true") 
+                                            ToastAndroid.show("Bu özelliği kullanabilmek için giriş yapın", ToastAndroid.SHORT);
+                                        else { 
+                                            const user = await Auth.currentAuthenticatedUser();
+                                            storeMethod.storeData({
+                                                id : props.movieDetail.id, 
+                                                poster_path : props.movieDetail.poster_path, 
+                                                media_type : props.mediaType},
+                                                setisAdded,
+                                                user.username);
+                                            }
                                     }}
                                     underlayColor = "lightgreen">
                                         <Icon name = "add" size = {35} color = "black"/>

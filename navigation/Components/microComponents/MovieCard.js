@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { ImageBackground, TouchableHighlight, StyleSheet } from 'react-native'
+import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import { storeMethod } from "../storage/index";
 import { Auth } from "aws-amplify";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
@@ -37,16 +38,21 @@ export const MovieCard = (props) => {
                 resizeMode = "cover">
                     {
                         (isAdded === true) ?
-                            null : 
+                            null :
                         (<TouchableHighlight style = {styles.fab} 
                             onPress = {async () => {
-                                const user = await Auth.currentAuthenticatedUser();
-                                storeMethod.storeData({
-                                    id : props.id, 
-                                    poster_path : props.imagePath, 
-                                    media_type : props.mediaType},
-                                    setisAdded,
-                                    user.username);
+                                const isSkip = await AsyncStorage.getItem("@isSkip");
+                                if(isSkip === "true")
+                                    ToastAndroid.show("Bu özelliği kullanabilmek için giriş yapın", ToastAndroid.LONG)
+                                else {
+                                    const user = await Auth.currentAuthenticatedUser();
+                                    storeMethod.storeData({
+                                        id : props.id, 
+                                        poster_path : props.imagePath, 
+                                        media_type : props.mediaType},
+                                        setisAdded,
+                                        user.username);
+                                }
                             }}
                             underlayColor = "lightgreen">
                             <Icon name = "plus" size = {17}/>

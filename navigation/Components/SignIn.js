@@ -46,9 +46,10 @@ export default class SignIn extends Component {
                 await Auth.signIn(username, password)
                 .then(async () => {
                     this.setState({isSubmit : false}, () => goToMainLayout());
-                    await AsyncStorage.setItem("@auth_status", "true")
+                    await AsyncStorage.setItem("@auth_status", "true");
+                    await AsyncStorage.setItem("@isSkip", "false");
                     console.log("succesful sign in");
-                }) 
+                })
                 .catch(err => {
                     this.setState({isSubmit : false}, () => {
                         ToastAndroid.show("Kullanıcı adı ya da parola yanlış", ToastAndroid.SHORT)
@@ -86,8 +87,9 @@ export default class SignIn extends Component {
                             }}>
                                 <Text style = {styles.buttonText}>Giriş</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style = {{...styles.button, backgroundColor : "#fac966"}} disabled = {true} onPress = {() => {
-                                this.setState({isSubmit : true}, () => {
+                            <TouchableOpacity style = {{...styles.button, backgroundColor : "#fac966"}} disabled = {this.state.isSubmit} onPress = {() => {
+                                this.setState({isSubmit : true}, async () => {
+                                    await AsyncStorage.setItem("@isSkip", "true");
                                     goToMainLayout();
                                 });
                             }}>
