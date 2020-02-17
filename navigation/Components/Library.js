@@ -26,7 +26,8 @@ export default class Library extends Component {
     //test comment
 
     componentDidAppear = () => {
-        this.getData();
+        if(this.state.isSkip !== true) 
+            this.getData();
     }
 
     componentDidMount = async () => {
@@ -47,21 +48,19 @@ export default class Library extends Component {
     }
 
     getData = async () => {
-        if(this.state.isSkip !== true) { 
-            const user = await Auth.currentAuthenticatedUser();
-            const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
-            if(data) {
-                try {
-                    this.setState({isLoading : true}, async () => {
-                        this.setState({isLoading : false});
-                        const res = JSON.parse(data).reverse();
-                        if(data !== []) {
-                            this.setState({data : [...res]});
-                        }
-                    });
-                } catch (error) {
-                    console.log(error)
-                }
+        const user = await Auth.currentAuthenticatedUser();
+        const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
+        if(data) {
+            try {
+                this.setState({isLoading : true}, async () => {
+                    this.setState({isLoading : false});
+                    const res = JSON.parse(data).reverse();
+                    if(data !== []) {
+                        this.setState({data : [...res]});
+                    }
+                });
+            } catch (error) {
+                console.log(error)
             }
         }
     }
@@ -137,7 +136,11 @@ export default class Library extends Component {
                     <View style = {{alignItems : "center", justifyContent : "center"}}>
                         <Text style = {{fontSize : 19, color : "white", marginBottom : 7}}>Kütüphaneyi kullanabilmek için</Text>
                         <Text style = {{fontSize : 19, color : "white", marginBottom : 17}}>lütfen giriş yapın.</Text>
-                        <TouchableOpacity style = {{...styles.logout, right : 0}} onPress = {() => goToAuth()}>
+                        <TouchableOpacity style = {{...styles.logout, right : 0}}
+                            onPress = {async () => {
+                                await AsyncStorage.setItem("@isSkip", "false");
+                                goToAuth();
+                            }}>
                             <Icon name = "x-circle" size = {20} color = "darkred"/>
                         </TouchableOpacity>
                     </View>

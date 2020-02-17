@@ -46,8 +46,10 @@ export default class SignUp extends Component {
                             break;
                         case "UsernameExistsException":
                             ToastAndroid.show("Bu kullanıcı adı daha önce alınmış", ToastAndroid.SHORT);
+                            break;
                         case "InvalidPasswordException":
                             ToastAndroid.show("Şifre uzunluğu en az 8 karakter olmalıdır.", ToastAndroid.SHORT);
+                            break;
                         default:
                             break;
                     }
