@@ -76,12 +76,12 @@ export default class Discover extends Component {
                         justifyContent : "center",
                         alignItems : "center",
                         padding : 0}}>
-                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#33b539" : "#c3c7c4"}}
+                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#47b559" : "#c3c7c4"}}
                         onPress = {() => this.setState({isSelectedTypeMovie : true})}>
                         <Text style = {{fontWeight : "bold", letterSpacing : 1, color : "black"}}>Film</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {{width : 8, height : 8, borderRadius : 4, marginHorizontal : 7, backgroundColor : "black"}}/>
-                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#c3c7c4" : "#33b539"}}
+                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#c3c7c4" : "#47b559"}}
                         onPress = {() => this.setState({isSelectedTypeMovie : false})}>
                         <Text style = {{fontWeight : "bold", letterSpacing : 1}}>Dizi</Text>
                     </TouchableOpacity>
@@ -101,10 +101,10 @@ export default class Discover extends Component {
                                 this.onSearchPress(type);
                             }}
                             activeOpacity = {0.75}>
-                        <Icon name = "search" size = {30} color = "gray"/>
-                        <Text style = {{fontSize : 21, color : "gray", marginLeft : 13}}>aramak için dokun</Text>
+                        <Icon name = "search" size = {23} color = "gray"/>
+                        <Text style = {{fontSize : 17, color : "gray", marginLeft : 13}}>aramak için dokun</Text>
                     </TouchableOpacity>
-                    <View style = {{flex : 9, width : "100%", padding : 5, alignItems : "center"}}>
+                    <View style = {{flex : 12, width : "100%", padding : 5, alignItems : "center"}}>
                         <FlatList data = {(this.state.isSelectedTypeMovie) ? movieGenres : tvGenres}
                             renderItem = {this.renderItem}
                             keyExtractor = {(item) => item.id.toString()}

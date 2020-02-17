@@ -9,7 +9,7 @@ export const movieGenres = [
     {
       "id": 28,
       "name": "Action",
-      "color": "#63876f"
+      "color": "#5c9c65"
     },
     {
       "id": 12,
@@ -39,7 +39,7 @@ export const movieGenres = [
     {
       "id": 18,
       "name": "Drama",
-      "color": "#5771d9"
+      "color": "#2f41fa"
     },
     {
       "id": 10751,

@@ -120,7 +120,8 @@ export default class Library extends Component {
         const iconSizeW = Dimensions.get("window").width;
         return(
             (this.state.isSkip === true) ? 
-                (<View style = {{
+                (
+                <View style = {{
                     flex : 1, 
                     backgroundColor : "gray",
                     justifyContent : "flex-start",
@@ -144,9 +145,15 @@ export default class Library extends Component {
                             <Icon name = "x-circle" size = {20} color = "darkred"/>
                         </TouchableOpacity>
                     </View>
-                </View>) :
-                (<View style = {{flex : 1}}>
-                    <View style = {{flex : 1, justifyContent : "center", alignItems : "flex-end", backgroundColor : "gray"}}>
+                </View>
+                ) :
+                (
+                <View style = {{flex : 1}}>
+                    <View style = {{
+                        flex : 1, 
+                        justifyContent : "center",
+                        alignItems : "flex-end",
+                        backgroundColor : "gray"}}>
                         <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
                             <Icon name = "x-circle" size = {20} color = "darkred"/>
                         </TouchableOpacity>
@@ -161,7 +168,8 @@ export default class Library extends Component {
                             numColumns = {3}/>)
                     }
                     </View>
-                </View>)
+                </View>
+                )
         )
     }
 }

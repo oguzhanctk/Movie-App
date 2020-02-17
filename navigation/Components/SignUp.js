@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {View, 
         Text, 
-        Button, 
         TextInput, 
         StyleSheet, 
         Dimensions, 
@@ -11,6 +10,7 @@ import {View,
 import { goToAuth } from "../navigation";
 import { Auth } from "aws-amplify";
 import Icon from "react-native-vector-icons/Feather";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class SignUp extends Component {
 
@@ -20,7 +20,7 @@ export default class SignUp extends Component {
         password : "",
         phone_number : "",
         confCode : "",
-        stage : 0
+        stage : 0,
     }
 
     getInput = (key, val) => {
@@ -36,6 +36,7 @@ export default class SignUp extends Component {
                 await Auth.signUp({username, password, attributes : {email}});
                 console.log("succesfull signup");
                 this.setState({stage : 1});
+                await AsyncStorage.setItem("@stage", JSON.stringify({stage : 1, username : this.state.username}));
             } catch (error) {
                 if(error.message === "Invalid email address format.")
                     ToastAndroid.show("Lütfen geçerli bir e-mail adresi girin", ToastAndroid.SHORT);
@@ -71,6 +72,7 @@ export default class SignUp extends Component {
                     ToastAndroid.show("Kayıt başarılı.", ToastAndroid.SHORT);
                     goToAuth();
                 });
+                await AsyncStorage.setItem("@stage", JSON.stringify({stage : 0, username : ""}));
             } catch (error) {
                 switch (error.code) {
                     case "CodeMismatchException":
@@ -88,13 +90,25 @@ export default class SignUp extends Component {
     }
     
     resendConfCode = async () => {
-        const {username} = this.state;
+        const username = this.state.username;
         try {
             await Auth.resendSignUp(username)
             .then(() => {
                 console.log("kod başarıyla gönderildi");
                 ToastAndroid.show("Kod tekrar gönderildi", ToastAndroid.SHORT);
             })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    componentDidMount = async () => {
+        try {
+            const stage = await AsyncStorage.getItem("@stage").then(res => JSON.parse(res)) || {stage : 0, username : ""};
+            this.setState({
+                stage : stage.stage,
+                username : stage.username    
+            });
         } catch (error) {
             console.log(error);
         }
@@ -114,8 +128,8 @@ export default class SignUp extends Component {
                                 <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
                                 <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
                                 <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("password", value)}/>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                                        this.signUp()
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {async () => {
+                                        await this.signUp();
                                 }}>
                                     <Text style = {styles.buttonText}>Kaydol</Text>
                                 </TouchableOpacity>
@@ -134,8 +148,8 @@ export default class SignUp extends Component {
                             </View>
                             <View style = {{flex : 1, justifyContent : "flex-start", alignItems : "center"}}>
                                 <TextInput maxLength = {30} placeholder = "doğrulama kodu" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("confCode", value)}/>
-                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {() => {
-                                        this.confirmSignUp();
+                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {async () => {
+                                        await this.confirmSignUp();
                                 }}>
                                     <Text style = {styles.buttonText}>Doğrula</Text>
                                 </TouchableOpacity>
@@ -149,18 +163,6 @@ export default class SignUp extends Component {
                                 }}>
                                     <Text style = {styles.buttonText}>Kayıt ekranına geri dön</Text>
                                 </TouchableOpacity>
-                                
-                                
-                                
-                                {/* <Button title = "Doğrula" onPress = {() => {
-                                    this.confirmSignUp();
-                                }}/>
-                                <Button title = "Kodu tekrar gönder" onPress = {() => {
-                                    this.resendConfCode();
-                                }}/>
-                                <Button title = "kayıt ekranına geri dön" onPress = {() => {
-                                    this.setState({stage : 0});
-                                }}/> */}
                             </View>
                         </View>
                     )

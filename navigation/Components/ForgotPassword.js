@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Button, ToastAndroid, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import {Text, 
+        View, 
+        TextInput,
+        Button,
+        ToastAndroid,
+        StyleSheet,
+        Dimensions,
+        TouchableOpacity} from 'react-native'
 import { Auth } from "aws-amplify";
 import { Navigation } from 'react-native-navigation';
 import Icon from "react-native-vector-icons/Feather";
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class ForgotPassword extends Component {
     state = {
@@ -28,10 +36,20 @@ export default class ForgotPassword extends Component {
                     console.log(data);
                 })
                 .catch(err => {
-                    if(err.code === "UserNotFoundException")
-                        ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT);
-                    console.log(err)
+                    switch (err.code) {
+                        case "UserNotFoundException":
+                            ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT);
+                            break;
+                        case "InvalidParameterException":
+                            ToastAndroid.show("Kullanıcı için e-mail adresi doğrulanmamış", ToastAndroid.SHORT);
+                        case "LimitExceededException":
+                            ToastAndroid.show("İstek limiti aşıldı", ToastAndroid.SHORT);
+                        default:
+                            break;
+                        };
+                    console.log(err);
                 });
+                await AsyncStorage.setItem("@password_stage", JSON.stringify({stage : 1, username : this.state.username}));
             } catch (error) {
                 console.log("Hata forgotPassword...", error);
             }
@@ -52,15 +70,37 @@ export default class ForgotPassword extends Component {
                     }, 1000);
                 })
                 .catch(err => {
-                    if(err.code === "CodeMismatchException")
-                        ToastAndroid.show("Doğrulama kodu yanlış", ToastAndroid.SHORT);
-                    if(err.code === "InvalidParameterException")
-                        ToastAndroid.show("Şifre uzunluğu yeterli değil", ToastAndroid.SHORT);
-                    console.log(err)
+                    switch (err.code) {
+                        case "InvalidPasswordException":
+                            ToastAndroid.show("Parola uzunluğu en az 8 karakter olmalıdır", ToastAndroid.SHORT);
+                            break;
+                        case "CodeMismatchException":
+                            ToastAndroid.show("Doğrulama kodu yanlış", ToastAndroid.SHORT);
+                            break;
+                        case "InvalidParameterException":
+                            ToastAndroid.show("Şifre uzunluğu yeterli değil", ToastAndroid.SHORT);
+                            break;
+                        default:
+                            ToastAndroid.show("Bu kullanıcı için e-mail adresi doğrulanmamış", ToastAndroid.SHORT);
+                            break;
+                    }
                 });
+                await AsyncStorage.setItem("@password_stage", JSON.stringify({stage : 0, username : ""}));
             } catch (error) {
                 console.log("Hata forgotPasswordSubmit...", error)
             }
+        }
+    }
+
+    componentDidMount = async () => {
+        try {
+            const stage = await AsyncStorage.getItem("@password_stage").then(res => JSON.parse(res)) || {stage : 0, username : ""};
+            this.setState({
+                stage : stage.stage,
+                username : stage.username    
+            });
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -78,8 +118,8 @@ export default class ForgotPassword extends Component {
                                 <TextInput style = {styles.textInput} 
                                     placeholder = "kullanıcı adı"
                                     onChangeText = {(value) => this.getUserInput("username", value)}/>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                                    this.forgotPassword();
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {async () => {
+                                    await this.forgotPassword();
                                 }}>
                                     <Text style = {styles.buttonText}>Devam</Text>
                                 </TouchableOpacity>
@@ -101,14 +141,19 @@ export default class ForgotPassword extends Component {
                                     placeholder = "yeni parola"
                                     secureTextEntry
                                     onChangeText = {(value) => this.getUserInput("newPass", value)}/>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                                    this.forgotPasswordSubmit()
+                                <TouchableOpacity style = {{...styles.button, marginBottom : 7}} disabled = {this.state.isSubmit} onPress = {async () => {
+                                    await this.forgotPasswordSubmit();
                                 }}>
                                     <Text style = {styles.buttonText}>Yenile</Text>
                                 </TouchableOpacity>
-                                {/* <Button title = "Şifreyi yenile" onPress = {() => {
-                                    this.forgotPasswordSubmit();
-                                }}/> */}
+                                <TouchableOpacity style = {styles.button} onPress = {async () => {
+                                    this.setState({stage : 0});
+                                    await AsyncStorage.setItem("@password_stage", JSON.stringify({stage : 0, username : ""}));
+
+                                }}>
+                                    <Text style = {styles.buttonText}>Geri dön</Text>
+                                </TouchableOpacity>
+                                
                             </View>
                         </View>)
                 }

@@ -113,7 +113,7 @@ export default class SignIn extends Component {
                         <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
                             Navigation.showModal({
                                 component : {
-                                    name : "ForgotPassword"
+                                    name : "ForgotPassword",
                                 }
                             });
                         }}>
