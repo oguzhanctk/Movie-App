@@ -8,97 +8,97 @@ export const libraryConstants = {
 export const movieGenres = [
     {
       "id": 28,
-      "name": "Action",
+      "name": "Aksiyon",
       "color": "#5c9c65"
     },
     {
       "id": 12,
-      "name": "Adventure",
+      "name": "Macera",
       "color": "#6e8a65"
     },
     {
       "id": 16,
-      "name": "Animation",
+      "name": "Animasyon",
       "color": "#70805b"
     },
     {
       "id": 35,
-      "name": "Comedy",
+      "name": "Komedi",
       "color": "#8a8f5e"
     },
     {
       "id": 80,
-      "name": "Crime",
+      "name": "Suç",
       "color": "#a1976d"
     },
     {
       "id": 99,
-      "name": "Documentary",
+      "name": "Belgesel",
       "color": "#ad8379"
     },
     {
       "id": 18,
-      "name": "Drama",
+      "name": "Dram",
       "color": "#2f41fa"
     },
     {
       "id": 10751,
-      "name": "Family",
+      "name": "Aile",
       "color": "#6843bf"
     },
     {
       "id": 14,
-      "name": "Fantasy",
+      "name": "Fantastik",
       "color": "#8f43bf"
     },
     {
       "id": 36,
-      "name": "History",
+      "name": "Tarih",
       "color": "#a33950"
     },
     {
       "id": 27,
-      "name": "Horror",
+      "name": "Korku",
       "color": "#5e2632"
     },
     {
       "id": 10402,
-      "name": "Music",
+      "name": "Müzikal",
       "color": "#425925"
     },
     {
       "id": 9648,
-      "name": "Mystery",
+      "name": "Gizem",
       "color": "#3c5e56"
     },
     {
       "id": 10749,
-      "name": "Romance",
+      "name": "Romantik",
       "color": "#9a409c"
     },
     {
       "id": 878,
-      "name": "Science Fiction",
+      "name": "Bilim-Kurgu",
       "color": "#233b4a"
     },
     {
       "id": 10770,
-      "name": "TV Movie",
+      "name": "TV Filmleri",
       "color": "#425c2d"
     },
     {
       "id": 53,
-      "name": "Thriller",
+      "name": "Gerilim",
       "color": "#477864"
     },
     {
       "id": 10752,
-      "name": "War",
+      "name": "Savaş",
       "color": "#6e6147"
     },
     {
       "id": 37,
-      "name": "Western",
+      "name": "Vahşi Batı",
       "color": "#41804b"
     }
   ];
@@ -107,82 +107,82 @@ export const movieGenres = [
     
     {
       "id": 10759,
-      "name": "Action & Adventure",
+      "name": "Aksiyon & Macera ",
       "color" : "#63876f"
     },
     {
       "id": 16,
-      "name": "Animation",
+      "name": "Animasyon",
       "color" : "#6e8a65"
     },
     {
       "id": 35,
-      "name": "Comedy",
+      "name": "Komedi",
       "color" : "#70805b"
     },
     {
       "id": 80,
-      "name": "Crime",
+      "name": "Suç",
       "color" : "#8a8f5e"
     },
     {
       "id": 99,
-      "name": "Documentary",
+      "name": "Belgesel",
       "color" : "#7a9945"
     },
     {
       "id": 18,
-      "name": "Drama",
+      "name": "Dram",
       "color" : "#498c70"
     },
     {
       "id": 10751,
-      "name": "Family",
+      "name": "Aile",
       "color" : "#6843bf"
     },
     {
       "id": 10762,
-      "name": "Kids",
+      "name": "Çocuk",
       "color" : "#8f43bf"
     },
     {
       "id": 9648,
-      "name": "Mystery",
+      "name": "Gizem",
       "color" : "#a33950"
     },
     {
       "id": 10763,
-      "name": "News",
+      "name": "Haber",
       "color" : "#233b4a"
     },
     {
       "id": 10764,
-      "name": "Reality",
+      "name": "Realite",
       "color" : "#425c2d"
     },
     {
       "id": 10765,
-      "name": "Sci-Fi & Fantasy",
+      "name": "Bilim-Kurgu & Fantastik",
       "color" : "#495b8c"
     },
     {
       "id": 10766,
-      "name": "Soap",
+      "name": "Pembe Dizi",
       "color" : "#477864"
     },
     {
       "id": 10767,
-      "name": "Talk",
+      "name": "Talk Show",
       "color" : "#646b7a"
     },
     {
       "id": 10768,
-      "name": "War & Politics",
+      "name": "Savaş & Politik",
       "color" : "#6e6147"
     },
     {
       "id": 37,
-      "name": "Western",
+      "name": "Vahşi Batı",
       "color" : "#41804b"
     }
   ]

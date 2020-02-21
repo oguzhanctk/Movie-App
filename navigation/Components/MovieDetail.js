@@ -19,6 +19,7 @@ import { Auth } from "aws-amplify";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const MovieDetail = (props) => {
+
     const url = (props.mediaType === "tv") ?
         `https://api.themoviedb.org/3/tv/${props.id}?api_key=${constants.api_key}&language=tr&append_to_response=credits` : 
         `https://api.themoviedb.org/3/movie/${props.id}?api_key=${constants.api_key}&language=tr&append_to_response=credits`;

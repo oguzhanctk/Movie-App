@@ -3,7 +3,6 @@ import { Navigation } from "react-native-navigation";
 Navigation.setDefaultOptions({
     navigationBar : {
         backgroundColor : "gray",
-        
     },
     bottomTabs : {
         titleDisplayMode : "alwaysShow",
@@ -12,6 +11,9 @@ Navigation.setDefaultOptions({
     statusBar : {
         style : "light",
         backgroundColor : "gray"
+    },
+    layout : {
+        orientation : ["portrait"]
     }
     
 })
@@ -55,7 +57,6 @@ export const goToAuth = () => {
                                     selectedIconColor : "black",
                                     iconColor : "gray",
                                     textColor : "gray",
-                                    
                                 }
                             }
                         }
@@ -64,11 +65,10 @@ export const goToAuth = () => {
                 options : {
                     bottomTabs : {
                         backgroundColor : "white",
-                        
-                    }
-                }
-            }
-        }
+                    },
+                },
+            },
+        },
     });   
 }
 
@@ -248,7 +248,7 @@ export const goToMainLayout = () => {
                                         options : {
                                             topBar : {
                                                 visible : false
-                                            }
+                                            },
                                         }
                                     }
                                 }

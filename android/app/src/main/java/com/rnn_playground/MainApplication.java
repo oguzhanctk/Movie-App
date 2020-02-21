@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.amazonaws.RNAWSCognitoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -20,6 +21,7 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 
 
 public class MainApplication extends NavigationApplication {
@@ -49,7 +51,8 @@ public class MainApplication extends NavigationApplication {
           new VectorIconsPackage(),
           new SplashScreenReactPackage(),
           new LottiePackage(),
-          new RNAWSCognitoPackage()
+          new RNAWSCognitoPackage(),
+          new NetInfoPackage()
       );
   }
 

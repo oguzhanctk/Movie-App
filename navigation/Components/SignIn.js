@@ -114,6 +114,11 @@ export default class SignIn extends Component {
                             Navigation.showModal({
                                 component : {
                                     name : "ForgotPassword",
+                                    options : {
+                                        layout : {
+                                            orientation : ["portrait"]
+                                        }
+                                    }
                                 }
                             });
                         }}>

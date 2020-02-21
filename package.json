@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.7.0",
+    "@react-native-community/netinfo": "^5.5.0",
     "amazon-cognito-identity-js": "^3.2.2",
     "aws-amplify": "^2.2.2",
     "aws-amplify-react-native": "^3.2.0",

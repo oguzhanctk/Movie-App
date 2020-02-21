@@ -10,8 +10,13 @@ Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root : {
       component : {
-        name : "Initializing"
-      }
+        name : "Initializing",
+        options : {
+          layout : {
+            orientation : ["portrait"]
+          }
+        }
+      },
     }
   });
 });

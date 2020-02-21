@@ -36,6 +36,8 @@ target 'RNN_Playground' do
 
   pod 'RNAWSCognito', :path => '../node_modules/amazon-cognito-identity-js'
 
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
   target 'RNN_PlaygroundTests' do
     inherit! :search_paths
     # Pods for testing
