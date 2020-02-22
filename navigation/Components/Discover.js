@@ -76,12 +76,12 @@ export default class Discover extends Component {
                         justifyContent : "center",
                         alignItems : "center",
                         padding : 0}}>
-                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#47b559" : "#c3c7c4"}}
+                    <TouchableOpacity style = {{...styles.typeCheck, borderBottomWidth : (this.state.isSelectedTypeMovie === true) ? 3.7 : 0}}
                         onPress = {() => this.setState({isSelectedTypeMovie : true})}>
                         <Text style = {{fontWeight : "bold", letterSpacing : 1, color : "black"}}>Film</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {{width : 8, height : 8, borderRadius : 4, marginHorizontal : 7, backgroundColor : "black"}}/>
-                    <TouchableOpacity style = {{...styles.typeCheck, backgroundColor : (this.state.isSelectedTypeMovie === true) ? "#c3c7c4" : "#47b559"}}
+                    <TouchableOpacity style = {{...styles.typeCheck, borderBottomWidth : (this.state.isSelectedTypeMovie === true) ? 0 : 3.7}}
                         onPress = {() => this.setState({isSelectedTypeMovie : false})}>
                         <Text style = {{fontWeight : "bold", letterSpacing : 1}}>Dizi</Text>
                     </TouchableOpacity>
@@ -90,12 +90,14 @@ export default class Discover extends Component {
                     <TouchableOpacity style = {{flex : 1, 
                             flexDirection : "row",
                             alignItems : "center",
-                            backgroundColor : "#4a4a4a",
+                            backgroundColor : "white",
                             paddingHorizontal : 7,
                             marginHorizontal : 1,
                             borderWidth : 0.65,
                             borderColor : "black",
-                            borderColor : "#595959"}} 
+                            borderColor : "#595959",
+                            borderRadius : 13,
+                            marginVertical : 7}}
                             onPress = {() => {
                                 const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
                                 this.onSearchPress(type);
@@ -119,12 +121,11 @@ export default class Discover extends Component {
 
 const styles = StyleSheet.create({
     typeCheck : {
-        borderWidth : 0.35,
+        borderColor : "lightgreen",
         padding : 3,
         height : Dimensions.get("window").height / 23,
         width : Dimensions.get("window").width / 3.5 ,
         justifyContent : "center",
         alignItems : "center",
-        borderRadius : 5
     }
 })

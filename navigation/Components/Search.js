@@ -42,7 +42,8 @@ class Search extends Component {
                                         borderRadius : 3, 
                                         backgroundColor : "orange",
                                         borderWidth : 0.35,
-                                        borderColor : "black"}}/>
+                                        borderColor : "black"}}
+                                        resizeMode = "contain"/>
                     </TouchableOpacity>
                 </View>
         )
