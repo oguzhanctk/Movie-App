@@ -35,7 +35,7 @@ export const MovieCard = (props) => {
                         justifyContent : "flex-end",
                         alignItems : "flex-end"
                         }}
-                resizeMode = "contain">
+                resizeMode = "cover">
                     {
                         (isAdded === true) ?
                             null :

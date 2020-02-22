@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { View, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, Text, Dimensions } from "react-native";
 import { MoviesSlider } from "./microComponents/MoviesSlider";
 import { constants } from "../../api/config";
 import { Loader } from "./microComponents/Loader";
@@ -11,12 +11,13 @@ export default class Home extends Component {
         this.state = {
             page : 1,
             currentUser : "",
+            isConnected : null,
         }
     }
 
     componentDidMount = async () => {
-        NetInfo.fetch().then(state => {
-            console.log("connection type: ", state.type);
+        NetInfo.addEventListener(state => {
+            console.log("connection type: ", state.details);
             console.log("is connected: ", state.isConnected);
         });
         await this.props.fetchDataFromApi(

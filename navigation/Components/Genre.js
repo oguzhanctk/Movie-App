@@ -62,7 +62,7 @@ export default class Genre extends Component {
                                     backgroundColor : "orange",
                                     borderWidth : 0.35,
                                     borderColor : "black"}}
-                                resizeMode = "contain"/>
+                                resizeMode = "stretch"/>
                 </TouchableOpacity>
             </View>
         )

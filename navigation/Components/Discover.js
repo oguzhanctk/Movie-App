@@ -86,7 +86,7 @@ export default class Discover extends Component {
                         <Text style = {{fontWeight : "bold", letterSpacing : 1}}>Dizi</Text>
                     </TouchableOpacity>
                 </View>
-                <View style = {{flex : 1}}>
+                <View style = {{flex : 1, paddingHorizontal : 5}}>
                     <TouchableOpacity style = {{flex : 1, 
                             flexDirection : "row",
                             alignItems : "center",

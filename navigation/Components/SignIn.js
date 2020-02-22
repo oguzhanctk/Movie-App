@@ -52,7 +52,19 @@ export default class SignIn extends Component {
                 })
                 .catch(err => {
                     this.setState({isSubmit : false}, () => {
-                        ToastAndroid.show("Kullanıcı adı ya da parola yanlış", ToastAndroid.SHORT)
+                        switch (err.code) {
+                            case "NetworkError":
+                                ToastAndroid.show("İnternet bağlantısı yok", ToastAndroid.SHORT)
+                                break;
+                            case "UserNotFoundException":
+                                ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT)
+                                break;
+                            case "NotAuthorizedException":
+                                ToastAndroid.show("Kullanıcı adı ya da parola yanlş", ToastAndroid.SHORT)
+                                break;
+                            default:
+                                break;
+                        }
                     });
                     console.log(err);
                 });
