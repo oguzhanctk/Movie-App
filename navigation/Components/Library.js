@@ -10,6 +10,8 @@ import Icon from "react-native-vector-icons/Feather";
 import { Auth } from "aws-amplify";
 import { goToAuth } from "../navigation";
 import LottieView from "lottie-react-native";
+import NetInfo from "@react-native-community/netinfo";
+import { Alert } from "./microComponents/index";
 
 export default class Library extends Component {
     constructor(props) {
@@ -20,6 +22,7 @@ export default class Library extends Component {
             isLoading : false,
             currentUser : "",
             isSkip : null,
+            isConnected : null
         };
     }
 
@@ -31,6 +34,9 @@ export default class Library extends Component {
     }
 
     componentDidMount = async () => {
+        this.unsubscribe = NetInfo.addEventListener((state) => {
+            this.setState({isConnected : state.isConnected});
+        });
         const isSkip = await AsyncStorage.getItem("@isSkip");
         if(isSkip !== "true") {
             const user = await Auth.currentAuthenticatedUser();
@@ -39,9 +45,10 @@ export default class Library extends Component {
             this.setState({isSkip : true});
     }
 
-    // componentDidMount = () => {
-    //     AsyncStorage.removeItem("@library_item");
-    // }
+    componentWillUnmount = () => {
+        this.unsubscribe();
+        this.setState({isConnected : null});
+    }
 
     componentDidDisappear = () => {
         this.setState({data : []});
@@ -149,6 +156,10 @@ export default class Library extends Component {
                 ) :
                 (
                 <View style = {{flex : 1}}>
+                    {
+                        (this.state.isConnected === null || this.state.isConnected === true) ? null : 
+                        (<Alert color = "red" alertText = "Bağlantı hatası"/>)
+                    }
                     <View style = {{
                         flex : 1, 
                         justifyContent : "center",

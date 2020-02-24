@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 
 export const fetch_Search_Results = (url) => {
+
     return async dispatch => {
         dispatch({
             type : "RESULTS_REQUESTED"
@@ -16,6 +17,7 @@ export const fetch_Search_Results = (url) => {
             });
         })
         .catch(err => {
+            console.log(err);
             dispatch({
                 type : "SEARCH_FAILED"
             })

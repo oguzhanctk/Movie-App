@@ -3,23 +3,37 @@ import { Text, View, SafeAreaView, FlatList, Dimensions, TouchableOpacity, Image
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { Alert } from "./microComponents/index";
+import NetInfo from "@react-native-community/netinfo";
 
 export default class Genre extends Component {
     constructor(props) {
         super(props);
+        Navigation.events().bindComponent(this);
         this.state = {
             page : 1,
             refreshing : false,
+            isConnected : null,
+            isSubmit : false,
             baseUrl : `https://api.themoviedb.org/3/discover/${this.props.media_type}?api_key=${constants.api_key}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=`
         }
     }
     
     componentDidMount = async () => {
-            await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page}`)
+        this.unsubscribe = NetInfo.addEventListener((state) => {
+            this.setState({isConnected : state.isConnected});
+        });
+        await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page}`);
     }
     
     componentWillUnmount = () => {
         this.props.clearResultArray();
+        this.unsubscribe();
+        this.setState({isConnected : null});
+    }
+
+    componentDidAppear = () => {
+        this.setState({isSubmit : false});
     }
 
     onMoviePress = (id, type) => {
@@ -54,15 +68,19 @@ export default class Genre extends Component {
         const ViewWidth = Dimensions.get("window").width / 4;
         return(
             <View style = {{padding : 3, margin : 2}}>
-                <TouchableOpacity onPress = {() => this.onMoviePress(item.id, this.props.media_type)}>
-                            <Image source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
-                                style = {{width : ViewWidth, 
-                                    height : ViewHeight, 
-                                    borderRadius : 3, 
-                                    backgroundColor : "orange",
-                                    borderWidth : 0.35,
-                                    borderColor : "black"}}
-                                resizeMode = "stretch"/>
+                <TouchableOpacity disabled = {this.state.isSubmit} onPress = {() => {
+                    this.setState({isSubmit : true}, () => {
+                        this.onMoviePress(item.id, this.props.media_type)
+                    });
+                }}>
+                        <Image source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
+                            style = {{width : ViewWidth, 
+                                height : ViewHeight, 
+                                borderRadius : 3, 
+                                backgroundColor : "orange",
+                                borderWidth : 0.35,
+                                borderColor : "black"}}
+                            resizeMode = "stretch"/>
                 </TouchableOpacity>
             </View>
         )
@@ -71,6 +89,10 @@ export default class Genre extends Component {
     render() {
         return (
             <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
+                {
+                    (this.state.isConnected === null || this.state.isConnected === true) ? null : 
+                    (<Alert color = "red" alertText = "Bağlantı hatası"/>)
+                }
                 <View style = {{height : Dimensions.get("window").height / 8,
                 width : Dimensions.get("window").width,
                 justifyContent : "space-between",
@@ -97,7 +119,7 @@ export default class Genre extends Component {
                         refreshControl = {
                             <RefreshControl refreshing = {this.props.isLoading}
                                 onRefresh = {() => this.onRefresh()}/>}
-                        /> 
+                    /> 
                 </View>
             </SafeAreaView>
         )

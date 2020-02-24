@@ -1,5 +1,5 @@
 import { Navigation } from "react-native-navigation";
-
+    
 Navigation.setDefaultOptions({
     navigationBar : {
         backgroundColor : "gray",

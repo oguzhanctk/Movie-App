@@ -37,13 +37,18 @@ export default class ForgotPassword extends Component {
                 })
                 .catch(err => {
                     switch (err.code) {
+                        case "NetworkError":
+                            ToastAndroid.show("İnternet bağlantısı yok", ToastAndroid.SHORT);
+                            break;
                         case "UserNotFoundException":
                             ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT);
                             break;
                         case "InvalidParameterException":
                             ToastAndroid.show("Kullanıcı için e-mail adresi doğrulanmamış", ToastAndroid.SHORT);
+                            break;
                         case "LimitExceededException":
                             ToastAndroid.show("İstek limiti aşıldı", ToastAndroid.SHORT);
+                            break;
                         default:
                             break;
                         };
@@ -71,6 +76,9 @@ export default class ForgotPassword extends Component {
                 })
                 .catch(err => {
                     switch (err.code) {
+                        case "NetworkError":
+                            ToastAndroid.show("İnternet bağlantısı yok", ToastAndroid.SHORT);
+                            break;
                         case "InvalidPasswordException":
                             ToastAndroid.show("Parola uzunluğu en az 8 karakter olmalıdır", ToastAndroid.SHORT);
                             break;

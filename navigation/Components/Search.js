@@ -1,17 +1,35 @@
 import React, { Component } from 'react'
-import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
+import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image, Text, Button } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
-import { Loader } from "./microComponents/Loader";
+import { Loader, Alert } from "./microComponents/index";
+import NetInfo from "@react-native-community/netinfo";
 
 class Search extends Component {
     constructor(props) {
         super(props);
+        Navigation.events().bindComponent(this);
         this.state = {
             searchValue : "",
-            nullArrayText : ""
+            nullArrayText : "",
+            isConnected : true,
+            isSubmit : false
         }
+    }
+    
+    componentDidMount = () => {
+        this.unsubscribe = NetInfo.addEventListener((state) => {
+            this.setState({isConnected : state.isConnected})
+        });
+    }
+
+    componentWillUnmount = () => {
+        this.unsubscribe();
+    }
+
+    componentDidAppear = () => {
+        this.setState({isSubmit : false});
     }
 
     getSearchInput = (value) => {
@@ -35,7 +53,12 @@ class Search extends Component {
         const ViewWidth = Dimensions.get("window").width / 4;
         return(
                 <View style = {{padding : 3, margin : 2}}>
-                    <TouchableOpacity onPress = {() => this.onMoviePress(item.id)}>
+                    <TouchableOpacity disabled = {this.state.isSubmit} 
+                    onPress = {() => {
+                        this.setState({isSubmit : true}, () => {
+                        this.onMoviePress(item.id);
+                        });
+                    }}>
                                 <Image source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
                                     style = {{width : ViewWidth, 
                                         height : ViewHeight, 
@@ -54,9 +77,12 @@ class Search extends Component {
     }
 
     render() {
-        const searchUrl = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=true`;
         return (
         <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
+            {
+                (this.state.isConnected) ? null : 
+                <Alert color = "red" alertText = "Bağlantı hatası"/>
+            }
             <View style = {styles.container}>
                 <TextInput  style = {styles.textInput} 
                     autoFocus 
@@ -69,7 +95,7 @@ class Search extends Component {
                 <TouchableOpacity style = {{padding : 3, backgroundColor : "#ccc"}}
                     onPress = {async () => {
                         const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=true`;
-                        await this.props.fetchSearchResults(url);
+                        await this.props.fetchSearchResults(url, this.cancel);
                         (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null; 
                     }}>
                     <Icon name = "search" size = {33} color = "black"/>
@@ -77,7 +103,7 @@ class Search extends Component {
             </View>
             {
                 (this.props.isLoading) ? 
-                    (<Loader/>) :
+                    (<Loader indicatorColor = "white"/>) :
                     (<View style = {{flex : 1, marginTop : 13, alignItems : "center"}}>
                         {
                             (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ?

@@ -42,6 +42,9 @@ export default class SignUp extends Component {
                     ToastAndroid.show("Lütfen geçerli bir e-mail adresi girin", ToastAndroid.SHORT);
                 else {
                     switch (error.code) {
+                        case "NetworkError":
+                            ToastAndroid.show("İnternet bağlantısı yok", ToastAndroid.SHORT);
+                            break;
                         case "InvalidParameterException":
                             ToastAndroid.show("Şifre uzunluğu en az 8 karakter olmalıdır.", ToastAndroid.SHORT);
                             break;
@@ -75,6 +78,9 @@ export default class SignUp extends Component {
                 await AsyncStorage.setItem("@stage", JSON.stringify({stage : 0, username : ""}));
             } catch (error) {
                 switch (error.code) {
+                    case "NetworkError":
+                        ToastAndroid.show("İnternet bağlantısı yok", ToastAndroid.SHORT)
+                        break;
                     case "CodeMismatchException":
                         ToastAndroid.show("Doğrulama kodu yanlış", ToastAndroid.SHORT);
                         break;

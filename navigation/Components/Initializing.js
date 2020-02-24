@@ -20,7 +20,6 @@ class Initializing extends Component {
 
     getAuthStatus = async () => {
         const status = await AsyncStorage.getItem("@auth_status");
-        console.log(status);
         return status;
     }
 

@@ -29,7 +29,7 @@ export const fetch_Data_From_Api = (movie, tv, topRated) => {
                 type : "REQUEST_FAILED",
                 payload : err
             })
-        })
+        });
     }
 }
 
@@ -38,6 +38,7 @@ const mapStateToProps = (state) => ({
     popularTv : state.HomePageReducer.popularTv,
     topRatedMovies : state.HomePageReducer.topRatedMovies,
     isLoading : state.HomePageReducer.isFetching,
+    isConnected : state.HomePageReducer.isConnected,
 });
 
 const mapDispatchToProps = (dispatch) => ({

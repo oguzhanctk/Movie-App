@@ -2,7 +2,7 @@ const HomePageReducer = (state = {
     isFetching : false,
     popularMovies : [], 
     popularTv : [], 
-    topRatedMovies : [], 
+    topRatedMovies : [],
 }, action) => {
     switch (action.type) {
         case "DATA_REQUESTED":
@@ -10,7 +10,6 @@ const HomePageReducer = (state = {
                 ...state,
                 isFetching : true
             };
-
         case "DATA_RECEIVED":
             const appendTypeToMovie = action.payload.popularMovie.results.map(item => Object.assign({}, item, {media_type : "movie"})); 
             const appendTypeToTv = action.payload.popularTv.results.map(item => Object.assign({}, item, {media_type : "tv"})); 

@@ -6,7 +6,7 @@ import { DimensionDeclaration } from "./dimensions_declaration";
 export const MoviesSlider = (props) => {
 
     return (
-        <View style = {{paddingVertical : 1, 
+        <View style = {{paddingVertical : 1,
                         paddingLeft : 7}}>
             <View style = {{justifyContent : "center", paddingVertical : 7}}>
                 <Text style = {{fontWeight : "bold", 

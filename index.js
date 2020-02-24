@@ -15,8 +15,8 @@ Navigation.events().registerAppLaunchedListener(() => {
           layout : {
             orientation : ["portrait"]
           }
-        }
+        },
       },
-    }
+    },
   });
 });

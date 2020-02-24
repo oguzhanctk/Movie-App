@@ -67,7 +67,6 @@ export default class Discover extends Component {
         })
     }
  
-
     render() {
         return(
             <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>

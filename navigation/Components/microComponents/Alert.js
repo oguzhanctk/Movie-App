@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, Dimensions } from 'react-native'
+import { View, Text, Dimensions, StyleSheet } from 'react-native'
 
-const Alert = () => {
+export const Alert = (props) => {
     return (
-        <View style = {styles.alertContainer}>
-            <Text>adsadsad</Text>
+        <View style = {{...styles.alertContainer, backgroundColor : props.color}}>
+            <Text>{props.alertText}</Text>
         </View>
     )
 }
@@ -12,13 +12,10 @@ const Alert = () => {
 const styles = StyleSheet.create({
     alertContainer : {
         justifyContent : "center",
-        alignContent : "center",
-        backgroundColor : "red",
+        alignItems : "center",
         elevation : 20,
         position : "absolute",
         top : 0,
         width : Dimensions.get("window").width,
     },
 })
-
-export default Alert;

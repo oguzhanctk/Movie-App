@@ -60,7 +60,10 @@ export default class SignIn extends Component {
                                 ToastAndroid.show("Kullanıcı bulunamadı", ToastAndroid.SHORT)
                                 break;
                             case "NotAuthorizedException":
-                                ToastAndroid.show("Kullanıcı adı ya da parola yanlş", ToastAndroid.SHORT)
+                                ToastAndroid.show("Kullanıcı adı ya da parola yanlış", ToastAndroid.SHORT)
+                                break;
+                            case "UserNotConfirmedException":
+                                ToastAndroid.show("Bu kullanıcı için mail adresi doğrulanmadı", ToastAndroid.SHORT)
                                 break;
                             default:
                                 break;
