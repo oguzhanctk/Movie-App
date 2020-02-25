@@ -22,7 +22,8 @@ export default class Library extends Component {
             isLoading : false,
             currentUser : "",
             isSkip : null,
-            isConnected : null
+            isConnected : null,
+            isSubmit : false
         };
     }
 
@@ -31,6 +32,7 @@ export default class Library extends Component {
     componentDidAppear = () => {
         if(this.state.isSkip !== true) 
             this.getData();
+        this.setState({isSubmit : false});
     }
 
     componentDidMount = async () => {
@@ -98,7 +100,12 @@ export default class Library extends Component {
     }
 
     renderItem = ({item}) => (
-            <TouchableOpacity onPress = {() => this.onMoviePress(item.id, item.media_type)}>
+            <TouchableOpacity disabled = {this.state.isSubmit} 
+            onPress = {() => {
+                this.setState({isSubmit : true}, () => {
+                    this.onMoviePress(item.id, item.media_type);
+                });
+            }}>
                 <ImageBackground source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
                 style = {{backgroundColor : "gray", 
                 width : libraryConstants.libraryWidth,
@@ -107,7 +114,8 @@ export default class Library extends Component {
                 borderWidth : 0.45,
                 borderColor : "gray",
                 justifyContent : "flex-end",
-                alignItems : "flex-end"}}>
+                alignItems : "flex-end"}}
+                resizeMode = "contain">
                     <TouchableHighlight style = {styles.fab} 
                         onPress = {() => {
                             let toArray = this.state.data.filter(member => member.id !== item.id);

@@ -103,7 +103,9 @@ export default class Discover extends Component {
                             }}
                             activeOpacity = {0.75}>
                         <Icon name = "search" size = {23} color = "gray"/>
-                        <Text style = {{fontSize : 17, color : "gray", marginLeft : 13}}>aramak için dokun</Text>
+                        <Text style = {{fontSize : 17, color : "gray", marginLeft : 13}}>
+                            {this.state.isSelectedTypeMovie === true ? "film " : "dizi "}aramak için dokun
+                        </Text>
                     </TouchableOpacity>
                     <View style = {{flex : 12, width : "100%", padding : 5, alignItems : "center"}}>
                         <FlatList data = {(this.state.isSelectedTypeMovie) ? movieGenres : tvGenres}
