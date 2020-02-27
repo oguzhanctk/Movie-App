@@ -28,7 +28,7 @@ export const MoviesSlider = (props) => {
                     showsHorizontalScrollIndicator = {false}
                     ListEmptyComponent = {() => (
                         <View style = {{flex : 1, 
-                                        backgroundColor : "#5e6e62", 
+                                        backgroundColor : "#ffd666", 
                                         height : DimensionDeclaration.movieCardWidth + 42,
                                         width : Dimensions.get("window").width}}>
                         </View>

@@ -29,7 +29,9 @@ const MovieDetail = (props) => {
     const imagePath = (props.movieDetail.backdrop_path) || (props.movieDetail.poster_path); 
     const [isAdded, setisAdded] = useState(false);
 
-    const name = props.movieDetail.original_name || props.movieDetail.original_title;    
+    const name = (props.movieDetail.original_language === "en") ? 
+        (props.movieDetail.original_name || props.movieDetail.original_title) :
+        (props.movieDetail.title || props.movieDetail.name);    
 
     useEffect(() => {
         const fetchMovie = async () => {

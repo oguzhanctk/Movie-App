@@ -27,8 +27,6 @@ export default class Home extends Component {
             `${constants.popularTVShowsUrl + page}`, 
             `${constants.topRatedMoviesUrl + page}`
         );
-        console.log(page, " ", this.state.page);
-
     }
 
     componentWillUnmount = async () => {

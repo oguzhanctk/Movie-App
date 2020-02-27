@@ -23,7 +23,8 @@ export default class Library extends Component {
             currentUser : "",
             isSkip : null,
             isConnected : null,
-            isSubmit : false
+            isSubmit : false,
+            isEmpty : false
         };
     }
 
@@ -52,22 +53,19 @@ export default class Library extends Component {
         this.setState({isConnected : null});
     }
 
-    componentDidDisappear = () => {
-        this.setState({data : []});
-    }
-
     getData = async () => {
         const user = await Auth.currentAuthenticatedUser();
         const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
         if(data) {
             try {
-                this.setState({isLoading : true}, async () => {
-                    this.setState({isLoading : false});
-                    const res = JSON.parse(data).reverse();
-                    if(data !== []) {
-                        this.setState({data : [...res]});
-                    }
-                });
+                this.setState({data : [...JSON.parse(data).reverse()]}, 
+                    () => {
+                        console.log(typeof(this.state.data))
+                        if(JSON.stringify(this.state.data) === "[]")
+                            this.setState({isEmpty : true});
+                        else 
+                            this.setState({isEmpty : false})
+                    });
             } catch (error) {
                 console.log(error)
             }
@@ -177,16 +175,31 @@ export default class Library extends Component {
                             <Icon name = "x-circle" size = {20} color = "darkred"/>
                         </TouchableOpacity>
                     </View>
-                    <View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
                     {
-                        (this.state.isLoading) ?
-                            null : 
-                        (<FlatList data = {this.state.data}
-                            renderItem = {this.renderItem}
-                            keyExtractor = {(item) => item.id.toString()}
-                            numColumns = {3}/>)
+                        (this.state.isEmpty === true) ?  
+                        
+                        (<View style = {{
+                            flex : 9,
+                            backgroundColor : "gray",
+                            justifyContent : "center",
+                            alignItems: "center"}}>
+                            <Text style = {{fontSize : 19, color : "white"}}>Burası boş gözüküyor...</Text>
+                            <View style = {{
+                                height : iconSizeH,
+                                width : iconSizeW,
+                                justifyContent : "center",
+                                alignItems : "center"}}>
+                                <LottieView source = {require("../assets/animation/9353-falling-popcorn")} autoPlay loop = {false}/>
+                            </View>
+                        </View>) : 
+                    
+                        (<View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
+                            <FlatList data = {this.state.data}
+                                renderItem = {this.renderItem}
+                                keyExtractor = {(item) => item.id.toString()}
+                                numColumns = {3}/>
+                        </View>)
                     }
-                    </View>
                 </View>
                 )
         )
