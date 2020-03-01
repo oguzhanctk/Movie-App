@@ -10,7 +10,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w500";
     const [isAdded, setisAdded] = useState(false);
-    const [isSubmit, setisSubmit] = useState(false);
+
+    const handleClick = () => {
+        props.updateState();
+    }
 
     const onMoviePress = (id, type) => {
         Navigation.showModal({
@@ -27,24 +30,22 @@ export const MovieCard = (props) => {
     return (
         <TouchableHighlight style = {{flex : 1}}
         onPress = {() => {
-                onMoviePress(props.id, props.mediaType);
-                setisSubmit(true);
-                setTimeout(() => {
-                    setisSubmit(false)
-                }, 1000);
-                }}
-        disabled = {isSubmit}>
+            handleClick();
+            onMoviePress(props.id, props.mediaType);
+            }}
+        disabled = {props.disabled}
+        >
             <ImageBackground source = {{uri : `${baseImageUrl}${props.imagePath}`}}
                 style = {{width : DimensionDeclaration.movieCardWidth - 11, 
                         height : DimensionDeclaration.movieCardHeight - 11, 
                         borderRadius : 3, 
                         borderWidth : 0.85,
                         borderColor : "black",
-                        backgroundColor : "gray",
+                        backgroundColor : "orange",
                         justifyContent : "flex-end",
                         alignItems : "flex-end"
                         }}
-                resizeMode = "cover">
+                resizeMode = "stretch">
                     {
                         (isAdded === true) ?
                             null :

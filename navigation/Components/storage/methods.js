@@ -39,7 +39,7 @@ export const removeData = async (id, username) => {
             let res = JSON.parse(data).filter(item => item.id !== id);
             try {
                 await AsyncStorage.setItem(`@library_item_${username}`, JSON.stringify(res));
-                ToastAndroid.show("Kütüphaneden başarıyla kaldırıldı", ToastAndroid.SHORT);
+                ToastAndroid.show("Kütüphaneden kaldırıldı", ToastAndroid.SHORT);
             } catch (error) {
                 console.log(error);
             }

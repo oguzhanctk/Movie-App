@@ -55,12 +55,15 @@ export default class Genre extends Component {
     }
 
     onRefresh = () => {
-        this.setState({refreshing : true}, async () => {
-            await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page + 1}`);
-            this.wait(500).then(() => { 
-                this.setState({refreshing : false, page : this.state.page + 1});
+        if(this.state.page < 50) {
+            this.setState({refreshing : true}, async () => {
+                await this.props.fetchMoviesWithGenre(`${this.state.baseUrl + this.props.genreId}&page=${this.state.page + 1}`);
+                this.wait(500).then(() => { 
+                    this.setState({refreshing : false, page : this.state.page + 1});
+                });
             });
-        });
+        } else
+            null
     }
 
     renderItem = ({item}) => {

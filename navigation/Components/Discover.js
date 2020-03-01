@@ -15,19 +15,28 @@ export default class Discover extends Component {
     
     constructor(props) {
         super(props);
+        Navigation.events().bindComponent(this);
         this.state = {
             isSelectedTypeMovie : true,
+            isDisabled : false,
         }
+    }
+
+    componentDidAppear = () => {
+        this.setState({isDisabled : false});
     }
 
     renderItem = ({item}) => {
         return(
             <TouchableHighlight style = {{marginHorizontal : 3, marginVertical : 3}} 
                 onPress = {() => {
-                    const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
-                    this.onGenrePress(item.id, type);
-                }}>
-                <View style = {{backgroundColor : item.color, 
+                    this.setState({isDisabled : true}, () => {
+                        const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
+                        this.onGenrePress(item.id, type);
+                    });
+                }}
+                disabled = {this.state.isDisabled}>
+                <View style = {{backgroundColor : item.color,
                     height : Dimensions.get("window").height / 7,
                     width : Dimensions.get("window").width / 2.2,
                     justifyContent : "center",
@@ -66,6 +75,11 @@ export default class Discover extends Component {
             }
         })
     }
+
+    shouldComponentUpdate = (nextProp, nextState) => {
+        return this.state.isSelectedTypeMovie !== nextState.isSelectedTypeMovie || 
+            this.state.isDisabled !== nextState.isDisabled;
+    }
  
     render() {
         return(
@@ -98,10 +112,13 @@ export default class Discover extends Component {
                             borderRadius : 13,
                             marginVertical : 7}}
                             onPress = {() => {
-                                const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
-                                this.onSearchPress(type);
+                                this.setState({isDisabled : true}, () => {
+                                    const type = (this.state.isSelectedTypeMovie) ? "movie" : "tv";
+                                    this.onSearchPress(type);
+                                });
                             }}
-                            activeOpacity = {0.75}>
+                            activeOpacity = {0.75}
+                            disabled = {this.state.isDisabled}>
                         <Icon name = "search" size = {23} color = "gray"/>
                         <Text style = {{fontSize : 17, color : "gray", marginLeft : 13}}>
                             {this.state.isSelectedTypeMovie === true ? "film " : "dizi "}aramak için dokun

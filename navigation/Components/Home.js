@@ -21,12 +21,13 @@ export default class Home extends Component {
             this.setState({isConnected : state.isConnected});
         });
         const page = await AsyncStorage.getItem("@page").then(res => JSON.parse(res)) || 1;
-        this.setState({page : page + 1});
-        await this.props.fetchDataFromApi(
-            `${constants.popularMoviesUrl + page}`, 
-            `${constants.popularTVShowsUrl + page}`, 
-            `${constants.topRatedMoviesUrl + page}`
-        );
+        this.setState({page : page + 1}, async () => {
+            await this.props.fetchDataFromApi(
+                `${constants.popularMoviesUrl + page}`, 
+                `${constants.popularTVShowsUrl + page}`, 
+                `${constants.topRatedMoviesUrl + page}`
+            );
+        });
     }
 
     componentWillUnmount = async () => {
@@ -34,6 +35,11 @@ export default class Home extends Component {
         this.unsubscribe();
     }
     
+    shouldComponentUpdate = (nextProp, nextState) => {
+        return nextState.isConnected !== this.state.isConnected ||
+            nextProp.isLoading !== this.props.isLoading;
+    }
+
     render() {
         return(
             <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
@@ -47,7 +53,7 @@ export default class Home extends Component {
                             }
                             <MoviesSlider headerText = "Popüler Filmler" movieData = {this.props.popularMovies}/>
                             <MoviesSlider headerText = "Popüler Diziler" movieData = {this.props.popularTv}/>
-                            <MoviesSlider headerText = "Efsaneler" movieData = {this.props.topRatedMovies}/>
+                            <MoviesSlider headerText = "En iyiler" movieData = {this.props.topRatedMovies}/>
                             <View style = {{height : 20}}/>
                         </ScrollView>)
                 }

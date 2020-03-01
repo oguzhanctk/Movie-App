@@ -19,7 +19,6 @@ export default class Library extends Component {
         Navigation.events().bindComponent(this);
         this.state = {
             data : [],
-            isLoading : false,
             currentUser : "",
             isSkip : null,
             isConnected : null,
@@ -41,10 +40,7 @@ export default class Library extends Component {
             this.setState({isConnected : state.isConnected});
         });
         const isSkip = await AsyncStorage.getItem("@isSkip");
-        if(isSkip !== "true") {
-            const user = await Auth.currentAuthenticatedUser();
-            this.setState({currentUser : user.username});
-        } else 
+        if(isSkip === "true")
             this.setState({isSkip : true});
     }
 
@@ -56,11 +52,11 @@ export default class Library extends Component {
     getData = async () => {
         const user = await Auth.currentAuthenticatedUser();
         const data = await AsyncStorage.getItem(`@library_item_${user.username}`);
+        this.setState({currentUser : user.username});
         if(data) {
             try {
                 this.setState({data : [...JSON.parse(data).reverse()]}, 
                     () => {
-                        console.log(typeof(this.state.data))
                         if(JSON.stringify(this.state.data) === "[]")
                             this.setState({isEmpty : true});
                         else 
@@ -69,7 +65,8 @@ export default class Library extends Component {
             } catch (error) {
                 console.log(error)
             }
-        }
+        } else 
+            this.setState({isEmpty : true})
     }
 
     onMoviePress = (id, type) => {
@@ -97,6 +94,15 @@ export default class Library extends Component {
         }
     }
 
+shouldComponentUpdate = (nextProp, nextState) => {
+    return this.state.isConnected !== nextState.isConnected ||
+    this.state.isEmpty !== nextState.isEmpty ||
+    this.state.isSubmit !== nextState.isSubmit ||
+    this.state.isSkip !== nextState.isSkip ||
+    this.state.data !== nextState.data ||
+    this.state.currentUser !== nextState.currentUser;
+}
+
     renderItem = ({item}) => (
             <TouchableOpacity disabled = {this.state.isSubmit} 
             onPress = {() => {
@@ -105,7 +111,7 @@ export default class Library extends Component {
                 });
             }}>
                 <ImageBackground source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
-                style = {{backgroundColor : "gray", 
+                style = {{backgroundColor : "orange", 
                 width : libraryConstants.libraryWidth,
                 height : libraryConstants.libraryHeight,
                 margin : 5,
@@ -113,7 +119,7 @@ export default class Library extends Component {
                 borderColor : "gray",
                 justifyContent : "flex-end",
                 alignItems : "flex-end"}}
-                resizeMode = "contain">
+                resizeMode = "stretch">
                     <TouchableHighlight style = {styles.fab} 
                         onPress = {() => {
                             let toArray = this.state.data.filter(member => member.id !== item.id);
@@ -161,16 +167,23 @@ export default class Library extends Component {
                 </View>
                 ) :
                 (
-                <View style = {{flex : 1}}>
+                <View style = {{flex : 1, backgroundColor : "gray"}}>
                     {
                         (this.state.isConnected === null || this.state.isConnected === true) ? null : 
                         (<Alert color = "red" alertText = "Bağlantı hatası"/>)
                     }
                     <View style = {{
                         flex : 1, 
-                        justifyContent : "center",
-                        alignItems : "flex-end",
-                        backgroundColor : "gray"}}>
+                        flexDirection : "row",
+                        justifyContent : "space-between",
+                        alignItems : "center",
+                        backgroundColor : "gray",
+                        marginHorizontal : 0,
+                        marginBottom : 13,
+                        paddingHorizontal : 5,
+                        borderBottomWidth : 0.45,
+                        elevation : 15}}>
+                        <Text style = {styles.userFont}>{this.state.currentUser}</Text>
                         <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
                             <Icon name = "x-circle" size = {20} color = "darkred"/>
                         </TouchableOpacity>
@@ -197,7 +210,13 @@ export default class Library extends Component {
                             <FlatList data = {this.state.data}
                                 renderItem = {this.renderItem}
                                 keyExtractor = {(item) => item.id.toString()}
-                                numColumns = {3}/>
+                                numColumns = {3}
+                                getItemLayout = {(data, index) => ({
+                                    length : libraryConstants.libraryHeight + 5,
+                                    offset : (libraryConstants.libraryHeight + 5) * index,
+                                    index
+                                })}
+                                />
                         </View>)
                     }
                 </View>
@@ -227,7 +246,13 @@ const styles = StyleSheet.create({
         height : DimensionDeclaration.movieCardHeight / 5,  
         borderRadius : 100,
         backgroundColor : "#ada1a2",
-        opacity : 0.75,
-        right : 10
+        opacity : 0.75
+    },
+    userFont : {
+        fontSize : 17,
+        color : "black",
+        fontWeight : "bold",
+        letterSpacing : 1,
+        fontStyle : "italic"
     }
 });

@@ -94,8 +94,8 @@ class Search extends Component {
                     onFocus = {() => this.textInput.clear()}/>
                 <TouchableOpacity style = {{padding : 3, backgroundColor : "#ccc"}}
                     onPress = {async () => {
-                        const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=true`;
-                        await this.props.fetchSearchResults(url, this.cancel);
+                        const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
+                        await this.props.fetchSearchResults(url);
                         (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null; 
                     }}>
                     <Icon name = "search" size = {33} color = "black"/>

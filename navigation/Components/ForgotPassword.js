@@ -33,7 +33,6 @@ export default class ForgotPassword extends Component {
                 await Auth.forgotPassword(username)
                 .then(data => {
                     this.setState({stage : 1});
-                    console.log(data);
                 })
                 .catch(err => {
                     switch (err.code) {

@@ -30,7 +30,7 @@ const MovieDetail = (props) => {
     const [isAdded, setisAdded] = useState(false);
 
     const name = (props.movieDetail.original_language === "en") ? 
-        (props.movieDetail.original_name || props.movieDetail.original_title) :
+        (props.movieDetail.original_title || props.movieDetail.original_name) :
         (props.movieDetail.title || props.movieDetail.name);    
 
     useEffect(() => {
@@ -55,7 +55,9 @@ const MovieDetail = (props) => {
                                 {
                                     (isAdded === true) ?
                                         null :
-                                    (<TouchableHighlight style = {styles.fab} onPress = {async () => {
+                                    (<TouchableHighlight 
+                                    style = {styles.fab} 
+                                    onPress = {async () => {
                                         const isSkip = await AsyncStorage.getItem("@isSkip");
                                         if(isSkip === "true") 
                                             ToastAndroid.show("Bu özelliği kullanabilmek için giriş yapın", ToastAndroid.SHORT);
@@ -67,7 +69,7 @@ const MovieDetail = (props) => {
                                                 media_type : props.mediaType},
                                                 setisAdded,
                                                 user.username);
-                                            }
+                                        }
                                     }}
                                     underlayColor = "lightgreen">
                                         <Icon name = "add" size = {35} color = "black"/>
@@ -128,7 +130,7 @@ const MovieDetail = (props) => {
                                 <Text style = {{letterSpacing : 0.7}}>{props.movieDetail.overview}</Text>
                             </View>
                             <View>
-                                <CreditsSlider data = {props.movieDetail.credits && props.movieDetail.credits.cast.splice(0, 7)}/>
+                                <CreditsSlider data = {props.movieDetail.credits}/>
                             </View>
                         </View>
                     </ScrollView>

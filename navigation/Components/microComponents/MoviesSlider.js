@@ -1,9 +1,26 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, FlatList, Dimensions } from 'react-native'
 import { MovieCard } from "./MovieCard";
 import { DimensionDeclaration } from "./dimensions_declaration";
+import { Navigation } from "react-native-navigation";
 
-export const MoviesSlider = (props) => {
+export const MoviesSlider = React.memo((props) => {
+    const [isSubmit, setisSubmit] = useState(false);
+
+    useEffect(() => {
+        const screenEventListener = Navigation.events().registerComponentDidAppearListener(({ componentId, componentName, passProps }) => {
+            if(componentName === "Home") {
+                setisSubmit(false);
+            }
+        });
+        return () => {
+            screenEventListener.remove();
+        };
+    }, [])
+
+    const updateState = () => {
+        setisSubmit(true);
+    }
 
     return (
         <View style = {{paddingVertical : 1,
@@ -19,7 +36,10 @@ export const MoviesSlider = (props) => {
                     renderItem = {({item}) => (
                         <MovieCard imagePath = {item.poster_path} 
                             id = {item.id}
-                            mediaType = {item.media_type}/>
+                            mediaType = {item.media_type}
+                            disabled = {isSubmit}
+                            updateState = {updateState}
+                        />
                         )}
                     keyExtractor = {item => item.id.toString()}
                     ItemSeparatorComponent = {() => (
@@ -33,11 +53,16 @@ export const MoviesSlider = (props) => {
                                         width : Dimensions.get("window").width}}>
                         </View>
                     )}
-                    initialNumToRender = {5}
+                    initialNumToRender = {4}
                     ListFooterComponent = {() => (
                         <View style = {{width : 7}}/>
                     )}
+                    getItemLayout = {(data, index) => ({
+                        length : DimensionDeclaration.movieCardWidth - 4,
+                        offset : DimensionDeclaration.movieCardWidth - 4 * index,
+                        index
+                    })}
                     />
         </View>
     )
-}
+})

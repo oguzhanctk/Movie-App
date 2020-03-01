@@ -13,7 +13,6 @@ export const fetch_Data_From_Api = (movie, tv, topRated) => {
             await axios.get(topRated)
         ])
         .then(axios.spread((p, l, t) => {
-            // console.log(p.data, "HomeActions -> 17");
             dispatch({
                 type : "DATA_RECEIVED",
                 payload : {

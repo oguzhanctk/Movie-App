@@ -274,7 +274,7 @@ export const goToMainLayout = () => {
                                 bottomTab : {
                                     iconColor : "gray",
                                     textColor : "gray",
-                                    text : "Kitaplık",
+                                    text : "Kütüphane",
                                     icon : {
                                         uri : "ic_library_books"
                                     },

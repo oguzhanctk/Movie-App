@@ -10,10 +10,11 @@ const MovieDetailReducer = (state = {
             };
         case "MOVIE_RECEIVED":
             const date = action.payload.release_date && action.payload.release_date.split("-")[0] || action.payload.first_air_date.split("-")[0];
+            const credits = action.payload.credits.cast && action.payload.credits.cast.splice(0,7);
             return {
                 ...state,
                 isLoading : false,
-                movieDetail : Object.assign({}, action.payload, {release_date : date})
+                movieDetail : Object.assign({}, action.payload, {release_date : date, credits : credits})
             };
         case "CLEAR_DATA":
             return {
