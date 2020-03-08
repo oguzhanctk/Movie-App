@@ -6,7 +6,8 @@ import {View,
         Dimensions, 
         ToastAndroid,
         TouchableOpacity,
-        ImageBackground} from "react-native";
+        ImageBackground,
+        Keyboard} from "react-native";
 import { goToAuth } from "../navigation";
 import { Auth } from "aws-amplify";
 import Icon from "react-native-vector-icons/Feather";
@@ -21,6 +22,7 @@ export default class SignUp extends Component {
         phone_number : "",
         confCode : "",
         stage : 0,
+        isKeyboardOpen : false
     }
 
     getInput = (key, val) => {
@@ -109,6 +111,12 @@ export default class SignUp extends Component {
     }
 
     componentDidMount = async () => {
+        this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () => {
+            this.setState({isKeyboardOpen : true});
+        });
+        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () => {
+            this.setState({isKeyboardOpen : false});
+        });
         try {
             const stage = await AsyncStorage.getItem("@stage").then(res => JSON.parse(res)) || {stage : 0, username : ""};
             this.setState({
@@ -120,21 +128,27 @@ export default class SignUp extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
     render() {
         return (
             <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
                 {
                     this.state.stage === Number(0) && (
                         <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
-                            <View style = {styles.apertureContainer}>
-                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
+                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 1 : 2}}>
+                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 5} color = "orange"/>
                             </View>
                             <View style = {{flex : 4, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
                                 <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                                 <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
                                 <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
                                 <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("password", value)}/>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {async () => {
+                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} 
+                                onPress = {async () => {
                                         await this.signUp();
                                 }}>
                                     <Text style = {styles.buttonText}>Kaydol</Text>
@@ -146,8 +160,8 @@ export default class SignUp extends Component {
                 {
                     this.state.stage === Number(1) && (
                         <View style = {{flex : 1}}>
-                            <View style = {{...styles.apertureContainer, flex : 1}}>
-                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
+                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 0.5 : 1}}>
+                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 5} color = "orange"/>
                             </View>
                             <View style = {{flex : 0.5, justifyContent : "center", alignItems : "center", padding : 13}}>
                                 <Text style = {{fontSize : 21}}>Devam etmek için e-mail adresinize gelen 6 haneli kodu girin.</Text>
@@ -190,8 +204,7 @@ const styles = StyleSheet.create({
         color : "black",        
     },
     apertureContainer : {
-        flex : 2,
-        justifyContent : "center",
+        justifyContent : "flex-start",
         alignItems : "center",
     },
     logoSize : Dimensions.get("window").height / 3.5,

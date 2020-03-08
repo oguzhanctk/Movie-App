@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import {Text, 
         View, 
         TextInput,
-        Button,
         ToastAndroid,
         StyleSheet,
         Dimensions,
-        TouchableOpacity} from 'react-native'
+        TouchableOpacity,
+        Keyboard} from 'react-native'
 import { Auth } from "aws-amplify";
 import { Navigation } from 'react-native-navigation';
 import Icon from "react-native-vector-icons/Feather";
@@ -17,7 +17,8 @@ export default class ForgotPassword extends Component {
         username : "",
         code : "",
         newPass : "",
-        stage : 0
+        stage : 0,
+        isKeyboardOpen : false
     }
 
     getUserInput = (key, value) => {
@@ -100,6 +101,12 @@ export default class ForgotPassword extends Component {
     }
 
     componentDidMount = async () => {
+        this.keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () => {
+            this.setState({isKeyboardOpen : true});
+        });
+        this.keyboardDidHideListener = Keyboard.addListener("keyboardDidHide", () => {
+            this.setState({isKeyboardOpen : false});
+        });
         try {
             const stage = await AsyncStorage.getItem("@password_stage").then(res => JSON.parse(res)) || {stage : 0, username : ""};
             this.setState({
@@ -111,9 +118,14 @@ export default class ForgotPassword extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
     render() {
         return (
-            <View style = {{flex : 1, justifyContent : "center", paddingHorizontal : 7, backgroundColor : "white"}}>
+            <View style = {{flex : 1, alignItems : "center", paddingHorizontal : 7, backgroundColor : "white"}}>
                 {
                     this.state.stage === Number(0) &&
                         (
@@ -136,9 +148,9 @@ export default class ForgotPassword extends Component {
 
                 {
                     this.state.stage === Number(1) &&
-                        (<View style = {{flex : 1, alignItems : "center"}}>
-                            <View style = {styles.apertureContainer}>
-                                <Icon name = "aperture" size = {styles.logoSize} color = "orange"/>
+                        (<View style = {{flex : 0.7, alignItems : "center"}}>
+                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 0.5 : 1}}>
+                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 3.5} color = "orange"/>
                             </View>
                             <View style = {{flex : 1, alignItems : "center", justifyContent : "flex-start"}}>
                                 <TextInput style = {styles.textInput} 
@@ -181,12 +193,12 @@ const styles = StyleSheet.create({
         margin : 7,
         color : "black",        
     },
+    logoSize : Dimensions.get("window").height / 3.5,
     apertureContainer : {
         flex : 1,
         justifyContent : "center",
         alignItems : "center",
     },
-    logoSize : Dimensions.get("window").height / 3.5,
     button : {
         backgroundColor : "orange",
         opacity : 0.8,

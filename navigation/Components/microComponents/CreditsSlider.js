@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, FlatList, Image } from 'react-native'
 
 const CreditsSlider = (props) => {
-    const baseImageUrl = "https://image.tmdb.org/t/p/w500";
+    const baseImageUrl = "https://image.tmdb.org/t/p/w185";
     const renderItem = ({item}) => (
         <View style = {{width : 110, alignItems : "center"}}>
             <Image source = {{uri : `${baseImageUrl + item.profile_path}`}}

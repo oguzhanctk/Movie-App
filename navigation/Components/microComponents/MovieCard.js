@@ -8,7 +8,7 @@ import { Auth } from "aws-amplify";
 import AsyncStorage from '@react-native-community/async-storage';
 
 export const MovieCard = (props) => {
-    const baseImageUrl = "https://image.tmdb.org/t/p/w500";
+    const baseImageUrl = "https://image.tmdb.org/t/p/w342";
     const [isAdded, setisAdded] = useState(false);
 
     const handleClick = () => {
@@ -41,7 +41,7 @@ export const MovieCard = (props) => {
                         borderRadius : 3, 
                         borderWidth : 0.85,
                         borderColor : "black",
-                        backgroundColor : "orange",
+                        backgroundColor : "#f0d689",
                         justifyContent : "flex-end",
                         alignItems : "flex-end"
                         }}

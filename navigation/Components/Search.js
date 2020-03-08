@@ -91,7 +91,12 @@ class Search extends Component {
                     onChangeText = {(value) => this.getSearchInput(value)}
                     maxLength = {30}
                     ref={(input) => { this.textInput = input }}
-                    onFocus = {() => this.textInput.clear()}/>
+                    onFocus = {() => this.textInput.clear()}
+                    onSubmitEditing = {async () => {
+                        const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
+                        await this.props.fetchSearchResults(url);
+                        (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null;
+                    }}/>
                 <TouchableOpacity style = {{padding : 3, backgroundColor : "#ccc"}}
                     onPress = {async () => {
                         const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
