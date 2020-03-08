@@ -42,7 +42,7 @@ export default class Home extends Component {
 
     render() {
         return(
-            <SafeAreaView style = {{backgroundColor : "gray", flex : 1}}>
+            <View style = {{backgroundColor : "gray", flex : 1}}>
                 {
                     (this.props.isLoading) ?
                         (<Loader indicatorColor = "white"/>) : 
@@ -57,7 +57,7 @@ export default class Home extends Component {
                             <View style = {{height : 20}}/>
                         </ScrollView>)
                 }
-            </SafeAreaView>
+            </View>
         )
     }
 }

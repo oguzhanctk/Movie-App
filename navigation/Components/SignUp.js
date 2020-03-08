@@ -22,7 +22,8 @@ export default class SignUp extends Component {
         phone_number : "",
         confCode : "",
         stage : 0,
-        isKeyboardOpen : false
+        isKeyboardOpen : false,
+        isSecureText : true,
     }
 
     getInput = (key, val) => {
@@ -146,7 +147,12 @@ export default class SignUp extends Component {
                                 <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
                                 <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
                                 <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
-                                <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("password", value)}/>
+                                <View style = {styles.textInputWithIconContainer}>
+                                    <TextInput secureTextEntry = {this.state.isSecureText} maxLength = {10} placeholder = "parola" style = {{...styles.textInputWithIcon}} onChangeText = {(value) => this.getInput("password", value)}/>
+                                    <TouchableOpacity onPress = {() => this.setState({isSecureText : !this.state.isSecureText})}>
+                                        <Icon name = {(this.state.isSecureText) ? "eye" : "eye-off"} size = {23} style = {{padding : 7, backgroundColor : "transparent"}}/>
+                                    </TouchableOpacity> 
+                                </View>
                                 <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} 
                                 onPress = {async () => {
                                         await this.signUp();
@@ -201,11 +207,29 @@ const styles = StyleSheet.create({
         padding : 7,
         width : Dimensions.get("window").width * 0.8,
         marginVertical : 3,
-        color : "black",        
+        color : "black",
+    },
+    textInputWithIcon : {
+        flex : 1,
+        backgroundColor : "#e1f0e8",
+        padding : 7,
+        color : "black",
+    },
+    textInputWithIconContainer : {
+        flexDirection : "row", 
+        alignItems : "center", 
+        width : Dimensions.get("window").width * 0.8, 
+        backgroundColor : "#e1f0e8", 
+        borderRadius : 3, 
+        borderWidth : 0.25, 
+        borderColor : "gray",
+        marginVertical : 2
+
     },
     apertureContainer : {
         justifyContent : "flex-start",
         alignItems : "center",
+        padding : 5
     },
     logoSize : Dimensions.get("window").height / 3.5,
     button : {
@@ -215,7 +239,8 @@ const styles = StyleSheet.create({
         justifyContent : "center",
         alignItems : "center",
         padding : 7,
-        borderRadius : 3
+        borderRadius : 3,
+        marginTop : 7
     },
     buttonText : {
         fontSize : 14,

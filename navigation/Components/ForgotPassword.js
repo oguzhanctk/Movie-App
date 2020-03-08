@@ -18,7 +18,8 @@ export default class ForgotPassword extends Component {
         code : "",
         newPass : "",
         stage : 0,
-        isKeyboardOpen : false
+        isKeyboardOpen : false,
+        isSecureText : true
     }
 
     getUserInput = (key, value) => {
@@ -156,11 +157,13 @@ export default class ForgotPassword extends Component {
                                 <TextInput style = {styles.textInput} 
                                     placeholder = "doğrulama kodu"
                                     onChangeText = {(value) => this.getUserInput("code", value)}/>
-                                <TextInput style = {styles.textInput} 
-                                    placeholder = "yeni parola"
-                                    secureTextEntry
-                                    onChangeText = {(value) => this.getUserInput("newPass", value)}/>
-                                <TouchableOpacity style = {{...styles.button, marginBottom : 7}} disabled = {this.state.isSubmit} onPress = {async () => {
+                                <View style = {styles.textInputWithIconContainer}>
+                                    <TextInput secureTextEntry = {this.state.isSecureText} maxLength = {10} placeholder = "yeni parola" style = {{...styles.textInputWithIcon}} onChangeText = {(value) => this.getUserInput("newPass", value)}/>
+                                    <TouchableOpacity onPress = {() => this.setState({isSecureText : !this.state.isSecureText})}>
+                                        <Icon name = {(this.state.isSecureText) ? "eye" : "eye-off"} size = {23} style = {{padding : 7, backgroundColor : "transparent"}}/>
+                                    </TouchableOpacity> 
+                                </View>
+                                <TouchableOpacity style = {{...styles.button, marginVertical : 7}} disabled = {this.state.isSubmit} onPress = {async () => {
                                     await this.forgotPasswordSubmit();
                                 }}>
                                     <Text style = {styles.buttonText}>Yenile</Text>
@@ -193,11 +196,29 @@ const styles = StyleSheet.create({
         margin : 7,
         color : "black",        
     },
+    textInputWithIcon : {
+        flex : 1,
+        backgroundColor : "#e1f0e8",
+        padding : 7,
+        color : "black",
+    },
+    textInputWithIconContainer : {
+        flexDirection : "row", 
+        alignItems : "center", 
+        width : Dimensions.get("window").width * 0.8, 
+        backgroundColor : "#e1f0e8", 
+        borderRadius : 3, 
+        borderWidth : 0.25, 
+        borderColor : "gray",
+        marginVertical : 2
+
+    },
     logoSize : Dimensions.get("window").height / 3.5,
     apertureContainer : {
         flex : 1,
         justifyContent : "center",
         alignItems : "center",
+        padding : 5
     },
     button : {
         backgroundColor : "orange",

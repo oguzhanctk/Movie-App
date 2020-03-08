@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
     apertureContainer : {
         justifyContent : "flex-start",
         alignItems : "center",
+        padding : 5
     },
     button : {
         backgroundColor : "orange",
