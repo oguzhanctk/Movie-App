@@ -42,7 +42,7 @@ export default class Home extends Component {
 
     render() {
         return(
-            <View style = {{backgroundColor : "gray", flex : 1}}>
+            <View style = {{backgroundColor : "#3b3935", flex : 1}}>
                 {
                     (this.props.isLoading) ?
                         (<Loader indicatorColor = "white"/>) : 

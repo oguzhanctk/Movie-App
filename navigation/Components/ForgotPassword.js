@@ -150,8 +150,8 @@ export default class ForgotPassword extends Component {
                 {
                     this.state.stage === Number(1) &&
                         (<View style = {{flex : 0.7, alignItems : "center"}}>
-                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 0.5 : 1}}>
-                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 3.5} color = "orange"/>
+                            <View style = {{...styles.apertureContainer, flex : 0.7}}>
+                                <Icon name = "aperture" size = {Dimensions.get("window").height / 7} color = "orange"/>
                             </View>
                             <View style = {{flex : 1, alignItems : "center", justifyContent : "flex-start"}}>
                                 <TextInput style = {styles.textInput} 
@@ -213,9 +213,9 @@ const styles = StyleSheet.create({
         marginVertical : 2
 
     },
-    logoSize : Dimensions.get("window").height / 3.5,
+    logoSize : Dimensions.get("window").height / 7,
     apertureContainer : {
-        flex : 1,
+        flex : 0.7,
         justifyContent : "center",
         alignItems : "center",
         padding : 5

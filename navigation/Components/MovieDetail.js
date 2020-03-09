@@ -98,7 +98,7 @@ const MovieDetail = (props) => {
                                     <View>
                                         {
                                             (props.mediaType === "movie") ? 
-                                                (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}<Text style = {{fontSize : 9}}>dk</Text></Text>) :
+                                        (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.runtime}<Text style = {{fontSize : 9}}>{(props.movieDetail.runtime) ? "dk" : null}</Text></Text>) :
                                                 (<Text style = {{fontWeight : "bold"}}>{props.movieDetail.number_of_seasons} sezon</Text>) 
                                         }
                                     </View>
@@ -108,14 +108,13 @@ const MovieDetail = (props) => {
                                     </View>
                                 </View>
                             </View>
-                            <View style = {{flex : 1, 
-                                flexDirection : "column",
+                            <View style = {{width : Dimensions.get("window").width,
                                 alignItems : "center", 
                                 justifyContent : "center", 
                                 paddingHorizontal : 15,
                                 marginBottom : 7,
                                 paddingVertical : 3}}>
-                                <View style = {{flexDirection : "row"}}>
+                                <View style = {{flexDirection : "row", flexWrap : "wrap"}}>
                                 {
                                     props.movieDetail.genres && props.movieDetail.genres.map( genre => {
                                         return (
@@ -124,7 +123,6 @@ const MovieDetail = (props) => {
                                     })
                                 }
                                 </View>
-                                
                             </View>
                             <View style = {{paddingHorizontal : 15, marginVertical : 3}}>
                                 <Text style = {{letterSpacing : 0.7}}>{props.movieDetail.overview}</Text>

@@ -8,7 +8,8 @@ import {View,
         Dimensions, 
         ToastAndroid, 
         ImageBackground,
-        Keyboard} from "react-native";
+        Keyboard,
+        ScrollView} from "react-native";
 import { goToMainLayout } from "../navigation";
 import { Navigation } from "react-native-navigation";
 import { Auth } from "aws-amplify";
@@ -29,7 +30,7 @@ export default class SignIn extends Component {
         username : "",
         password : "",
         isSubmit : false,
-        isKeyboardOpen : false,
+        isKeyboardOpen : false
     }
 
     getInput = (key, value) => {
@@ -95,67 +96,76 @@ export default class SignIn extends Component {
 
     render() {
         return (
-            <View style = {{flex : 1}}>
-                <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
-                    <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-                        <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 0.8 : 1}}>
-                            <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 5} color = "orange"/>
-                        </View>
-                        <View style = {{flex : 2, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
-                            <TextInput maxLength = {30} placeholder = "kullanıcı adı" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
-                            <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
-                            <View style = {{
-                                flexDirection : "row", 
-                                justifyContent : "space-between", 
-                                width : Dimensions.get("window").width * 0.8}}>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                                    this.setState({isSubmit : true}, () => {
-                                        this.signIn()
-                                    });
-                                }}>
-                                    <Text style = {styles.buttonText}>Giriş</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style = {{...styles.button, backgroundColor : "#fac966"}} disabled = {this.state.isSubmit} onPress = {() => {
-                                    this.setState({isSubmit : true}, async () => {
-                                        await AsyncStorage.setItem("@isSkip", "true");
-                                        goToMainLayout();
-                                    });
-                                }}>
-                                    <Text style = {styles.buttonText}>Atla</Text>
-                                </TouchableOpacity>
+            <ScrollView contentContainerStyle = {{flexGrow : 1}}>
+                <View style = {{flex : 1}}>
+                    <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
+                        <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
+                            <View style = {{...styles.apertureContainer, flex : 1}}>
+                                <Icon name = "aperture" size = {Dimensions.get("window").height / 7} color = "orange"/>
                             </View>
+                            <View style = {{flex : 2, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
+                                <TextInput maxLength = {30} placeholder = "kullanıcı adı" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
+                                <TextInput secureTextEntry = {true} maxLength = {10} placeholder = "parola" style = {styles.textInput} onChangeText = {(value) => this.getInput("password", value)}/>
+                                <View style = {{
+                                    flexDirection : "row", 
+                                    justifyContent : "space-between", 
+                                    width : Dimensions.get("window").width * 0.8}}>
+                                    <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.setState({isSubmit : true}, () => {
+                                            this.signIn()
+                                        });
+                                    }}>
+                                        <Text style = {styles.buttonText}>Giriş</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {{...styles.button, backgroundColor : "#fac966"}} disabled = {this.state.isSubmit} onPress = {() => {
+                                        this.setState({isSubmit : true}, async () => {
+                                            await AsyncStorage.setItem("@isSkip", "true");
+                                            goToMainLayout();
+                                        });
+                                    }}>
+                                        <Text style = {styles.buttonText}>Atla</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            {
+                                (this.state.isKeyboardOpen === false) ? (
+                                    <View style = {{flex : 0.5, 
+                                        flexDirection : "column",
+                                        justifyContent : "space-evenly",
+                                        alignItems : "center"
+                                        }}>
+                                        <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
+                                            Navigation.mergeOptions(this.props.componentId, {
+                                                bottomTabs : {
+                                                    currentTabId : "signUpId"
+                                                }
+                                            });
+                                        }}>
+                                            <Text style = {{color : "darkblue", fontWeight : "bold"}}>Hala kayıt olmadınız mı?</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
+                                            Navigation.showModal({
+                                                component : {
+                                                    name : "ForgotPassword",
+                                                    options : {
+                                                        layout : {
+                                                            orientation : ["portrait"]
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }}>
+                                            <Text style = {{color : "darkblue", fontWeight : "bold"}}>Şifremi unuttum</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    
+                                ) : null
+                            }
+                            
                         </View>
-                        <View style = {{flex : 0.5, 
-                                flexDirection : "column",
-                                justifyContent : "space-evenly",
-                                alignItems : "center"}}>
-                            <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
-                                Navigation.mergeOptions(this.props.componentId, {
-                                    bottomTabs : {
-                                        currentTabId : "signUpId"
-                                    }
-                                });
-                            }}>
-                                <Text style = {{color : "darkblue", fontWeight : "bold"}}>Hala kayıt olmadınız mı?</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style = {{backgroundColor : "transparent"}} onPress = {() => {
-                                Navigation.showModal({
-                                    component : {
-                                        name : "ForgotPassword",
-                                        options : {
-                                            layout : {
-                                                orientation : ["portrait"]
-                                            }
-                                        }
-                                    }
-                                });
-                            }}>
-                                <Text style = {{color : "darkblue", fontWeight : "bold"}}>Şifremi unuttum</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </ImageBackground>
-            </View>
+                    </ImageBackground>
+                </View>
+            </ScrollView>
         )
     }
 }
@@ -172,7 +182,7 @@ const styles = StyleSheet.create({
         color : "black",        
     },
     apertureContainer : {
-        justifyContent : "flex-start",
+        justifyContent : "center",
         alignItems : "center",
         padding : 5
     },

@@ -10,10 +10,13 @@ Navigation.setDefaultOptions({
     },
     statusBar : {
         style : "light",
-        backgroundColor : "gray"
+        backgroundColor : "#3b3935"
     },
     layout : {
         orientation : ["portrait"]
+    },
+    topBar : {
+        visible : false
     }
     
 })

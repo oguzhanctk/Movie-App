@@ -78,7 +78,7 @@ class Search extends Component {
 
     render() {
         return (
-        <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
+        <View style = {{flex : 1, backgroundColor : "#3b3935"}}>
             {
                 (this.state.isConnected) ? null : 
                 <Alert color = "red" alertText = "Bağlantı hatası"/>
@@ -97,7 +97,7 @@ class Search extends Component {
                         await this.props.fetchSearchResults(url);
                         (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null;
                     }}/>
-                <TouchableOpacity style = {{padding : 3, backgroundColor : "#ccc"}}
+                <TouchableOpacity style = {{padding : 1, backgroundColor : "#aaa"}}
                     onPress = {async () => {
                         const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
                         await this.props.fetchSearchResults(url);
@@ -121,7 +121,7 @@ class Search extends Component {
                         }
                     </View>)
             }
-        </SafeAreaView>
+        </View>
         )
     }
 };
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor : "#393e3d",
         padding : 1,
         borderWidth : 3,
-        borderColor : "gray",
+        borderColor : "#3b3935",
         flexDirection : "row",
         alignItems : "center",
     },

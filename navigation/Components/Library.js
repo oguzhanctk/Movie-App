@@ -27,8 +27,6 @@ export default class Library extends Component {
         };
     }
 
-    //test comment
-
     componentDidAppear = () => {
         if(this.state.isSkip !== true) 
             this.getData();
@@ -142,7 +140,7 @@ shouldComponentUpdate = (nextProp, nextState) => {
                 (
                 <View style = {{
                     flex : 1, 
-                    backgroundColor : "gray",
+                    backgroundColor : "#3b3935",
                     justifyContent : "flex-start",
                     alignItems: "center"}}>
                     <View style = {{
@@ -167,7 +165,7 @@ shouldComponentUpdate = (nextProp, nextState) => {
                 </View>
                 ) :
                 (
-                <View style = {{flex : 1, backgroundColor : "gray"}}>
+                <View style = {{flex : 1, backgroundColor : "#3b3935"}}>
                     {
                         (this.state.isConnected === null || this.state.isConnected === true) ? null : 
                         (<Alert color = "red" alertText = "Bağlantı hatası"/>)
@@ -177,11 +175,10 @@ shouldComponentUpdate = (nextProp, nextState) => {
                         flexDirection : "row",
                         justifyContent : "space-between",
                         alignItems : "center",
-                        backgroundColor : "gray",
+                        backgroundColor : "#4d4645",
                         marginHorizontal : 0,
                         marginBottom : 13,
-                        paddingHorizontal : 5,
-                        borderBottomWidth : 0.45,
+                        paddingHorizontal : 7,
                         elevation : 15}}>
                         <Text style = {styles.userFont}>{this.state.currentUser}</Text>
                         <TouchableOpacity style = {styles.logout} onPress = {() => this.signOut()}>
@@ -193,7 +190,7 @@ shouldComponentUpdate = (nextProp, nextState) => {
                         
                         (<View style = {{
                             flex : 9,
-                            backgroundColor : "gray",
+                            backgroundColor : "#3b3935",
                             justifyContent : "center",
                             alignItems: "center"}}>
                             <Text style = {{fontSize : 19, color : "white"}}>Burası boş gözüküyor...</Text>
@@ -206,7 +203,7 @@ shouldComponentUpdate = (nextProp, nextState) => {
                             </View>
                         </View>) : 
                     
-                        (<View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "gray"}}>
+                        (<View style = {{flex : 9, justifyContent : "center", alignItems : "center", backgroundColor : "#3b3935"}}>
                             <FlatList data = {this.state.data}
                                 renderItem = {this.renderItem}
                                 keyExtractor = {(item) => item.id.toString()}
@@ -245,12 +242,12 @@ const styles = StyleSheet.create({
         width : DimensionDeclaration.movieCardHeight / 5,
         height : DimensionDeclaration.movieCardHeight / 5,  
         borderRadius : 100,
-        backgroundColor : "#ada1a2",
+        backgroundColor : "#6b6463",
         opacity : 0.75
     },
     userFont : {
-        fontSize : 17,
-        color : "black",
+        fontSize : 23,
+        color : "white",
         fontWeight : "bold",
         letterSpacing : 1,
         fontStyle : "italic"

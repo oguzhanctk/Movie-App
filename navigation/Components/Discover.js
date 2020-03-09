@@ -83,7 +83,7 @@ export default class Discover extends Component {
  
     render() {
         return(
-            <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
+            <View style = {{flex : 1, backgroundColor : "#3b3935"}}>
                 <View style = {{height : Dimensions.get("window").height / 17 ,
                         flexDirection : "row", 
                         justifyContent : "center",
@@ -91,19 +91,19 @@ export default class Discover extends Component {
                         padding : 0}}>
                     <TouchableOpacity style = {{...styles.typeCheck, borderBottomWidth : (this.state.isSelectedTypeMovie === true) ? 3.7 : 0}}
                         onPress = {() => this.setState({isSelectedTypeMovie : true})}>
-                        <Text style = {{fontWeight : "bold", letterSpacing : 1, color : "black"}}>Film</Text>
+                        <Text style = {{fontWeight : "bold", letterSpacing : 1, color : "white"}}>Film</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style = {{width : 8, height : 8, borderRadius : 4, marginHorizontal : 7, backgroundColor : "black"}}/>
+                    <TouchableOpacity style = {{width : 8, height : 8, borderRadius : 4, marginHorizontal : 7, backgroundColor : "white"}}/>
                     <TouchableOpacity style = {{...styles.typeCheck, borderBottomWidth : (this.state.isSelectedTypeMovie === true) ? 0 : 3.7}}
                         onPress = {() => this.setState({isSelectedTypeMovie : false})}>
-                        <Text style = {{fontWeight : "bold", letterSpacing : 1}}>Dizi</Text>
+                        <Text style = {{fontWeight : "bold", letterSpacing : 1, color : "white"}}>Dizi</Text>
                     </TouchableOpacity>
                 </View>
                 <View style = {{flex : 1, paddingHorizontal : 5}}>
                     <TouchableOpacity style = {{flex : 1, 
                             flexDirection : "row",
                             alignItems : "center",
-                            backgroundColor : "white",
+                            backgroundColor : "gray",
                             paddingHorizontal : 7,
                             marginHorizontal : 1,
                             borderWidth : 0.65,
@@ -119,8 +119,8 @@ export default class Discover extends Component {
                             }}
                             activeOpacity = {0.75}
                             disabled = {this.state.isDisabled}>
-                        <Icon name = "search" size = {23} color = "gray"/>
-                        <Text style = {{fontSize : 17, color : "gray", marginLeft : 13}}>
+                        <Icon name = "search" size = {23} color = "white"/>
+                        <Text style = {{fontSize : 17, color : "white", marginLeft : 13}}>
                             {this.state.isSelectedTypeMovie === true ? "film " : "dizi "}aramak için dokun
                         </Text>
                     </TouchableOpacity>
@@ -132,14 +132,14 @@ export default class Discover extends Component {
                             numColumns = {2}/>
                     </View>
                 </View>
-            </SafeAreaView>
+            </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
     typeCheck : {
-        borderColor : "lightgreen",
+        borderColor : "#47803e",
         padding : 3,
         height : Dimensions.get("window").height / 23,
         width : Dimensions.get("window").width / 3.5 ,

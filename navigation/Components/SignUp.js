@@ -7,7 +7,8 @@ import {View,
         ToastAndroid,
         TouchableOpacity,
         ImageBackground,
-        Keyboard} from "react-native";
+        Keyboard,
+        ScrollView} from "react-native";
 import { goToAuth } from "../navigation";
 import { Auth } from "aws-amplify";
 import Icon from "react-native-vector-icons/Feather";
@@ -136,64 +137,66 @@ export default class SignUp extends Component {
 
     render() {
         return (
-            <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
-                {
-                    this.state.stage === Number(0) && (
-                        <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
-                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 1 : 2}}>
-                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 5} color = "orange"/>
-                            </View>
-                            <View style = {{flex : 4, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
-                                <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
-                                <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
-                                <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
-                                <View style = {styles.textInputWithIconContainer}>
-                                    <TextInput secureTextEntry = {this.state.isSecureText} maxLength = {10} placeholder = "parola" style = {{...styles.textInputWithIcon}} onChangeText = {(value) => this.getInput("password", value)}/>
-                                    <TouchableOpacity onPress = {() => this.setState({isSecureText : !this.state.isSecureText})}>
-                                        <Icon name = {(this.state.isSecureText) ? "eye" : "eye-off"} size = {23} style = {{padding : 7, backgroundColor : "transparent"}}/>
-                                    </TouchableOpacity> 
+            <ScrollView contentContainerStyle = {{flexGrow : 1}}>
+                <View style = {{flex : 1, justifyContent : "center", alignItems : "center"}}>
+                    {
+                        this.state.stage === Number(0) && (
+                            <ImageBackground source = {require("../assets/popcorn.jpg")} style = {{width : "100%", height : "100%"}}>
+                                <View style = {{...styles.apertureContainer, flex : 1}}>
+                                    <Icon name = "aperture" size = {Dimensions.get("window").height / 7} color = "orange"/>
                                 </View>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} 
-                                onPress = {async () => {
-                                        await this.signUp();
-                                }}>
-                                    <Text style = {styles.buttonText}>Kaydol</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </ImageBackground>)
-                }
+                                <View style = {{flex : 4, justifyContent : "flex-start", alignItems : "center", padding : 7}}>
+                                    <TextInput maxLength = {30} placeholder = "isim" style = {styles.textInput} onChangeText = {(value) => this.getInput("username", value)}/>
+                                    <TextInput maxLength = {30} placeholder = "e-mail" style = {styles.textInput} onChangeText = {(value) => this.getInput("email", value)}/>
+                                    <TextInput maxLength = {12} placeholder = "telefon numarası (5xx)" style = {styles.textInput} onChangeText = {(value) => this.getInput("phone_number", value)}/>
+                                    <View style = {styles.textInputWithIconContainer}>
+                                        <TextInput secureTextEntry = {this.state.isSecureText} maxLength = {10} placeholder = "parola" style = {{...styles.textInputWithIcon}} onChangeText = {(value) => this.getInput("password", value)}/>
+                                        <TouchableOpacity onPress = {() => this.setState({isSecureText : !this.state.isSecureText})}>
+                                            <Icon name = {(this.state.isSecureText) ? "eye" : "eye-off"} size = {23} style = {{padding : 7, backgroundColor : "transparent"}}/>
+                                        </TouchableOpacity> 
+                                    </View>
+                                    <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} 
+                                    onPress = {async () => {
+                                            await this.signUp();
+                                    }}>
+                                        <Text style = {styles.buttonText}>Kaydol</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </ImageBackground>)
+                    }
 
-                {
-                    this.state.stage === Number(1) && (
-                        <View style = {{flex : 1}}>
-                            <View style = {{...styles.apertureContainer, flex : (this.state.isKeyboardOpen === true) ? 0.5 : 1}}>
-                                <Icon name = "aperture" size = {(this.state.isKeyboardOpen === true) ? Dimensions.get("window").height / 10 : Dimensions.get("window").height / 5} color = "orange"/>
+                    {
+                        this.state.stage === Number(1) && (
+                            <View style = {{flex : 1}}>
+                                <View style = {{...styles.apertureContainer, flex : 0.7}}>
+                                    <Icon name = "aperture" size = {Dimensions.get("window").height / 7} color = "orange"/>
+                                </View>
+                                <View style = {{flex : 0.5, justifyContent : "center", alignItems : "center", padding : 13}}>
+                                    <Text style = {{fontSize : 21}}>Devam etmek için e-mail adresinize gelen 6 haneli kodu girin.</Text>
+                                </View>
+                                <View style = {{flex : 1, justifyContent : "flex-start", alignItems : "center"}}>
+                                    <TextInput maxLength = {30} placeholder = "doğrulama kodu" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("confCode", value)}/>
+                                    <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {async () => {
+                                            await this.confirmSignUp();
+                                    }}>
+                                        <Text style = {styles.buttonText}>Doğrula</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {() => {
+                                            this.resendConfCode();
+                                    }}>
+                                        <Text style = {styles.buttonText}>Kodu tekrar al</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
+                                            this.setState({stage : 0});
+                                    }}>
+                                        <Text style = {styles.buttonText}>Kayıt ekranına geri dön</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                            <View style = {{flex : 0.5, justifyContent : "center", alignItems : "center", padding : 13}}>
-                                <Text style = {{fontSize : 21}}>Devam etmek için e-mail adresinize gelen 6 haneli kodu girin.</Text>
-                            </View>
-                            <View style = {{flex : 1, justifyContent : "flex-start", alignItems : "center"}}>
-                                <TextInput maxLength = {30} placeholder = "doğrulama kodu" style = {{...styles.textInput, marginBottom : 13}} onChangeText = {(value) => this.getInput("confCode", value)}/>
-                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {async () => {
-                                        await this.confirmSignUp();
-                                }}>
-                                    <Text style = {styles.buttonText}>Doğrula</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style = {{...styles.button, marginBottom : 5}} disabled = {this.state.isSubmit} onPress = {() => {
-                                        this.resendConfCode();
-                                }}>
-                                    <Text style = {styles.buttonText}>Kodu tekrar al</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style = {styles.button} disabled = {this.state.isSubmit} onPress = {() => {
-                                        this.setState({stage : 0});
-                                }}>
-                                    <Text style = {styles.buttonText}>Kayıt ekranına geri dön</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )
-                }
-            </View>
+                        )
+                    }
+                </View>
+            </ScrollView>
         )
     }
 }
@@ -227,7 +230,7 @@ const styles = StyleSheet.create({
 
     },
     apertureContainer : {
-        justifyContent : "flex-start",
+        justifyContent : "center",
         alignItems : "center",
         padding : 5
     },

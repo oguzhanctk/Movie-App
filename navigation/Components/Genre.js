@@ -91,7 +91,7 @@ export default class Genre extends Component {
 
     render() {
         return (
-            <SafeAreaView style = {{flex : 1, backgroundColor : "gray"}}>
+            <View style = {{flex : 1, backgroundColor : "#3b3935"}}>
                 {
                     (this.state.isConnected === null || this.state.isConnected === true) ? null : 
                     (<Alert color = "red" alertText = "Bağlantı hatası"/>)
@@ -113,7 +113,7 @@ export default class Genre extends Component {
                             marginLeft : 3}}>yenilemek için aşağı çekin</Text>
                     </View>
                 </View>
-                <View style = {{flex : 1, marginTop : 7, alignItems : "center", backgroundColor : "gray"}}>
+                <View style = {{flex : 1, marginTop : 7, alignItems : "center", backgroundColor : "#3b3935"}}>
                     <FlatList data = {this.props.genreResults.filter(item => item.poster_path !== null)}
                         renderItem = {this.renderItem}
                         keyExtractor = {(item) => item.id.toString()}
@@ -124,7 +124,7 @@ export default class Genre extends Component {
                                 onRefresh = {() => this.onRefresh()}/>}
                     /> 
                 </View>
-            </SafeAreaView>
+            </View>
         )
     }
 }
