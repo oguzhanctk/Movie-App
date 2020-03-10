@@ -86,7 +86,8 @@ class Search extends Component {
             <View style = {styles.container}>
                 <TextInput  style = {styles.textInput} 
                     autoFocus 
-                    placeholder = "search" 
+                    placeholder = "search"
+                    selectionColor = "white"
                     placeholderTextColor = "#959c9b"
                     onChangeText = {(value) => this.getSearchInput(value)}
                     maxLength = {30}
