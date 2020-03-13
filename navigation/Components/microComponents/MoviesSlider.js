@@ -1,30 +1,29 @@
 import React, {useEffect, useState} from 'react'
-import { View, Text, FlatList, Dimensions } from 'react-native'
+import { View, Text, FlatList, Dimensions, TouchableOpacity } from 'react-native'
 import { MovieCard } from "./MovieCard";
 import { DimensionDeclaration } from "./dimensions_declaration";
 import { Navigation } from "react-native-navigation";
 
 export const MoviesSlider = React.memo((props) => {
-    const [isSubmit, setisSubmit] = useState(false);
 
-    useEffect(() => {
-        const screenEventListener = Navigation.events().registerComponentDidAppearListener(({ componentId, componentName, passProps }) => {
-            if(componentName === "Home") {
-                setisSubmit(false);
+    const handleClick = () => {
+        props.updateState();
+    }
+
+    const onMoviePress = (id, type) => {
+        Navigation.showModal({
+            component : {
+                name : "MovieDetail",
+                passProps : {
+                    id : id,
+                    mediaType : type
+                }
             }
         });
-        return () => {
-            screenEventListener.remove();
-        };
-    }, [])
-
-    const updateState = () => {
-        setisSubmit(true);
     }
 
     return (
-        <View style = {{paddingVertical : 1,
-                        paddingLeft : 7}}>
+        <View style = {{paddingVertical : 1, paddingLeft : 7}}>
             <View style = {{justifyContent : "center", paddingVertical : 7}}>
                 <Text style = {{fontWeight : "bold", 
                     fontSize : 15, 
@@ -34,12 +33,13 @@ export const MoviesSlider = React.memo((props) => {
                     data = {props.movieData.filter(item => item.poster_path !== null)}
                     horizontal
                     renderItem = {({item}) => (
-                        <MovieCard imagePath = {item.poster_path} 
-                            id = {item.id}
-                            mediaType = {item.media_type}
-                            disabled = {isSubmit}
-                            updateState = {updateState}
-                        />
+                        <TouchableOpacity style = {{flex : 1}}
+                        onPress = {() => {
+                            handleClick();
+                            onMoviePress(item.id, item.media_type);
+                        }}>
+                            <MovieCard imagePath = {item.poster_path} id = {item.id} mediaType = {item.media_type}/>
+                        </TouchableOpacity>
                         )}
                     keyExtractor = {item => item.id.toString()}
                     ItemSeparatorComponent = {() => (
@@ -62,7 +62,7 @@ export const MoviesSlider = React.memo((props) => {
                         offset : DimensionDeclaration.movieCardWidth - 4 * index,
                         index
                     })}
-                    />
+            />
         </View>
     )
 })

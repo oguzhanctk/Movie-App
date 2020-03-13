@@ -1,44 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { ImageBackground, TouchableHighlight, StyleSheet, ToastAndroid } from 'react-native'
 import { DimensionDeclaration } from "./dimensions_declaration";
-import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/Feather";
 import { storeMethod } from "../storage/index";
 import { Auth } from "aws-amplify";
 import AsyncStorage from '@react-native-community/async-storage';
+import { Navigation } from "react-native-navigation";
 
 export const MovieCard = (props) => {
     const baseImageUrl = "https://image.tmdb.org/t/p/w342";
     const [isAdded, setisAdded] = useState(false);
+    const [counter, setcounter] = useState(0)
 
-    const handleClick = () => {
-        props.updateState();
-    }
-
-    const onMoviePress = (id, type) => {
-        Navigation.showModal({
-            component : {
-                name : "MovieDetail",
-                passProps : {
-                    id : id,
-                    mediaType : type
-                }
-            }
-        });
-    }
-    
     return (
-        <TouchableHighlight style = {{flex : 1}}
-        onPress = {() => {
-            handleClick();
-            onMoviePress(props.id, props.mediaType);
-            }}
-        disabled = {props.disabled}
-        >
             <ImageBackground source = {{uri : `${baseImageUrl}${props.imagePath}`}}
                 style = {{width : DimensionDeclaration.movieCardWidth - 11, 
                         height : DimensionDeclaration.movieCardHeight - 11, 
-                        borderRadius : 3, 
+                        borderRadius : 3,
                         borderWidth : 0.85,
                         borderColor : "black",
                         backgroundColor : "#f0d689",
@@ -62,6 +40,12 @@ export const MovieCard = (props) => {
                                         media_type : props.mediaType},
                                         setisAdded,
                                         user.username);
+                                    Navigation.mergeOptions("library_id", {
+                                        bottomTab : {
+                                            badge : "!",
+                                            badgeColor : "orange"
+                                        }
+                                    });
                                 }
                             }}
                             underlayColor = "lightgreen">
@@ -69,7 +53,6 @@ export const MovieCard = (props) => {
                         </TouchableHighlight>)
                     }         
             </ImageBackground>
-        </TouchableHighlight>
     )
 }
 

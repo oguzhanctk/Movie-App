@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, FlatList, Dimensions, TouchableOpacity, Image, RefreshControl } from 'react-native'
+import { Text, View, FlatList, Dimensions, TouchableOpacity, Image, RefreshControl } from 'react-native'
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";
 import Icon from "react-native-vector-icons/MaterialIcons";

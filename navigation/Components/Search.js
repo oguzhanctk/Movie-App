@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TextInput, SafeAreaView, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image, Text, Button } from 'react-native'
+import { View, TextInput, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image, Text } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { constants } from "../../api/config";
 import { Navigation } from "react-native-navigation";

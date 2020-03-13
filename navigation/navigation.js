@@ -2,7 +2,7 @@ import { Navigation } from "react-native-navigation";
     
 Navigation.setDefaultOptions({
     navigationBar : {
-        backgroundColor : "gray",
+        backgroundColor : "gray",    
     },
     bottomTabs : {
         titleDisplayMode : "alwaysShow",
@@ -10,13 +10,13 @@ Navigation.setDefaultOptions({
     },
     statusBar : {
         style : "light",
-        backgroundColor : "#3b3935"
+        backgroundColor : "#3b3935",
     },
     layout : {
         orientation : ["portrait"]
     },
     topBar : {
-        visible : false
+        visible : false,        
     }
     
 })
@@ -272,6 +272,7 @@ export const goToMainLayout = () => {
                     },
                     {
                         component : {
+                            id : "library_id",
                             name : "Library",
                             options : {
                                 bottomTab : {

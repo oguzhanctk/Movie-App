@@ -17,6 +17,7 @@ import { Loader } from './microComponents/Loader';
 import { constants } from "../../api/config";
 import { Auth } from "aws-amplify";
 import AsyncStorage from "@react-native-community/async-storage";
+import { Navigation } from "react-native-navigation";
 
 const MovieDetail = (props) => {
 
@@ -69,6 +70,12 @@ const MovieDetail = (props) => {
                                                 media_type : props.mediaType},
                                                 setisAdded,
                                                 user.username);
+                                                Navigation.mergeOptions("library_id", {
+                                                    bottomTab : {
+                                                        badge : "!",
+                                                        badgeColor : "orange"
+                                                    }
+                                                });
                                         }
                                     }}
                                     underlayColor = "lightgreen">

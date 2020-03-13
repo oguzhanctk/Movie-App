@@ -12,7 +12,7 @@ export const Badge = (props) => {
 
 const styles = StyleSheet.create({
     container : {
-        borderWidth : 0.3,
+        borderWidth : 0,
         backgroundColor : "#ccc",
         borderRadius :13,
         padding : 5,

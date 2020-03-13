@@ -28,8 +28,14 @@ export default class Library extends Component {
     }
 
     componentDidAppear = () => {
-        if(this.state.isSkip !== true) 
+        if(this.state.isSkip !== true) {
             this.getData();
+            Navigation.mergeOptions("library_id", {
+                bottomTab : {
+                    badge : ""
+                }
+            });
+        }
         this.setState({isSubmit : false});
     }
 
