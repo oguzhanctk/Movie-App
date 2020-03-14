@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
         opacity : 0.75
     },
     userFont : {
-        fontSize : 23,
+        fontSize : 19,
         color : "white",
         fontWeight : "bold",
         letterSpacing : 1,
