@@ -4,7 +4,6 @@ import SignIn from "./Components/SignIn";
 import SignUp from "./Components/SignUp";
 import Library from "./Components/Library";
 import Initializing from "./Components/Initializing";
-import SideMenuTest from "./Components/sideMenuTest";
 import { Provider } from "react-redux";
 import store from "../reducers/index";
 import DiscoverActions from "../actions/DiscoverActions";
@@ -22,7 +21,6 @@ export const registerScreens = () => {
     Navigation.registerComponent("Library", () => Library);
     Navigation.registerComponent("Initializing", () => Initializing);
     Navigation.registerComponentWithRedux("Discover", () => DiscoverActions, Provider, store);
-    Navigation.registerComponent("SideMenuTest", () => SideMenuTest);
     Navigation.registerComponent("ForgotPassword", () => ForgotPassword);
     Navigation.registerComponentWithRedux("MovieDetail", () => MovieDetailActions, Provider, store);
 
