@@ -12,7 +12,7 @@ class Search extends Component {
         Navigation.events().bindComponent(this);
         this.state = {
             searchValue : "",
-            nullArrayText : "",
+            nullArrayText : ["", "", ""],
             isConnected : true,
             isSubmit : false
         }
@@ -45,6 +45,12 @@ class Search extends Component {
                     mediaType : this.props.mediaType
                 }
             }
+        });
+    }
+
+    setNullArrayText = () => {
+        this.setState({
+            nullArrayText : ["Herhangi bir sonuç bulamadık...", "Farklı bir anahtar kelime kullanarak", "tekrar aramayı deneyin."]
         });
     }
 
@@ -96,13 +102,13 @@ class Search extends Component {
                     onSubmitEditing = {async () => {
                         const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
                         await this.props.fetchSearchResults(url);
-                        (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null;
+                        (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setNullArrayText() : null;
                     }}/>
                 <TouchableOpacity style = {{padding : 1, backgroundColor : "#aaa"}}
                     onPress = {async () => {
                         const url = `https://api.themoviedb.org/3/search/${this.props.mediaType}?api_key=${constants.api_key}&language=en-US&query=${this.state.searchValue}&page=1&include_adult=false`;
                         await this.props.fetchSearchResults(url);
-                        (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setState({nullArrayText : "Herhangi bir sonuç bulunamadı :/"}) : null; 
+                        (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ? this.setNullArrayText() : null; 
                     }}>
                     <Icon name = "search" size = {33} color = "black"/>
                 </TouchableOpacity>
@@ -113,7 +119,13 @@ class Search extends Component {
                     (<View style = {{flex : 1, marginTop : 13, alignItems : "center"}}>
                         {
                             (this.props.searchResults.filter(item => item.poster_path !== null).length === 0) ?
-                                (<Text style = {{color : "black", fontSize : 18}}>{this.state.nullArrayText}</Text>) :
+                                (
+                                    <View style = {{alignItems : "center", padding : 7}}>
+                                        <Text style = {{color : "white", fontSize : 15, fontWeight : "bold", paddingVertical : 17}}>{this.state.nullArrayText[0]}</Text>
+                                        <Text style = {{color : "#8f8888", fontSize : 13, fontWeight : "bold"}}>{this.state.nullArrayText[1]}</Text>
+                                        <Text style = {{color : "#8f8888", fontSize : 13, fontWeight : "bold"}}>{this.state.nullArrayText[2]}</Text>
+                                    </View>
+                                ) :
                                 (<FlatList data = {this.props.searchResults.filter(item => item.poster_path !== null)}
                                     renderItem = {this.renderItem}
                                     keyExtractor = {(item) => item.id.toString()}
