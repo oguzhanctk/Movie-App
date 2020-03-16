@@ -2,8 +2,8 @@
 
 ## React Native Movie Application
 
-<img src="https://i.imgur.com/vBM0RjV.png" title="source: imgur.com" width = "240"/>&nbsp;
-<img src="https://i.imgur.com/B30m5kR.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/S7HrFhN.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/lzDJQHW.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/v4MshuX.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/0BkBCPu.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/FvlhKiJ.png" title="source: imgur.com" width = "240"/>&nbsp;

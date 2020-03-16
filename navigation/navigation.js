@@ -33,7 +33,7 @@ export const goToAuth = () => {
                             name : "SignIn",
                             options : {
                                 bottomTab : {
-                                    text : "Sign in",
+                                    text : "Giriş",
                                     icon : {
                                       uri :  "ic_account_circle"
                                     },
@@ -52,7 +52,7 @@ export const goToAuth = () => {
                             id : "signUpId",
                             options : {
                                 bottomTab : {
-                                    text : "Sign up",
+                                    text : "Kaydol",
                                     icon : {
                                         uri : "ic_group_add"
                                     },
