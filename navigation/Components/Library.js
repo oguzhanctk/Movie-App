@@ -119,7 +119,7 @@ shouldComponentUpdate = (nextProp, nextState) => {
                 width : libraryConstants.libraryWidth,
                 height : libraryConstants.libraryHeight,
                 margin : 5,
-                borderWidth : 0.45,
+                borderWidth : 0.7,
                 borderColor : "gray",
                 justifyContent : "flex-end",
                 alignItems : "flex-end"}}

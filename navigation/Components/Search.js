@@ -68,10 +68,10 @@ class Search extends Component {
                                 <Image source = {{uri : `${constants.imageBaseUrl + item.poster_path}`}}
                                     style = {{width : ViewWidth, 
                                         height : ViewHeight, 
-                                        borderRadius : 3, 
+                                        borderRadius : 0, 
                                         backgroundColor : "orange",
-                                        borderWidth : 0.35,
-                                        borderColor : "black"}}
+                                        borderWidth : 0.7,
+                                        borderColor : "gray"}}
                                         resizeMode = "stretch"/>
                     </TouchableOpacity>
                 </View>

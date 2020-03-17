@@ -6,13 +6,13 @@
 
 <img src="https://i.imgur.com/S7HrFhN.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/lzDJQHW.png" title="source: imgur.com" width = "240"/>&nbsp;
-<img src="https://i.imgur.com/v4MshuX.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/o94B2fh.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/0BkBCPu.png" title="source: imgur.com" width = "240"/>&nbsp;
-<img src="https://i.imgur.com/FvlhKiJ.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/hr4UFR9.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/bhknYHU.png" title="source: imgur.com" width = "240"/>&nbsp;
 <img src="https://i.imgur.com/1aW6u4W.png" title="source: imgur.com" width = "240"/>&nbsp;
-<img src="https://i.imgur.com/O9KpDfo.png" title="source: imgur.com" width = "240"/>&nbsp;
-<img src="https://i.imgur.com/zsHiNqe.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/4LzysUR.png" title="source: imgur.com" width = "240"/>&nbsp;
+<img src="https://i.imgur.com/SYR5Td8.png" title="source: imgur.com" width = "240"/>&nbsp;
 
 ### Includes the following
 * [Wix/React Native Navigation](https://github.com/wix/react-native-navigation) - Native navigation solution for react native

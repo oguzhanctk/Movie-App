@@ -16,9 +16,9 @@ export const MovieCard = (props) => {
             <ImageBackground source = {{uri : `${baseImageUrl}${props.imagePath}`}}
                 style = {{width : DimensionDeclaration.movieCardWidth - 11, 
                         height : DimensionDeclaration.movieCardHeight - 11, 
-                        borderRadius : 3,
-                        borderWidth : 0.85,
-                        borderColor : "black",
+                        borderRadius : 0,
+                        borderWidth : 0.7,
+                        borderColor : "gray",
                         backgroundColor : "#f0d689",
                         justifyContent : "flex-end",
                         alignItems : "flex-end"
