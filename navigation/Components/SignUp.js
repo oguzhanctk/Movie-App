@@ -205,8 +205,7 @@ const styles = StyleSheet.create({
     textInput : {
         backgroundColor : "#e1f0e8",
         borderRadius : 3,
-        borderWidth : 0.25,
-        borderColor : "gray",
+        borderWidth : 0,
         padding : 7,
         width : Dimensions.get("window").width * 0.8,
         marginVertical : 3,
